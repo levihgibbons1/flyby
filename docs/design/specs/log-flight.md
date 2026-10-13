@@ -1,4 +1,4 @@
-# Spec: Log a Flight (v0.3 Skyglass, provisional)
+# Spec: Log a Flight (v0.3.1 Skyglass, provisional)
 
 References: `png/06-log-flight-1.png`, `png/07-log-flight-2-visibility.png`, `png/17-state-log-import-error.png`, `png/22-sizes-log-keyboard-se-promax.png`
 
@@ -16,7 +16,7 @@ Presented as a sheet from the **Record** tab (`tab.record`); it's a glass sheet 
 | Notes | Multiline | |
 | Photos | Thumbnails + add tile | **`PhotosPicker` (PHPicker), no permission prompt.** Logging a flight never requests Photos access. Add-only access is requested **only when saving a recap** (`recaps.md`) |
 | **Who can see this flight** | VisibilityPicker: **Private** (preselected, "Default", "Only you") · Followers · Public | "**Private by default.** Only you can see this flight. You can change it anytime." id `log.visibility` |
-| Privacy when shared | **Hide home airport**: shows the global default (Profile → Privacy, **On**), caption "Your default (Profile → Privacy): On"; Trim start / end `Stepper` (default from settings, **1.0 nm**) | A change here is a **per-flight override**. It doesn't change the global setting (`privacy-sharing.md`). Sprint 1 may omit this row; the global default then applies |
+| Privacy when shared | **Read-only note** (`shield`): "Home airport hidden when shared" with the caption "From your privacy setting · Profile → Settings" (tapping it opens Settings). Trim start / end `Stepper` (default from settings, **1.0 nm**) | The **per-flight Hide home airport toggle is deferred** past Sprint 1 (PM scope trim); the global setting always applies. Per-share changes happen in Share (`privacy-sharing.md`) |
 | Save | Prominent capsule button + disclaimer "Personal journal · Not for navigation" | `.sensoryFeedback(.success)` |
 
 Validation:
@@ -26,4 +26,4 @@ Validation:
 
 Keyboard (`png/22`): the focused field scrolls above the keyboard and the 44 pt accessory bar (`.scrollDismissesKeyboard(.interactively)`). Save stays in the nav bar, so it's reachable at any size, including SE.
 
-Ids (F9): `log.save`, `log.cancel`, `log.import`, `log.import.error`, `log.field.dep`, `log.field.arr`, `log.field.date`, `log.field.aircraft`, `log.field.tail`, `log.time.out|off|on|in`, `log.visibility` (renamed from `visibilityPicker`), `log.visibility.private|followers|public`, `log.toggle.hideHome`, `log.trim`, `log.disclaimer`. VoiceOver: `accessibility.md` §5.
+Ids (F9): `log.save`, `log.cancel`, `log.import`, `log.import.error`, `log.field.dep`, `log.field.arr`, `log.field.date`, `log.field.aircraft`, `log.field.tail`, `log.time.out|off|on|in`, `log.visibility` (renamed from `visibilityPicker`), `log.visibility.private|followers|public`, `log.privacyNote`, `log.trim`, `log.disclaimer`. VoiceOver: `accessibility.md` §5.
