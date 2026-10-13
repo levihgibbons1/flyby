@@ -1,106 +1,1040 @@
-# Flyby Design System: "Skyglass" (v0.2.1, provisional)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flyby — Design Direction Proposal (v0.1, local draft)</title>
+<style>
+:root{
+  --sf:-apple-system,"SF Pro Text","SF Pro Display",Inter,system-ui,"Helvetica Neue",sans-serif;
+  --sfd:-apple-system,"SF Pro Display",Inter,system-ui,sans-serif;
+  --sfr:"SF Pro Rounded",ui-rounded,Nunito,-apple-system,system-ui,sans-serif;
+  --mono:"SF Mono",ui-monospace,"Geist Mono","IBM Plex Mono",Menlo,monospace;
+  --alt0:#34D399;--alt1:#22D3EE;--alt2:#818CF8;
+}
+.light{--bg:#F5F8FC;--surface:#FFFFFF;--surface2:#EEF3F9;--fill:rgba(16,42,90,.06);--sep:rgba(16,42,90,.10);--label:#0B1220;--label2:#4A5568;--label3:#647089;--primary:#0A63DB;--onPrimary:#FFFFFF;--primarySoft:rgba(10,99,219,.10);--sky:#4BA3FF;--skyWash:#DCEBFF;--beacon:#F2A93B;--beaconText:#9A5B00;--route:#0A63DB;--routeCasing:#FFFFFF;--routeEnd:#1E3A8A;--success:#137A3A;--warn:#9A5B00;--danger:#C2261F;--mapWater:#D4DFE8;--mapLand:#EEF0F2;--mapHill:rgba(60,70,84,.035);--mapRoad:#FFFFFF;--mapRoadCasing:rgba(60,70,84,.10);--mapContour:rgba(60,70,84,.07);--mapGrid:rgba(16,42,90,.045);--terrain:rgba(16,42,90,.08);--glass:rgba(255,255,255,.58);--glassStrong:rgba(255,255,255,.74);--glassEdge:rgba(255,255,255,.75);--glassShadow:0 10px 30px rgba(16,42,90,.13),0 1px 2px rgba(16,42,90,.08);--material:rgba(255,255,255,.6);--shadow:0 1px 2px rgba(16,42,90,.05),0 6px 20px rgba(16,42,90,.06);--alt0:#8CCBFF;--alt1:#2F80ED;--alt2:#1E3A8A}
+.dark{--bg:#0A0F1A;--surface:#141B28;--surface2:#1C2536;--fill:rgba(255,255,255,.08);--sep:rgba(255,255,255,.10);--label:#F2F5FA;--label2:#A3AEC2;--label3:#7D89A0;--primary:#4DA3FF;--onPrimary:#03112A;--primarySoft:rgba(77,163,255,.16);--sky:#4DA3FF;--skyWash:#12213C;--beacon:#F2A93B;--beaconText:#F2A93B;--route:#4DA3FF;--routeCasing:#FFFFFF;--routeEnd:#A5C8FF;--success:#4ADE80;--warn:#FBBF24;--danger:#FF6B6B;--mapWater:#0C141F;--mapLand:#171D27;--mapHill:rgba(255,255,255,.025);--mapRoad:rgba(255,255,255,.10);--mapRoadCasing:rgba(0,0,0,.25);--mapContour:rgba(255,255,255,.05);--mapGrid:rgba(255,255,255,.035);--terrain:rgba(255,255,255,.08);--glass:rgba(34,44,64,.52);--glassStrong:rgba(30,40,58,.72);--glassEdge:rgba(255,255,255,.16);--glassShadow:0 10px 30px rgba(0,0,0,.35);--material:rgba(30,40,58,.55);--shadow:0 1px 0 rgba(255,255,255,.04) inset,0 8px 24px rgba(0,0,0,.3);--alt0:#9BD3FF;--alt1:#4DA3FF;--alt2:#A5B4FC}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sf);background:#F2F3F6;color:#0B1220;-webkit-font-smoothing:antialiased;line-height:1.45}
+.doc{max-width:1320px;margin:0 auto;padding:56px 40px 120px}
+.hero{background:radial-gradient(90% 120% at 85% -10%,#BFDDFF 0%,#E6F1FF 45%,#FFFFFF 80%);color:#0B1220;border-radius:32px;padding:56px;position:relative;overflow:hidden;margin-bottom:48px;box-shadow:0 1px 2px rgba(16,42,90,.06),0 20px 60px rgba(16,42,90,.08)}
+.hero h1{font-family:var(--sfd);font-size:56px;letter-spacing:-.02em;line-height:1.02;font-weight:700}
+.hero p{color:#4A5568;max-width:720px;font-size:18px;margin-top:16px}
+.hero .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.tag{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.7);color:#33415C;box-shadow:inset 0 0 0 1px rgba(16,42,90,.08)}
+.tag.amber{background:#FFF3DC;color:#9A5B00}
+section{margin:72px 0}
+h2{font-family:var(--sfd);font-size:34px;letter-spacing:-.015em;font-weight:700;margin-bottom:8px}
+h2 small{font:600 13px var(--mono);color:#6B7588;letter-spacing:.08em;display:block;margin-bottom:6px}
+h3{font-size:20px;font-weight:650;margin:28px 0 10px;letter-spacing:-.01em}
+.lead{color:#4A5568;font-size:17px;max-width:860px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:#fff;border-radius:22px;padding:28px;box-shadow:0 1px 2px rgba(11,18,32,.05),0 8px 30px rgba(11,18,32,.05)}
+.card.ink{background:linear-gradient(160deg,#EAF3FF,#FFFFFF);color:#0B1220;box-shadow:inset 0 0 0 2px #0A63DB,0 8px 30px rgba(16,42,90,.08)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#6B7588;padding:10px 8px;border-bottom:1px solid #E3E7EE}
+td{padding:10px 8px;border-bottom:1px solid #EEF1F5;vertical-align:middle}
+td code,.code{font-family:var(--mono);font-size:12.5px}
+.sw{display:inline-flex;align-items:center;gap:8px;font:500 12.5px var(--mono)}
+.sw i{width:22px;height:22px;border-radius:7px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.pass{font:700 11px var(--mono);color:#137A3A;background:#E3F5EA;border-radius:6px;padding:3px 6px}
+.pass.lg{color:#0A5FD1;background:#E6EFFC}
+ul.clean{list-style:none}
+ul.clean li{padding:6px 0 6px 22px;position:relative;color:#2D3748}
+.card.ink ul.clean li{color:#2D3748}
+ul.clean li:before{content:"";position:absolute;left:4px;top:14px;width:8px;height:2px;background:#0A63DB;border-radius:2px}
+.stage{display:flex;flex-wrap:wrap;gap:44px 40px;align-items:flex-start;padding:40px;border-radius:32px;background:linear-gradient(180deg,#E3ECF7,#D6E2F0)}
+.stage.darkstage{background:radial-gradient(100% 80% at 50% 0%,#CFE5FF,#EEF4FB 70%)}
+figure{display:flex;flex-direction:column;gap:14px;align-items:center}
+figcaption{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#4A5568;text-align:center;max-width:393px}
+figcaption b{display:block;font:600 15px var(--sf);text-transform:none;letter-spacing:0;color:#0B1220;margin-bottom:3px}
+.sample{font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#9A5B00;background:#FFF3DC;padding:3px 7px;border-radius:5px;vertical-align:middle}
+pre{background:#0B1220;color:#D6DEEB;border-radius:20px;padding:28px;overflow:auto;font:13px/1.6 var(--mono)}
+pre .k{color:#C792EA}pre .t{color:#5AC8FA}pre .s{color:#F5A524}pre .c{color:#7A869A}pre .n{color:#4ADE80}
+.device{padding:11px;border-radius:66px;background:linear-gradient(145deg,#2A2E37,#111318);box-shadow:0 0 0 1.5px #474C57,0 40px 80px -20px rgba(5,10,20,.45)}
+.phone{width:393px;height:852px;border-radius:55px;position:relative;overflow:hidden;background:var(--bg);color:var(--label);font-family:var(--sf);font-size:17px;line-height:1.29}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:126px;height:37px;border-radius:20px;background:#000;z-index:50}
+.status{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;font:600 17px var(--sf);z-index:40;color:var(--label)}
+.status.onmap{color:#fff}
+.status .r{display:flex;gap:6px;align-items:center}
+.homeind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:139px;height:5px;border-radius:3px;background:var(--label);opacity:.85;z-index:60}
+.scroll{position:absolute;inset:0;overflow:hidden;padding:54px 0 0}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:6px 16px;height:44px}
+.largetitle{font:700 34px/41px var(--sfd);letter-spacing:.012em;padding:2px 16px 8px}
+.iconbtn{width:36px;height:36px;border-radius:18px;display:grid;place-items:center;background:var(--fill);color:var(--label)}
+.iconbtn.glass,.iconbtn{background:var(--glass);backdrop-filter:blur(18px) saturate(1.8);-webkit-backdrop-filter:blur(18px) saturate(1.8);color:var(--label);box-shadow:var(--glassShadow),inset 0 1px 0 var(--glassEdge),inset 0 0 0 .5px var(--glassEdge);width:40px;height:40px;border-radius:20px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.i.s{width:14px;height:14px;stroke-width:2.2}
+svg.i.xs{width:12px;height:12px;stroke-width:2.4}
+svg.i.l{width:24px;height:24px}
+.caption1{font-size:12px;line-height:16px}
+.footnote{font-size:13px;line-height:18px}
+.subhead{font-size:15px;line-height:20px}
+.callout{font-size:16px;line-height:21px}
+.headline{font-size:17px;line-height:22px;font-weight:600}
+.l2{color:var(--label2)}.l3{color:var(--label3)}
+.mono{font-family:var(--mono)}
+.num{font-family:var(--sfr);font-variant-numeric:tabular-nums;font-weight:650;letter-spacing:-.01em}
+.unit{font-family:var(--sf);font-weight:500;font-size:.5em;color:var(--label2);margin-left:2px;letter-spacing:0}
+.eyebrow{font:600 11px/13px var(--sf);letter-spacing:.06em;text-transform:uppercase;color:var(--label2)}
+.tabbar{position:absolute;left:14px;right:14px;bottom:24px;height:62px;border-radius:31px;background:var(--glass);backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:var(--glassShadow),inset 0 1px 0 var(--glassEdge),inset 0 0 0 .5px var(--glassEdge);display:grid;grid-template-columns:repeat(5,1fr);padding:4px;z-index:30}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font:600 10px var(--sf);color:var(--label);border-radius:27px;position:relative}
+.tab svg{width:25px;height:25px;stroke-width:1.9}
+.tab.on{color:var(--primary);background:var(--fill);box-shadow:inset 0 0 0 .5px var(--sep)}
+.tab.log .plus{width:27px;height:27px;border-radius:14px;background:var(--primary);color:var(--onPrimary);display:grid;place-items:center;box-shadow:0 4px 12px -3px var(--primary)}
+.tab.log .plus svg{width:18px;height:18px;stroke-width:2.8}
+.tab.log{color:var(--primary)}
+.fcard{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.pad{padding:14px 16px}
+.row{display:flex;align-items:center}
+.gap4{gap:4px}.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}
+.sb{justify-content:space-between}
+.vis{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:11px;font:600 11.5px var(--sf);background:var(--fill);color:var(--label2);white-space:nowrap}
+.vis.followers{background:var(--primarySoft);color:var(--primary)}
+.vis.public{background:color-mix(in srgb,var(--success) 14%,transparent);color:var(--success)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:16px;background:var(--fill);font:500 14px var(--sf);color:var(--label)}
+.chip.on{background:var(--label);color:var(--bg)}
+.btn{height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;font:600 17px var(--sf);background:var(--primary);color:var(--onPrimary)}
+.btn.sec{background:var(--fill);color:var(--label)}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.stat .v{font-size:22px;line-height:26px}
+.stat .k{font:500 12px/16px var(--sf);color:var(--label2);margin-top:1px}
+.tile{background:var(--surface);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow)}
+.tile .v{font-size:28px;line-height:32px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--sfr);color:#fff;flex:none}
+.seg{display:flex;background:var(--fill);border-radius:9px;padding:2px;height:32px}
+.seg>div{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;font:500 13px var(--sf);border-radius:7px;color:var(--label)}
+.seg>div.on{background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.04);font-weight:600}
+.dark .seg>div.on{background:#2A3349}
+.group{background:var(--surface);border-radius:14px;margin:0 16px;overflow:hidden}
+.group .cell{display:flex;align-items:center;min-height:46px;padding:0 16px;gap:12px;position:relative;font-size:16px}
+.group .cell+.cell:before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--sep)}
+.group .cell .val{margin-left:auto;color:var(--label2);display:flex;align-items:center;gap:6px}
+.ghead{font:400 13px var(--sf);color:var(--label2);text-transform:uppercase;letter-spacing:.02em;padding:16px 32px 7px}
+.gfoot{font:400 13px/18px var(--sf);color:var(--label2);padding:7px 32px 0}
+.toggle{width:51px;height:31px;border-radius:16px;background:var(--fill);position:relative;flex:none;margin-left:auto}
+.light .toggle{background:#E3E6EC}
+.toggle:after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15)}
+.toggle.on{background:#34C759}.toggle.on:after{left:22px}
+.disclaimer{display:flex;align-items:center;gap:6px;font:500 11px/14px var(--sf);color:var(--label3)}
+.map{position:relative;overflow:hidden}
+.map svg{display:block}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.route-anim{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s cubic-bezier(.22,.8,.18,1) .3s forwards}
+@keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+.pin-anim{transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.3,1.6,.5,1) 1.7s both}
+@media (prefers-reduced-motion:reduce){.route-anim{animation:none;stroke-dashoffset:0}.pin-anim{animation:none}}
+.recap{width:360px;height:640px;position:relative;overflow:hidden;font-family:var(--sf);color:#fff;flex:none}
+.recap.sq{height:360px}
+.motion td:nth-child(3){font-family:var(--mono);font-size:12.5px;color:#0A63DB}
+.dirs .card{position:relative;overflow:hidden}
+.rec{position:absolute;top:22px;right:22px;font:700 11px var(--mono);letter-spacing:.08em;background:#0A63DB;color:#fff;border-radius:999px;padding:6px 10px}
+.tokrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.tok{border-radius:14px;padding:12px;min-width:130px;font:500 12px var(--mono)}
 
-> Local draft, Oct 13, 2026. **Replaces v0.1 "Contrail"** (dark), per founder feedback. Scope is provisional. All data in the mockups is **sample data**.
-> Visual reference: `proposal.html` (open in a browser) and `png/`. Research notes: `specs/research.md`.
+.glass{background:var(--glass);backdrop-filter:blur(22px) saturate(1.8);-webkit-backdrop-filter:blur(22px) saturate(1.8);box-shadow:var(--glassShadow),inset 0 1px 0 var(--glassEdge),inset 0 0 0 .5px var(--glassEdge);position:relative}
+.glass.strong{background:var(--glassStrong)}
+.glass:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 32%,rgba(255,255,255,0) 70%,rgba(255,255,255,.22) 100%);mix-blend-mode:soft-light}
+.dark .glass:before{background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 35%,rgba(255,255,255,0) 72%,rgba(255,255,255,.08) 100%)}
+.skywash{position:absolute;left:0;right:0;top:0;height:340px;background:radial-gradient(120% 90% at 80% -10%,var(--skyWash) 0%,rgba(0,0,0,0) 70%),linear-gradient(180deg,var(--skyWash),rgba(0,0,0,0));opacity:.95;pointer-events:none}
+.cloud{position:absolute;border-radius:50%;background:#fff;filter:blur(18px);opacity:.75;pointer-events:none}
+.scrolledge{position:absolute;left:0;right:0;top:0;height:100px;background:linear-gradient(180deg,var(--bg) 35%,rgba(0,0,0,0));z-index:20;pointer-events:none;opacity:.0}
+.btn.glassbtn{background:var(--glass);color:var(--label);backdrop-filter:blur(18px) saturate(1.8);box-shadow:var(--glassShadow),inset 0 1px 0 var(--glassEdge),inset 0 0 0 .5px var(--glassEdge)}
+.btn{border-radius:25px}
+.lens{position:absolute;inset:3px 6px;border-radius:24px}
+.vis.glassy{background:var(--glass);backdrop-filter:blur(14px) saturate(1.8);box-shadow:inset 0 0 0 .5px var(--glassEdge),0 4px 12px rgba(16,42,90,.10);color:var(--label)}
+.research td{vertical-align:top}
+.src{font:500 12px var(--mono);color:#0A63DB;word-break:break-all}
+</style><body>
+<div class="doc">
+<header class="hero">
+  <div class="cloud" style="width:420px;height:160px;right:-60px;top:30px"></div><div class="cloud" style="width:260px;height:100px;right:220px;top:-30px;opacity:.6"></div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;position:relative"><span data-logo="44"></span><span style="font:700 26px var(--sfr);letter-spacing:-.01em">flyby</span></div>
+  <h1 style="position:relative">Design direction<br>proposal · <span style="color:#0A63DB">Skyglass</span></h1>
+  <p style="position:relative">A premium flight journal for pilots: log flights, keep a beautiful private logbook, and share recaps with the people you fly with when you want to. Light-first, white and blue, built on iOS 26 Liquid Glass. iOS · SwiftUI · MapKit · Supabase.</p>
+  <div class="meta" style="position:relative"><span class="tag">v0.2.1 · Oct 13, 2026</span><span class="tag">Strava-style activity maps</span><span class="tag">Replaces v0.1 "Contrail"</span><span class="tag">Local draft · provisional scope</span><span class="tag amber">All data shown is sample data</span><span class="tag">Journal, not navigation</span></div>
+</header>
 
-## 1. Direction
-| | **A · Skyglass** (recommended) | B · Contrail (v0.1, retired) |
-|---|---|---|
-| Mood | Light-first and airy. White surfaces on a soft sky wash, one Flyby Blue, a crisp blue route with a white casing; navigation and map controls float on iOS 26 **Liquid Glass** | Dark Ink, glowing route, amber accents |
-| Why | Matches what the founder liked (light Home Journal + Pilot Profile); native to iOS 26; content stays the hero | Read as heavy and nocturnal; off-brief |
+<section>
+  <h2><small>00 · RESEARCH</small>What we learned before redesigning</h2>
+  <p class="lead">The founder's feedback on v0.1: Contrail (dark) didn't land. The light Home Journal and Pilot Profile were the closest. The ask: Apple's iOS 26 Liquid Glass look, light-first, white + blue, with Flighty, "Flightdeck" and Strava as references.</p>
+  <div class="card research" style="margin-top:24px;padding:12px 20px">
+  <table>
+    <tr><th style="width:18%">Source</th><th>Key takeaways</th><th style="width:26%">How Flyby uses it</th></tr>
+    <tr><td><b>Liquid Glass</b><br><span class="src">developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass</span><br><span class="src">WWDC25 “Meet Liquid Glass” (219), “Build a SwiftUI app with the new design” (323)</span></td>
+      <td>Liquid Glass is a dynamic material that bends and blurs what's behind it. It forms a <b>separate functional layer</b> for navigation and controls that floats above content. Tab bars float, and can minimize on scroll (<code>.tabBarMinimizeBehavior(.onScrollDown)</code>). Small glass elements flip light/dark based on what's behind them. Two variants: <b>Regular</b> (adaptive, the default) and <b>Clear</b> (needs a dimming layer over bright media). Use tint <b>sparingly</b>, only for primary actions; color belongs in the content layer. Avoid custom backgrounds on bars and avoid overusing glass on custom controls. Group custom glass in <code>GlassEffectContainer</code>. Buttons: <code>.buttonStyle(.glass)</code> / <code>.glassProminent</code>.</td>
+      <td>Glass only on the nav/control layer: tab bar, floating map controls, the stats panel floating over the map, filter chips. Content cards stay solid white for legibility. Blue tint is reserved for Record and primary buttons. Standard <code>TabView</code>, so we get system glass for free.</td></tr>
+    <tr><td><b>HIG · Tab bars</b><br><span class="src">developer.apple.com/design/human-interface-guidelines/tab-bars</span></td>
+      <td>"Use a tab bar to support navigation, not to provide actions." Keep labels short (one word), use SF Symbols (filled preferred), and keep tab tint distinct from bright content.</td>
+      <td><b>Tension:</b> Record is an action. We keep the founder's 5 tabs, but Record is a real tab whose selection is intercepted to present the Log sheet, and the previous tab stays selected (see §05).</td></tr>
+    <tr><td><b>“Flightdeck”</b> (verified)<br><span class="src">apps.apple.com/us/app/flightdeck-flight-tracker/id6759628645</span><br><span class="src">apps.apple.com/us/app/flightdeck-efb/id1592153352</span></td>
+      <td>Two different App Store apps use this name. <b>FlightDeck – Flight Tracker</b> (Attracts, tryflightdeck.com, 2026) is a live flight tracker with decoded ACARS messages, Lock Screen tracking and weather; reviews call the UI pretty but unpolished. <b>FlightDeck EFB</b> is a digital kneeboard for GA pilots: checklists, one-tap flight time logging, METAR/TAF, documents and reminders. <i>We need the founder to confirm which one he meant.</i></td>
+      <td>From the tracker: map-first layouts with floating glass panels and plain-English data. From the EFB: one-tap Out/Off/On/In time capture (Log a Flight). We don't borrow any live-tracking or EFIS features: Flyby is not for navigation.</td></tr>
+    <tr><td><b>Flighty</b></td><td>Calm, information-dense, beautiful numbers. Strong hierarchy; color used as signal; flight stats as passport-style collectibles.</td><td>Rounded tabular numerals, restrained color, year-in-review and recap moments.</td></tr>
+    <tr><td><b>Strava</b></td><td>The social loop: activity card (map + 3 stats + kudos), segments and achievements, shareable images with privacy zones. Activity maps: muted low-contrast basemap, thick saturated route with round joins and a slight shadow, start/finish dots with white borders, map-heavy feed cards and compact thumbnails.</td><td>Map hierarchy (quiet base, loud route), stats above an edge-to-edge map, feed post anatomy, "Tailwinds" kudos, achievements, privacy zones around the home field.</td></tr>
+  </table>
+  </div>
+</section>
 
-What carries over from v0.1: optional altitude-tinted routes (Flight Detail toggle), rounded tabular numerals, SF Mono codes, the privacy model, the not-for-navigation stance.
+<section>
+  <h2><small>01 · DESIGN DIRECTION</small>Skyglass replaces Contrail</h2>
+  <p class="lead">v0.2 offers two directions. Contrail (v0.1) is shown only for contrast; Skyglass is recommended and developed fully below.</p>
+  <div class="grid2 dirs" style="margin-top:24px">
+    <div class="card ink"><span class="rec">RECOMMENDED</span>
+      <div class="eyebrow" style="color:#0A63DB">Direction A · new</div>
+      <h3 style="margin-top:6px;font-size:30px">Skyglass</h3>
+      <p style="color:#33415C">Light-first and airy, like a clear day at altitude. White surfaces on a soft sky wash, one confident Flyby Blue, and the route drawn as a crisp blue line with a white casing. Navigation and map controls float on Liquid Glass, so the map and your flights always show through. The number style keeps the Flighty-like calm that the founder liked in the Journal and Profile screens.</p>
+      <div class="tokrow">
+        <div class="tok" style="background:#FFFFFF;box-shadow:inset 0 0 0 1px #DCE6F2;color:#4A5568">Cloud White<br><b style="color:#0B1220">#FFFFFF</b></div>
+        <div class="tok" style="background:#0A63DB;color:#fff">Flyby Blue<br><b>#0A63DB</b></div>
+        <div class="tok" style="background:linear-gradient(90deg,#8CCBFF,#2F80ED,#1E3A8A);color:#fff">Altitude ramp<br><b>sky → navy</b></div>
+        <div class="tok" style="background:rgba(255,255,255,.55);backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.9),0 6px 18px rgba(16,42,90,.12);color:#0B1220">Liquid Glass<br><b>Regular</b></div>
+      </div>
+    </div>
+    <div class="card" style="background:#0B1220;color:#F2F5FA">
+      <div class="eyebrow" style="color:#9DA8BA">Direction B · v0.1, retired</div>
+      <h3 style="margin-top:6px;font-size:30px">Contrail</h3>
+      <p style="color:#A9B4C6">Dark "Ink" night skies with a glowing route line tinted by altitude, and amber for celebrations. Dramatic for recaps, but it read as heavy and nocturnal, and it didn't match the founder's light, Apple-native taste. Its ideas live on: altitude-tinted routes, rounded numerals, and the privacy model.</p>
+      <div class="tokrow">
+        <div class="tok" style="background:#070B14;box-shadow:inset 0 0 0 1px #222a3a;color:#9DA8BA">Ink<br><b style="color:#fff">#070B14</b></div>
+        <div class="tok" style="background:#5AC8FA;color:#04101F">Route Cyan<br><b>#5AC8FA</b></div>
+        <div class="tok" style="background:#F5A524;color:#0B1220">Beacon<br><b>#F5A524</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:24px">
+    <h3 style="margin-top:0">Why Skyglass</h3>
+    <ul class="clean">
+      <li><b>It matches what the founder responded to:</b> the light Journal and Profile screens. Their layouts carry over and gain glass navigation.</li>
+      <li><b>It's native to iOS 26.</b> Standard <code>TabView</code>, toolbars, sheets and glass button styles give us real Liquid Glass (refraction, adaptive light/dark flipping, scroll-edge effects) with little custom code. It will age with the platform rather than against it.</li>
+      <li><b>Content stays the hero.</b> Glass is limited to the navigation/control layer, following Apple's guidance, so flights, maps and photos supply the color, and text sits on solid white wherever it's dense.</li>
+      <li><b>Dark Mode is still first-class:</b> every token has a dark value, and glass adapts automatically (see the dark Home mockup).</li>
+    </ul>
+  </div>
+</section>
 
-## 2. Liquid Glass usage (from Apple's guidance)
-- Glass is a **functional layer for navigation and controls** that floats above content. Content itself (flight cards, lists, forms) stays on solid `surface`.
-- Use system components so glass is real: `TabView` (floating glass tab bar, `.tabBarMinimizeBehavior(.onScrollDown)`), toolbars, sheets, `.buttonStyle(.glass)` and `.glassProminent`. **No custom backgrounds on bars.**
-- Custom glass only for: the floating stats sheet/panel over the Flight Detail map, map control clusters, and filter chips (`.glassEffect(.regular, in:)`, grouped in `GlassEffectContainer`, morphing via `glassEffectID`). Add `.interactive()` only to tappable glass.
-- **Tint sparingly:** Flyby Blue only on Record and primary buttons.
-- Use the Regular variant. Clear glass only over media, with a dimming layer, and never for text in recaps.
-- Accessibility: Reduce Transparency → glass becomes solid `surface`; Increase Contrast → 1 pt `sep` border on glass. Text on glass uses `label`/`label2` only.
+<section>
+  <h2><small>02 · COLOR</small>Skyglass palette</h2>
+  <p class="lead">Light is primary; every token also has a Dark value and an Increased Contrast variant in the asset catalog. Views use semantic tokens only. Ratios are measured against the token's intended background.</p>
+  <div class="card" style="margin-top:24px;padding:12px 20px">
+  <table>
+    <tr><th>Token</th><th>Role</th><th>Light (primary)</th><th>Dark</th><th>Contrast (L / D)</th></tr>
+    <tr><td><code>bg</code> · Cloud</td><td>App background</td><td><span class="sw"><i style="background:#F5F8FC"></i>#F5F8FC</span></td><td><span class="sw"><i style="background:#0A0F1A"></i>#0A0F1A</span></td><td>—</td></tr>
+    <tr><td><code>skyWash</code></td><td>Top-of-screen gradient behind glass</td><td><span class="sw"><i style="background:#DCEBFF"></i>#DCEBFF → bg</span></td><td><span class="sw"><i style="background:#12213C"></i>#12213C → bg</span></td><td>Decorative</td></tr>
+    <tr><td><code>surface</code> · Cloud White</td><td>Content cards, sheets</td><td><span class="sw"><i style="background:#FFFFFF"></i>#FFFFFF</span></td><td><span class="sw"><i style="background:#141B28"></i>#141B28</span></td><td>—</td></tr>
+    <tr><td><code>surface2</code></td><td>Grouped fills, inputs</td><td><span class="sw"><i style="background:#EEF3F9"></i>#EEF3F9</span></td><td><span class="sw"><i style="background:#1C2536"></i>#1C2536</span></td><td>—</td></tr>
+    <tr><td><code>glass.regular</code></td><td>Tab bar, floating controls, map panels</td><td><span class="sw"><i style="background:rgba(255,255,255,.58)"></i>white 58% + blur 22 + sat 180%</span></td><td><span class="sw"><i style="background:rgba(34,44,64,.52)"></i>#222C40 52%</span></td><td>System material in-app; text on it is ≥ 4.5:1 thanks to its adaptive tint</td></tr>
+    <tr><td><code>label</code></td><td>Primary text</td><td><span class="sw"><i style="background:#0B1220"></i>#0B1220</span></td><td><span class="sw"><i style="background:#F2F5FA"></i>#F2F5FA</span></td><td><span class="pass">17.6 AAA</span> / <span class="pass">17.5 AAA</span></td></tr>
+    <tr><td><code>label2</code></td><td>Secondary text, units</td><td><span class="sw"><i style="background:#4A5568"></i>#4A5568</span></td><td><span class="sw"><i style="background:#A3AEC2"></i>#A3AEC2</span></td><td><span class="pass">7.1 AAA</span> / <span class="pass">8.6 AAA</span></td></tr>
+    <tr><td><code>label3</code></td><td>Tertiary, disclaimers</td><td><span class="sw"><i style="background:#647089"></i>#647089</span></td><td><span class="sw"><i style="background:#7D89A0"></i>#7D89A0</span></td><td><span class="pass lg">5.0 AA</span> / <span class="pass lg">4.9 AA</span></td></tr>
+    <tr><td><code>primary</code> · Flyby Blue</td><td>Actions, links, selection, Record tint</td><td><span class="sw"><i style="background:#0A63DB"></i>#0A63DB</span></td><td><span class="sw"><i style="background:#4DA3FF"></i>#4DA3FF</span></td><td><span class="pass lg">5.5 AA</span> / <span class="pass lg">6.6 AA</span>; on-primary <span class="pass lg">5.5</span> / <span class="pass">7.2</span></td></tr>
+    <tr><td><code>sky</code></td><td>Decorative fills, illustration, sparkle</td><td><span class="sw"><i style="background:#4BA3FF"></i>#4BA3FF</span></td><td><span class="sw"><i style="background:#4DA3FF"></i>#4DA3FF</span></td><td>Not for text on white (system blue #007AFF is only 4.0)</td></tr>
+    <tr><td><code>route</code> + <code>routeCasing</code></td><td>Flight track line with casing</td><td><span class="sw"><i style="background:#0A63DB"></i>#0A63DB + white casing</span></td><td><span class="sw"><i style="background:#4DA3FF"></i>#4DA3FF + white casing</span></td><td>vs map land <span class="pass lg">4.8</span> / <span class="pass lg">6.4</span> ≥ 3:1 (non-text, 1.4.11)</td></tr>
+    <tr><td><code>routeEnd</code></td><td>Arrival marker core</td><td><span class="sw"><i style="background:#1E3A8A"></i>#1E3A8A</span></td><td><span class="sw"><i style="background:#A5C8FF"></i>#A5C8FF</span></td><td>9.1 vs land</td></tr>
+    <tr><td><code>mapLand / mapWater / mapRoad</code></td><td>Muted activity basemap (mockups; MapKit .muted in app)</td><td><span class="sw"><i style="background:#EEF0F2"></i><i style="background:#D4DFE8"></i><i style="background:#FFFFFF"></i></span></td><td><span class="sw"><i style="background:#171D27"></i><i style="background:#0C141F"></i><i style="background:#2E343D"></i></span></td><td>Deliberately low contrast so the route leads</td></tr>
+    <tr><td><code>altLow / altMid / altHigh</code></td><td>Altitude ramp (track + chart)</td><td><span class="sw"><i style="background:#8CCBFF"></i><i style="background:#2F80ED"></i><i style="background:#1E3A8A"></i></span></td><td><span class="sw"><i style="background:#9BD3FF"></i><i style="background:#4DA3FF"></i><i style="background:#A5B4FC"></i></span></td><td>Decorative; values always also shown as text</td></tr>
+    <tr><td><code>accent</code> · Gold</td><td>Achievements only</td><td><span class="sw"><i style="background:#F2A93B"></i>#F2A93B fill</span> <span class="sw"><i style="background:#9A5B00"></i>#9A5B00 text</span></td><td><span class="sw"><i style="background:#F2A93B"></i>#F2A93B</span></td><td>text <span class="pass lg">5.4</span> / <span class="pass">9+</span></td></tr>
+    <tr><td><code>success / warning / danger</code></td><td>States</td><td><span class="sw"><i style="background:#137A3A"></i><i style="background:#9A5B00"></i><i style="background:#C2261F"></i></span></td><td><span class="sw"><i style="background:#4ADE80"></i><i style="background:#FBBF24"></i><i style="background:#FF6B6B"></i></span></td><td><span class="pass lg">5.4 / 5.4 / 5.9</span> · dark <span class="pass">10+</span></td></tr>
+    <tr><td><code>visibility.*</code></td><td>Private / Followers / Public</td><td colspan="2">label2 + lock · primary + person.2 · success + globe, each on a tinted capsule</td><td>Icon + text, never color alone</td></tr>
+  </table>
+  </div>
+  <p class="lead" style="margin-top:14px;font-size:14px">Glass legibility rules: text on glass uses <code>label</code>/<code>label2</code> only (never <code>label3</code>). Over bright or busy media, use the Regular variant (never Clear without a dimming layer). Under <i>Reduce Transparency</i>, glass becomes solid <code>surface</code>, and with <i>Increase Contrast</i> it gains a 1 pt <code>sep</code> border. Recap text always sits on a solid or 74%+ glass panel at ≥ 4.5:1.</p>
+</section>
+<section>
+  <h2><small>03 · TYPOGRAPHY</small>SF Pro for words, SF Pro Rounded for numbers, SF Mono for codes</h2>
+  <p class="lead">Every style maps to an iOS text style, so Dynamic Type works for free (sizes below are the default Large size). Flight stats use SF Pro Rounded Semibold with <code>.monospacedDigit()</code> so numbers don't jitter while they count up. ICAO codes, tail numbers and coordinates use SF Mono as the "instrument" voice.</p>
+  <div class="card" style="margin-top:24px;padding:12px 20px">
+  <table>
+    <tr><th>Flyby token</th><th>iOS text style</th><th>Font · weight</th><th>Size / leading</th><th>Specimen</th></tr>
+    <tr><td><code>statHero</code></td><td>custom, relativeTo .largeTitle</td><td>SF Pro Rounded · Semibold · tabular</td><td>48 / 52</td><td><span class="num" style="font-size:44px">11,500<span class="unit" style="color:#4A5568">ft</span></span></td></tr>
+    <tr><td><code>largeTitle</code></td><td>.largeTitle</td><td>SF Pro Display · Bold</td><td>34 / 41</td><td style="font:700 30px var(--sfd)">Journal</td></tr>
+    <tr><td><code>title2</code></td><td>.title2</td><td>SF Pro Display · Bold</td><td>22 / 28</td><td style="font:700 22px var(--sfd)">Sunset run to Tahoe</td></tr>
+    <tr><td><code>statValue</code></td><td>.title2, rounded</td><td>SF Pro Rounded · Semibold · tabular</td><td>22 / 26</td><td><span class="num" style="font-size:22px">0:58 · 135<span class="unit" style="color:#4A5568">nm</span></span></td></tr>
+    <tr><td><code>routeCode</code></td><td>.title3, monospaced</td><td>SF Mono · Semibold</td><td>20 / 25</td><td style="font:600 20px var(--mono)">KSQL → KTVL</td></tr>
+    <tr><td><code>headline</code></td><td>.headline</td><td>SF Pro Text · Semibold</td><td>17 / 22</td><td style="font:600 17px var(--sf)">Alex Rivera</td></tr>
+    <tr><td><code>body</code></td><td>.body</td><td>SF Pro Text · Regular</td><td>17 / 22</td><td style="font:400 17px var(--sf)">Smooth ride over Echo Summit.</td></tr>
+    <tr><td><code>subhead</code></td><td>.subheadline</td><td>SF Pro Text · Regular</td><td>15 / 20</td><td style="font:400 15px var(--sf);color:#4A5568">Cirrus SR22 · 2 h ago</td></tr>
+    <tr><td><code>statLabel</code></td><td>.caption1</td><td>SF Pro Text · Medium</td><td>12 / 16</td><td style="font:500 12px var(--sf);color:#4A5568">Flight time</td></tr>
+    <tr><td><code>eyebrow</code></td><td>.caption2, uppercase, +6% tracking</td><td>SF Pro Text · Semibold</td><td>11 / 13</td><td style="font:600 11px var(--sf);letter-spacing:.06em;color:#4A5568">MAX ALTITUDE</td></tr>
+    <tr><td><code>tail</code> / <code>coord</code></td><td>.footnote, monospaced</td><td>SF Mono · Medium</td><td>13 / 18</td><td style="font:500 13px var(--mono)">N•••CD · 38.894°N</td></tr>
+  </table>
+  </div>
+  <ul class="clean" style="margin-top:14px">
+    <li>Units render at 50% of the value size in <code>label2</code> SF Pro (not rounded), so the numbers stay dominant and easy to scan.</li>
+    <li>Durations are always <code>h:mm</code> (0:58); logbook totals use decimal hours (412.6 h), the way pilots log them. Distance is in nm, altitude in ft MSL, speed in kt ground speed. Metric is a user setting.</li>
+    <li>At accessibility sizes (AX1–AX5), stat grids reflow from 3 → 2 → 1 columns with <code>ViewThatFits</code>. Numbers never truncate.</li>
+    <li>The mockups render with Inter / Nunito / Geist Mono as stand-ins where SF fonts aren't installed. The app uses system SF fonts.</li>
+  </ul>
+</section>
 
-## 3. Color tokens (Light primary · Dark variant)
-| Token | Role | Light | Dark | Contrast L / D |
-|---|---|---|---|---|
-| `bg` (Cloud) | App background | `#F5F8FC` | `#0A0F1A` | — |
-| `skyWash` | Top-of-screen gradient behind glass | `#DCEBFF → bg` | `#12213C → bg` | Decorative |
-| `surface` (Cloud White) | Content cards, sheets | `#FFFFFF` | `#141B28` | — |
-| `surface2` | Grouped fills, inputs | `#EEF3F9` | `#1C2536` | — |
-| `glass.regular` | Tab bar, floating controls, map panels | system; mock = white 58% + blur 22 + sat 180% + 1 pt highlight | system; mock = `#222C40` 52% | Text on it ≥ 4.5:1 |
-| `label` | Primary text | `#0B1220` | `#F2F5FA` | 17.6 / 17.5 |
-| `label2` | Secondary text, units | `#4A5568` | `#A3AEC2` | 7.1 / 8.6 |
-| `label3` | Tertiary, disclaimers (not on glass) | `#647089` | `#7D89A0` | 4.7 / 4.9 |
-| `primary` (Flyby Blue) | Actions, links, selection, Record | `#0A63DB` | `#4DA3FF` | 5.5 / 6.6; on-primary 5.5 / 7.2 |
-| `onPrimary` | Text on primary | `#FFFFFF` | `#03112A` | — |
-| `sky` | Decorative fills (not text on white; `#007AFF` would be only 4.0) | `#4BA3FF` | `#4DA3FF` | — |
-| `route` + `routeCasing` | Track line over a white casing (Strava-style activity map) | `#0A63DB` + white | `#4DA3FF` + white | 4.8 / 6.4 vs land, 4.1 vs water (non-text ≥ 3:1) |
-| `routeEnd` | Arrival dot core | `#1E3A8A` | `#A5C8FF` | 9.1 vs land |
-| `altLow / altMid / altHigh` | Altitude ramp, track + chart | `#8CCBFF / #2F80ED / #1E3A8A` | `#9BD3FF / #4DA3FF / #A5B4FC` | Decorative |
-| `gold` | Achievements; ground-speed line in charts | `#F2A93B` fill, `#9A5B00` text | `#F2A93B` | 5.4 text |
-| `success / warning / danger` | States | `#137A3A / #9A5B00 / #C2261F` | `#4ADE80 / #FBBF24 / #FF6B6B` | 5.4 / 5.4 / 5.9 |
-| `mapLand / mapWater` | Muted activity basemap (mockups; MapKit `.muted` in app) | `#EEF0F2 / #D4DFE8` | `#171D27 / #0C141F` | Low contrast on purpose |
-| `mapRoad / mapRoadCasing / mapHill / mapContour` | Basemap detail (mockups only) | white / ink 10% / ink 3.5% / ink 7% | white 10% / black 25% / white 2.5% / white 5% | — |
+<section>
+  <h2><small>04 · TOKENS &amp; COMPONENTS</small>Spacing, radius, glass &amp; elevation</h2>
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h3 style="margin-top:0">Spacing (4-pt grid) &amp; radius</h3>
+      <table><tr><th>Token</th><th>Value</th><th>Use</th></tr>
+        <tr><td><code>space.xxs / xs / sm</code></td><td>4 / 8 / 12</td><td>Pill gaps, tile insides, card rows</td></tr>
+        <tr><td><code>space.md</code></td><td>16</td><td>Screen margins, card padding</td></tr>
+        <tr><td><code>space.lg / xl / xxl</code></td><td>24 / 32 / 48</td><td>Sections, hero, empty states</td></tr>
+        <tr><td><code>radius.chip</code></td><td>capsule</td><td>Chips, pills, glass buttons (iOS 26 favors capsules)</td></tr>
+        <tr><td><code>radius.sm / md</code></td><td>10 / 14</td><td>Thumbnails / grouped lists, inputs</td></tr>
+        <tr><td><code>radius.tile / card</code></td><td>18 / 24</td><td>Stat tiles / flight cards (concentric with 55 pt display corners)</td></tr>
+        <tr><td><code>radius.panel</code></td><td>30</td><td>Floating glass panels over maps, sheets</td></tr>
+        <tr><td><code>tabbar</code></td><td>62 pt capsule, 14 pt side inset, 24 pt from bottom</td><td>Floating glass tab bar</td></tr></table></div>
+    <div class="card"><h3 style="margin-top:0">Glass &amp; elevation</h3>
+      <table><tr><th>Token</th><th>SwiftUI</th><th>Use</th></tr>
+        <tr><td><code>glass.nav</code></td><td>system (TabView, toolbar)</td><td>Tab bar, nav bar buttons: no custom background</td></tr>
+        <tr><td><code>glass.control</code></td><td><code>.buttonStyle(.glass)</code></td><td>Floating back/share/more, map controls</td></tr>
+        <tr><td><code>glass.primary</code></td><td><code>.buttonStyle(.glassProminent)</code> + <code>.tint(.flybyBlue)</code></td><td>Save Flight, Share to Stories</td></tr>
+        <tr><td><code>glass.panel</code></td><td><code>.glassEffect(.regular, in: .rect(cornerRadius: 30))</code></td><td>Stats panel floating over the Flight Detail map</td></tr>
+        <tr><td><code>glass.group</code></td><td><code>GlassEffectContainer</code> + <code>glassEffectID</code></td><td>Chip rows and control clusters that morph</td></tr>
+        <tr><td><code>elev.card</code></td><td>y1 b2 5% + y6 b20 6% (navy)</td><td>Solid content cards (light)</td></tr>
+        <tr><td><code>elev.glass</code></td><td>y10 b30 13% navy + inner 1 pt highlight</td><td>Mockup approximation of system glass</td></tr></table>
+      <p style="font-size:13px;margin-top:10px;color:#4A5568">The mockups approximate glass with blur + saturation + edge highlight; the system renders the real refraction. Min hit target 44×44 pt.</p></div>
+  </div>
+  <h3>Core components</h3>
+  <div class="stage" id="components">
+    <div class="light" style="background:var(--bg);border-radius:28px;padding:24px;width:520px;display:flex;flex-direction:column;gap:16px;color:var(--label);position:relative;overflow:hidden">
+      <div class="eyebrow">Flight card · solid content</div>
+      <div data-flightcard="tahoe" data-vis="private"></div>
+      <div class="eyebrow">Compact flight row (Home, Flights)</div>
+      <div data-flightcard="monterey" data-vis="followers" data-compact="1"></div>
+      <div class="eyebrow">Stat tiles</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div class="tile"><div class="eyebrow">Flight time</div><div class="num v">0:58</div></div>
+        <div class="tile"><div class="eyebrow">Distance</div><div class="num v">135<span class="unit">nm</span></div></div>
+        <div class="tile"><div class="eyebrow">Max alt</div><div class="num v">11.5<span class="unit">k ft</span></div></div>
+      </div>
+      <div class="eyebrow">Chips &amp; visibility pills</div>
+      <div class="row gap8" style="flex-wrap:wrap"><span class="chip on">All</span><span class="chip">Cross-country</span><span class="chip">Night</span><span class="chip"><span data-i="mountain" data-c="s"></span>Mountain</span></div>
+      <div class="row gap8"><span class="vis"><span data-i="lock" data-c="xs"></span>Private</span><span class="vis followers"><span data-i="people" data-c="xs"></span>Followers</span><span class="vis public"><span data-i="globe" data-c="xs"></span>Public</span><span class="vis" style="background:#FFF3DC;color:#9A5B00"><span data-i="medal" data-c="xs"></span>New PR</span></div>
+      <div class="eyebrow">Visibility picker (Log a Flight)</div>
+      <div data-vispicker="private"></div>
+    </div>
+    <div class="light" style="border-radius:28px;width:520px;position:relative;overflow:hidden;color:var(--label);min-height:600px">
+      <div style="position:absolute;inset:0" data-map="tahoe" data-w="520" data-h="760" data-labels="1"></div>
+      <div style="position:relative;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div class="eyebrow" style="color:#0B1220">Glass layer · over the map</div>
+        <div class="row gap10"><div class="iconbtn glass"><span data-i="chevL"></span></div><div class="iconbtn glass"><span data-i="share"></span></div><div class="iconbtn glass"><span data-i="more"></span></div><span class="vis glassy" style="height:30px;padding:0 12px;border-radius:15px"><span data-i="people" data-c="xs"></span>Followers</span></div>
+        <div class="row gap10"><div class="btn" style="flex:1"><span data-i="check"></span>Save Flight</div><div class="btn glassbtn" style="flex:1"><span data-i="share"></span>Share Recap</div></div>
+        <div class="glass" style="border-radius:30px;padding:16px">
+          <div class="eyebrow" style="color:var(--label2)">Glass panel</div>
+          <div class="stats3" style="margin-top:6px"><div class="stat"><div class="num v">0:58</div><div class="k">Flight</div></div><div class="stat"><div class="num v">135<span class="unit">nm</span></div><div class="k">Distance</div></div><div class="stat"><div class="num v">11,500<span class="unit">ft</span></div><div class="k">Max alt</div></div></div>
+        </div>
+        <div style="height:150px"></div>
+        <div class="eyebrow" style="color:#0B1220">Floating glass tab bar (5 tabs)</div>
+        <div style="position:relative;height:90px"><div data-tabbar="home"></div></div>
+        <div class="disclaimer" style="color:#33415C"><span data-i="info" data-c="xs"></span>Recorded track for your journal · Not for navigation</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-Visibility is always icon + label: Private (`lock.fill`, label2) · Followers (`person.2.fill`, primary) · Public (`globe.americas.fill`, success).
+<section>
+  <h2><small>05 · NAVIGATION</small>Five tabs on a floating glass bar, with Record at the center</h2>
+  <p class="lead">Set at the founder kickoff and matching <code>MVP-PLAN.md</code> D2: <b>Home · Explore · Record · Flights · Profile</b>. Built on the standard iOS 26 <code>TabView</code>, so the bar is real Liquid Glass, floats above content, and minimizes on scroll.</p>
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><table>
+      <tr><th>Tab</th><th>SF Symbol</th><th>Purpose</th><th>A11y id</th></tr>
+      <tr><td><b>Home</b></td><td><code>house.fill</code></td><td>Before social: your journal (year summary + recent flights). After social: a Following ⇄ You segmented control.</td><td><code>tab.home</code></td></tr>
+      <tr><td><b>Explore</b></td><td><code>globe.americas.fill</code></td><td>Airports you've visited or want to visit, and airport pages. For discovery, not flight planning.</td><td><code>tab.explore</code></td></tr>
+      <tr><td><b>Record</b></td><td><code>plus.circle.fill</code>, tinted Flyby Blue</td><td>Center tab. Opens the Log a Flight sheet (manual entry or GPX/KML import). It never records live position.</td><td><code>tab.record</code></td></tr>
+      <tr><td><b>Flights</b></td><td><code>book.closed.fill</code></td><td>Your logbook: the full, searchable list of your flights (filters such as Cross-country, Night, Aircraft), with totals in the header. Rows open Flight Detail.</td><td><code>tab.flights</code></td></tr>
+      <tr><td><b>Profile</b></td><td><code>person.crop.circle.fill</code></td><td>Totals, logbook stats, aircraft, achievements, settings and privacy (home airport).</td><td><code>tab.profile</code></td></tr>
+    </table></div>
+    <div class="card"><h3 style="margin-top:0">Rationale &amp; rules</h3><ul class="clean">
+      <li>With five tabs, Record is the true center and the only tinted item, which follows Apple's guidance to reserve tint for the primary action.</li>
+      <li><b>HIG note:</b> tab bars are meant for navigation, not actions. Record is implemented as a regular <code>Tab</code> whose selection is intercepted (the selection binding reverts) to present the Log a Flight sheet. The previous tab stays selected, so the bar never shows an empty Record screen.</li>
+      <li><code>.tabBarMinimizeBehavior(.onScrollDown)</code> on Home, Flights and Explore lets content (maps, flights) breathe; the bar returns when you scroll up.</li>
+      <li><b>Home is for highlights, Flights is the archive.</b> Home shows the year and the latest flights; "All flights" opens the Flights tab. Achievements live in Profile.</li>
+      <li>Labels are always shown. At accessibility sizes, the system's large-content viewer shows the label on long-press.</li>
+      <li>No navigation-style UI anywhere: no moving map, no ownship, no ETA or guidance. Flyby is a <b>journal</b>.</li>
+    </ul></div>
+  </div>
+</section>
+<section>
+  <h2><small>06 · SCREEN CONCEPTS</small>Core screens <span class="sample">Sample data</span></h2>
+  <p class="lead">393 × 852 pt (iPhone 15/16 Pro). Light is the primary appearance; a Dark Home is included to show the variant. Every screen ships in both.</p>
+  <div class="stage" style="margin-top:24px">
 
-## 4. Typography
-Unchanged from v0.1. **SF Pro** for words, **SF Pro Rounded Semibold + `.monospacedDigit()`** for stats, **SF Mono** for ICAO codes, tail numbers and coordinates. Everything maps to iOS text styles (Dynamic Type to AX5; stat grids reflow 3 → 2 → 1 columns).
+  <figure><div class="device"><div class="phone light" id="m-home-journal">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><span class="footnote l2">Tuesday, Oct 13</span><div class="iconbtn"><span data-i="search"></span></div></div>
+      <div class="largetitle">Home</div>
+      <div style="padding:4px 16px 0"><div class="fcard" style="padding:16px">
+        <div class="row sb"><div class="eyebrow">2026 so far</div><span class="vis"><span data-i="lock" data-c="xs"></span>Only you</span></div>
+        <div class="row" style="margin-top:10px;gap:18px">
+          <div data-ringp="0.624" style="width:84px;height:84px;flex:none"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;flex:1">
+            <div class="stat"><div class="num v">62.4<span class="unit">h</span></div><div class="k">of 100 h goal</div></div>
+            <div class="stat"><div class="num v">38</div><div class="k">Flights</div></div>
+            <div class="stat"><div class="num v">21</div><div class="k">Airports</div></div>
+            <div class="stat"><div class="num v">4,812<span class="unit">nm</span></div><div class="k">Distance</div></div>
+          </div></div></div></div>
+      <div class="row sb" style="padding:22px 16px 10px"><div style="font:700 20px var(--sfd)">Recent flights</div><span class="subhead" style="color:var(--primary)">All flights</span></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+        <div data-flightcard="tahoe" data-vis="followers" data-compact="1"></div>
+        <div data-flightcard="monterey" data-vis="private" data-compact="1"></div>
+        <div data-flightcard="patternme" data-vis="private" data-compact="1"></div>
+      </div>
+      <div style="margin:12px 16px 0;padding:12px 14px;border-radius:14px;border:1px dashed var(--sep);display:flex;gap:10px;align-items:center" class="footnote l2"><span data-i="people" style="color:var(--primary)"></span>Following pilots is coming soon. Your flights stay private unless you choose otherwise.</div>
+    </div>
+    <div data-tabbar="home"></div><div class="homeind"></div>
+  </div></div><figcaption><b>Home · Journal mode (pre-social)</b>Your year + recent flights; every card shows its visibility</figcaption></figure>
 
-| Token | iOS style | Font / weight | Size / leading (Large) |
-|---|---|---|---|
-| `statHero` | custom, `relativeTo: .largeTitle` | SF Pro Rounded Semibold, tabular | 48 / 52 |
-| `largeTitle` | `.largeTitle` | SF Pro Display Bold | 34 / 41 |
-| `title2` | `.title2` | SF Pro Display Bold | 22 / 28 |
-| `statValue` | `.title2` rounded | SF Pro Rounded Semibold, tabular | 22 / 26 |
-| `routeCode` | `.title3` monospaced | SF Mono Semibold | 20 / 25 |
-| `headline` / `body` | `.headline` / `.body` | SF Pro Text Semibold / Regular | 17 / 22 |
-| `subhead` | `.subheadline` | SF Pro Text Regular | 15 / 20 |
-| `statLabel` | `.caption` | SF Pro Text Medium | 12 / 16 |
-| `eyebrow` | `.caption2`, uppercase, tracking 0.6 | SF Pro Text Semibold | 11 / 13 |
-| `tail` / `coord` | `.footnote` monospaced | SF Mono Medium | 13 / 18 |
+  <figure><div class="device"><div class="phone light" id="m-home-feed">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><span></span><div class="iconbtn"><span data-i="bell"></span></div></div>
+      <div class="largetitle" style="padding-bottom:10px">Home</div>
+      <div style="padding:0 16px 14px"><div class="seg"><div class="on">Following</div><div>You</div></div></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:14px">
+        <div data-post="tahoe"></div>
+        <div data-post="pattern"></div>
+      </div>
+    </div>
+    <div data-tabbar="home"></div><div class="homeind"></div>
+  </div></div><figcaption><b>Home · Social feed (later)</b>Following ⇄ You; reactions are "Tailwinds"; home field trimmed</figcaption></figure>
 
-Units render at about 50% of the value size in `label2`. Formats: `h:mm` durations, decimal logbook hours, nm, ft MSL, kt GS (metric is a user setting).
-
-## 5. Spacing, radius, elevation
-- **Spacing:** `4 · 8 · 12 · 16 (margin) · 24 · 32 · 48`
-- **Radius (`.continuous`, concentric with the display):** chip/button capsule · sm 10 · md 14 · tile 18 · card 24 · panel 30 · inset sheet ≈ 44 (system)
-- **Tab bar:** system floating glass capsule. Mockups show it 62 pt tall, 14 pt side inset, 24 pt from the bottom.
-- **Elevation:** `elev.card` = y1 b2 5% + y6 b20 6% navy (solid cards); `elev.glass` = y10 b30 13% navy + inner 1 pt highlight (mock approximation of system glass).
-- Min hit target 44×44 pt.
-
-## 6. Core components
-| Component | Layer | Notes |
-|---|---|---|
-| FlightCard / FlightRow | Content (solid) | Activity-map snapshot (trimmed for non-owners); feed posts put 3 stats above an edge-to-edge 212 pt map; rows use a 72 pt thumbnail (3.2 pt route). SF Mono route, VisibilityPill, date · aircraft |
-| StatTile | Content (solid; 70% white when inside a glass sheet) | eyebrow + statValue + unit |
-| VisibilityPill / VisibilityPicker | Content | Picker = 3 radio cards, Private preselected ("Default") |
-| Glass controls | Glass | 40 pt circular `.buttonStyle(.glass)`: back, share, more, close. Clustered share/more = one capsule |
-| Primary button | Glass prominent | Capsule 50 pt, Flyby Blue (`.glassProminent` + tint) |
-| Glass panel / sheet | Glass | Flight Detail stats + chart sheet floating over the map (medium detent) |
-| Chips | Glass group | Filters, recap template picker; morph in `GlassEffectContainer` |
-| TabBar | System glass | 5 tabs, see §7 |
-| Disclaimer | Content | `info.circle` + caption2: "Recorded track for your journal · Not for navigation" |
-
-## 7. Navigation (founder kickoff; matches MVP-PLAN.md D2)
-**Home · Explore · Record · Flights · Profile**
-
-| Tab | SF Symbol | Purpose | A11y id |
-|---|---|---|---|
-| Home | `house.fill` | Pre-social: journal (year summary + recent flights). Post-social: Following ⇄ You | `tab.home` |
-| Explore | `globe.americas.fill` | Airports visited/wishlist, airport pages; discovery, not planning | `tab.explore` |
-| Record | `plus.circle.fill`, tinted Flyby Blue | **Center tab.** Opens the Log a Flight sheet; never records live position | `tab.record` |
-| Flights | `book.closed.fill` | The user's logbook list: search, filters, totals, grouped by month | `tab.flights` |
-| Profile | `person.crop.circle.fill` | Totals, logbook stats, aircraft, achievements, settings & privacy | `tab.profile` |
-
-HIG note: tab bars are for navigation, not actions. Record is a real `Tab` whose selection is intercepted to present the sheet; the previous tab stays selected.
-
-## 8. Principles
-1. **Journal, not navigation.** No live position, ownship, guidance, ETA or planning UI. A small "Not for navigation" line on Flight Detail, the Log save footer and every recap.
-2. **Private by default.** Model and UI default to Private; visibility shows on every card.
-3. **Privacy before pixels.** Home airport hiding + track trimming are applied before any shared view or recap renders (on by default in Share).
-4. **Glass for chrome, white for content.** Color comes from content; tint only the primary action.
-5. **Accessible by construction.** AA in both modes, Dynamic Type to AX5, Reduce Motion / Transparency / Increase Contrast.
+  <figure><div class="device"><div class="phone light" id="m-flight-detail">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:470px" data-map="tahoe" data-w="393" data-h="470" data-ring="1" data-labels="1" data-anim="1" data-grid="1"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:110px;background:linear-gradient(180deg,rgba(245,248,252,.85),rgba(245,248,252,0));z-index:4"></div>
+    <div style="position:absolute;top:56px;left:16px;right:16px;display:flex;justify-content:space-between;z-index:5">
+      <div class="iconbtn glass"><span data-i="chevL"></span></div>
+      <div class="glass row" style="border-radius:20px;height:40px;padding:0 4px"><div style="width:40px;display:grid;place-items:center"><span data-i="share"></span></div><div style="width:1px;height:20px;background:var(--sep)"></div><div style="width:40px;display:grid;place-items:center"><span data-i="more"></span></div></div>
+    </div>
+    <div style="position:absolute;top:360px;left:16px;z-index:5;display:flex;gap:6px">
+      <span class="vis glassy" style="height:28px;padding:0 10px;border-radius:14px;color:var(--primary)"><span data-i="people" data-c="xs"></span>Followers</span>
+      <span class="vis glassy" style="height:28px;padding:0 10px;border-radius:14px"><span data-i="shield" data-c="xs"></span>Home zone hidden when shared</span>
+    </div>
+    <div class="glass strong" style="position:absolute;top:400px;left:8px;right:8px;bottom:8px;border-radius:44px;padding:10px 16px 0;z-index:6">
+      <div style="width:36px;height:5px;border-radius:3px;background:var(--sep);margin:0 auto 10px"></div>
+      <div class="row sb"><div style="font:600 24px var(--mono);letter-spacing:-.01em">KSQL<span style="color:var(--label3);margin:0 8px">→</span>KTVL</div><span class="footnote l2">Sat, Sep 19</span></div>
+      <div class="subhead l2" style="margin-top:2px">San Carlos → Lake Tahoe · SR22 · <span class="mono">N482CD</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Flight</div><div class="num" style="font-size:22px;line-height:27px">0:58</div></div>
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Distance</div><div class="num" style="font-size:22px;line-height:27px">135<span class="unit">nm</span></div></div>
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Max alt</div><div class="num" style="font-size:22px;line-height:27px">11,500<span class="unit">ft</span></div></div>
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Block</div><div class="num" style="font-size:22px;line-height:27px">1:12</div></div>
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Avg GS</div><div class="num" style="font-size:22px;line-height:27px">140<span class="unit">kt</span></div></div>
+        <div class="tile" style="padding:8px 12px"><div class="eyebrow">Max GS</div><div class="num" style="font-size:22px;line-height:27px">188<span class="unit">kt</span></div></div>
+      </div>
+      <div class="fcard" style="margin-top:10px;padding:10px 12px 6px">
+        <div class="row sb" style="margin-bottom:2px"><div class="eyebrow">Profile</div><div class="row gap10 caption1 l2" style="font-size:11px"><span class="row gap4"><i style="width:10px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--alt0),var(--alt2))"></i>Altitude</span><span class="row gap4"><i style="width:10px;height:3px;border-radius:2px;background:var(--beacon)"></i>Ground speed</span><span class="row gap4"><i style="width:10px;height:7px;border-radius:2px;background:var(--terrain)"></i>Terrain</span></div></div>
+        <div data-chart data-w="329" data-h="112" data-scrub="0.55"></div>
+      </div>
+      <div class="disclaimer" style="justify-content:center;margin-top:8px;color:var(--label2)"><span data-i="info" data-c="xs"></span>Recorded track for your journal · Not for navigation</div>
+    </div>
+    <div class="homeind" style="z-index:70"></div>
+  </div></div><figcaption><b>Flight detail (owner view)</b>Full-bleed map with a floating glass sheet, route draw-on, privacy-zone ring, profile chart</figcaption></figure>
 
 
-## Activity maps
-The look is Strava-inspired: a muted base with a loud route. The basemap is MapKit `.standard(emphasis: .muted, pointsOfInterest: .excludingAll)`. The route is solid Flyby Blue over a white casing: 5/9 pt on detail, 4.6/8.6 pt on cards, 3.2/6.4 pt on thumbnails, with round joins and a soft shadow. The start dot is white with a blue ring; the end dot is white with a navy core. Shared views have no start dot, the route fades out near home, and there's no zone ring. Full spec and MapKit code: `specs/maps.md`.
+  <figure><div class="device"><div class="phone light" id="m-profile">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><span></span><div class="row gap8"><div class="iconbtn"><span data-i="share"></span></div><div class="iconbtn"><span data-i="gear"></span></div></div></div>
+      <div style="padding:0 16px" class="row gap12">
+        <div class="avatar" style="width:68px;height:68px;font-size:24px;background:linear-gradient(135deg,#0A5FD1,#22D3EE)">AR</div>
+        <div><div style="font:700 24px/28px var(--sfd)">Alex Rivera</div><div class="subhead l2"><span class="mono" style="font-size:14px">@alexflies</span> · PPL · Instrument</div>
+        <div class="row gap6 footnote l2" style="margin-top:2px"><span data-i="shield" data-c="xs"></span>Home base: Bay Area <span class="l3">(field hidden)</span></div></div>
+      </div>
+      <div class="row gap12 subhead" style="padding:10px 16px 0"><span><b class="num">124</b> <span class="l2">followers</span></span><span><b class="num">98</b> <span class="l2">following</span></span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 0">
+        <div class="tile" style="padding:10px 14px"><div class="eyebrow">Total time</div><div class="num v">412.6<span class="unit">h</span></div></div>
+        <div class="tile" style="padding:10px 14px"><div class="eyebrow">Flights</div><div class="num v">187</div></div>
+        <div class="tile" style="padding:10px 14px"><div class="eyebrow">Airports</div><div class="num v">64</div></div>
+        <div class="tile" style="padding:10px 14px"><div class="eyebrow">Distance</div><div class="num v">18,940<span class="unit">nm</span></div></div>
+      </div>
+      <div style="padding:14px 16px 0"><div class="seg"><div class="on">Overview</div><div>Logbook</div><div>Aircraft</div></div></div>
+      <div style="padding:12px 16px 0"><div class="fcard pad" style="padding:12px 14px">
+        <div class="row sb"><div class="eyebrow">Hours by month · last 12</div><span class="caption1 l2">10.2 h in Jul</span></div>
+        <div data-bars style="margin-top:8px"></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px;border-top:.5px solid var(--sep);padding-top:8px">
+          <div class="stat"><div class="num" style="font-size:17px">368.2</div><div class="k">PIC</div></div>
+          <div class="stat"><div class="num" style="font-size:17px">251.0</div><div class="k">Cross-ctry</div></div>
+          <div class="stat"><div class="num" style="font-size:17px">42.1</div><div class="k">Night</div></div>
+          <div class="stat"><div class="num" style="font-size:17px">18.4</div><div class="k">Actual IMC</div></div>
+        </div></div></div>
+      <div class="row sb" style="padding:14px 16px 8px"><div style="font:700 20px var(--sfd)">Achievements</div><span class="subhead" style="color:var(--primary)">All 23</span></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);padding:0 10px" data-badges></div>
+      <div class="row sb" style="padding:14px 16px 8px"><div style="font:700 20px var(--sfd)">Aircraft</div></div>
+      <div class="row gap10" style="padding:0 16px">
+        <div class="tile" style="flex:1"><div class="row sb"><span class="mono footnote">N482CD</span><span data-i="plane" data-c="s" style="color:var(--primary)"></span></div><div class="headline" style="margin-top:4px">Cirrus SR22</div><div class="caption1 l2">142.3 h · 51 flights</div></div>
+        <div class="tile" style="flex:1"><div class="row sb"><span class="mono footnote">N738SP</span><span data-i="plane" data-c="s" style="color:var(--primary)"></span></div><div class="headline" style="margin-top:4px">Cessna 172S</div><div class="caption1 l2">231.8 h · 118 flights</div></div>
+      </div>
+    </div>
+    <div data-tabbar="profile"></div><div class="homeind"></div>
+  </div></div><figcaption><b>Pilot profile (own view)</b>Totals, logbook stats, achievements, aircraft</figcaption></figure>
+  <figure><div class="device"><div class="phone light" id="m-flights">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><span></span><div class="iconbtn glass"><span data-i="more"></span></div></div>
+      <div class="largetitle" style="position:relative">Flights</div>
+      <div style="padding:0 16px;position:relative"><div class="glass row gap8" style="height:40px;border-radius:20px;padding:0 14px;color:var(--label2)"><span data-i="search" data-c="s"></span><span class="subhead">Search airports, aircraft, notes</span></div></div>
+      <div class="row gap8" style="padding:12px 16px 0;position:relative"><span class="chip on">All</span><span class="chip">Cross-country</span><span class="chip">Night</span><span class="chip">SR22</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px 0">
+        <div class="tile" style="padding:9px 12px"><div class="eyebrow">Flights</div><div class="num" style="font-size:22px">187</div></div>
+        <div class="tile" style="padding:9px 12px"><div class="eyebrow">Hours</div><div class="num" style="font-size:22px">412.6</div></div>
+        <div class="tile" style="padding:9px 12px"><div class="eyebrow">Airports</div><div class="num" style="font-size:22px">64</div></div>
+      </div>
+      <div class="row sb" style="padding:18px 20px 8px"><span class="eyebrow">October 2026</span><span class="caption1 l2">1 flight · 0.9 h</span></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+        <div data-flightcard="monterey" data-vis="private" data-compact="1"></div>
+      </div>
+      <div class="row sb" style="padding:16px 20px 8px"><span class="eyebrow">September 2026</span><span class="caption1 l2">6 flights · 5.9 h</span></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+        <div data-flightcard="tahoe" data-vis="followers" data-compact="1"></div>
+        <div data-flightcard="patternme" data-vis="private" data-compact="1"></div>
+      </div>
+    </div>
+    <div data-tabbar="flights"></div><div class="homeind"></div>
+  </div></div><figcaption><b>Flights · your logbook</b>Search, filters, totals, flights grouped by month</figcaption></figure>
+
+
+  <figure><div class="device"><div class="phone light" id="m-log-flight">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div style="position:absolute;top:54px;left:0;right:0;bottom:0;background:var(--bg);border-radius:12px 12px 0 0;overflow:hidden;box-shadow:0 -1px 0 var(--sep)">
+      <div class="navbar" style="height:56px;position:relative;z-index:3"><div class="iconbtn glass" aria-label="Cancel"><span data-i="x"></span></div><span class="headline">Log a Flight</span><div class="iconbtn" style="background:var(--primary);color:#fff;box-shadow:0 6px 16px -6px var(--primary)" aria-label="Save"><span data-i="check"></span></div></div>
+      <div style="margin:4px 16px 0;border-radius:14px;padding:12px 14px;background:var(--primarySoft);display:flex;gap:12px;align-items:center">
+        <div style="width:40px;height:40px;border-radius:12px;background:var(--primary);color:#fff;display:grid;place-items:center;flex:none"><span data-i="import"></span></div>
+        <div style="flex:1"><div class="headline" style="font-size:16px">Import GPX or KML</div><div class="footnote l2">Fills route, times, distance and altitude from a track file</div></div>
+        <span data-i="chevR" style="color:var(--label3)"></span>
+      </div>
+      <div class="ghead">Route</div>
+      <div class="group">
+        <div class="cell" style="min-height:66px">
+          <div style="flex:1"><div class="caption1 l2">From</div><div style="font:600 20px var(--mono)">KSQL</div><div class="caption1 l2">San Carlos</div></div>
+          <div class="iconbtn" style="color:var(--primary)"><span data-i="swap"></span></div>
+          <div style="flex:1;text-align:right"><div class="caption1 l2">To</div><div style="font:600 20px var(--mono)">KTVL</div><div class="caption1 l2">Lake Tahoe</div></div>
+        </div>
+        <div class="cell"><span>Route</span><span class="val mono" style="font-size:14px">Direct, via Echo Summit</span></div>
+      </div>
+      <div class="ghead">Aircraft</div>
+      <div class="group">
+        <div class="cell"><span data-i="plane" style="color:var(--primary)"></span><span>Cirrus SR22</span><span class="val">G6 <span data-i="chevR" data-c="s"></span></span></div>
+        <div class="cell"><span>Tail number</span><span class="val mono" style="font-size:15px;color:var(--label)">N482CD</span></div>
+        <div class="cell"><span>Show tail number on shares</span><div class="toggle"></div></div>
+      </div>
+      <div class="ghead">Times <span style="text-transform:none" class="l3">· local (PDT)</span></div>
+      <div class="group">
+        <div class="cell"><span data-i="calendar" style="color:var(--label2)"></span><span>Date</span><span class="val">Sat, Sep 19, 2026</span></div>
+        <div class="cell" style="min-height:58px"><div style="display:grid;grid-template-columns:repeat(4,1fr);width:100%;text-align:center">
+          <div><div class="caption1 l2">Out</div><div class="num" style="font-size:17px">16:02</div></div>
+          <div><div class="caption1 l2">Off</div><div class="num" style="font-size:17px">16:11</div></div>
+          <div><div class="caption1 l2">On</div><div class="num" style="font-size:17px">17:09</div></div>
+          <div><div class="caption1 l2">In</div><div class="num" style="font-size:17px">17:14</div></div></div></div>
+        <div class="cell"><span>Flight · Block</span><span class="val num" style="color:var(--label)">0:58 · 1:12</span></div>
+      </div>
+      <div class="gfoot">Calculated from off/on and out/in times. Tap a time to stamp "now" (one-tap capture), or edit any value to override.</div>
+    </div>
+    <div class="homeind"></div>
+  </div></div><figcaption><b>Record → Log a Flight · 1 of 2</b>GPX/KML import, route, aircraft, tail number, times</figcaption></figure>
+
+  <figure><div class="device"><div class="phone light" id="m-log-visibility">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div style="position:absolute;top:54px;left:0;right:0;bottom:0;background:var(--bg);border-radius:12px 12px 0 0;overflow:hidden">
+      <div class="navbar" style="height:56px;position:relative;z-index:3"><div class="iconbtn glass" aria-label="Cancel"><span data-i="x"></span></div><span class="headline">Log a Flight</span><div class="iconbtn" style="background:var(--primary);color:#fff;box-shadow:0 6px 16px -6px var(--primary)" aria-label="Save"><span data-i="check"></span></div></div>
+      <div class="ghead" style="padding-top:12px">Notes</div>
+      <div class="group"><div class="cell" style="min-height:64px;align-items:flex-start;padding-top:10px;padding-bottom:10px"><span class="callout">Smooth ride over Echo Summit, light chop descending into the basin. The lake was glass.</span></div></div>
+      <div class="ghead">Photos</div>
+      <div class="row gap8" style="padding:0 16px">
+        <div data-photo="1" style="width:84px;height:76px;border-radius:12px"></div>
+        <div data-photo="2" style="width:84px;height:76px;border-radius:12px"></div>
+        <div data-photo="3" style="width:84px;height:76px;border-radius:12px"></div>
+        <div style="width:84px;height:76px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;color:var(--primary)"><span data-i="camera" data-c="l"></span></div>
+      </div>
+      <div class="ghead">Who can see this flight</div>
+      <div style="padding:0 16px"><div data-vispicker="private"></div></div>
+      <div class="gfoot"><b style="color:var(--label)">Private by default.</b> Only you can see this flight. You can change it anytime.</div>
+      <div class="ghead">Privacy when shared</div>
+      <div class="group">
+        <div class="cell"><span data-i="shield" style="color:var(--primary)"></span><span>Hide home airport</span><div class="toggle on"></div></div>
+        <div class="cell"><span data-i="scissors" style="color:var(--primary)"></span><span>Trim start / end</span><span class="val" style="color:var(--label)"><span class="num">1.0 nm</span><span class="seg" style="height:28px;width:84px;margin-left:4px"><div>−</div><div>+</div></span></span></div>
+      </div>
+      <div class="gfoot">Followers and Public see "Bay Area" instead of KSQL, and the first and last 1.0 nm of the track are removed.</div>
+      <div style="position:absolute;left:16px;right:16px;bottom:30px"><div class="btn"><span data-i="check"></span>Save Flight</div>
+      <div class="disclaimer" style="justify-content:center;margin-top:8px"><span data-i="info" data-c="xs"></span>Flyby is a journal · Not for navigation</div></div>
+    </div>
+    <div class="homeind"></div>
+  </div></div><figcaption><b>Record → Log a Flight · 2 of 2</b>Notes, photos, visibility (Private by default), privacy zone</figcaption></figure>
+
+  <figure><div class="device"><div class="phone light" id="m-share">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><div class="iconbtn glass"><span data-i="x"></span></div><span class="headline">Share Recap</span><span style="width:36px"></span></div>
+      <div style="display:flex;justify-content:center;padding:6px 0 0"><div style="width:216px;height:384px;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 0 .5px rgba(255,255,255,.12)"><div style="transform:scale(.6);transform-origin:0 0;width:360px;height:640px" data-recap="skyglass"></div></div></div>
+      <div class="row gap8" style="padding:16px 16px 0;justify-content:center"><span class="chip on">Skyglass</span><span class="chip">Window Seat</span><span class="chip">Square</span></div>
+      <div class="group" style="margin-top:14px">
+        <div class="cell"><span data-i="shield" style="color:var(--primary)"></span><span>Hide home airport</span><div class="toggle on"></div></div>
+        <div class="cell"><span data-i="scissors" style="color:var(--primary)"></span><span>Trim start / end</span><span class="val num" style="color:var(--label)">1.0 nm</span></div>
+        <div class="cell"><span data-i="plane" style="color:var(--primary)"></span><span>Show tail number</span><div class="toggle"></div></div>
+      </div>
+      <div class="row gap10" style="padding:14px 16px 0"><div class="btn glassbtn" style="flex:1"><span data-i="import"></span>Save</div><div class="btn" style="flex:2"><span data-i="share"></span>Share to Stories</div></div>
+    </div>
+    <div class="homeind"></div>
+  </div></div><figcaption><b>Share recap</b>Template picker and privacy controls with a live preview</figcaption></figure>
+  <figure><div class="device"><div class="phone dark" id="m-home-journal-dark">
+    <div class="island"></div><div class="skywash"></div><div data-status></div>
+    <div class="scroll">
+      <div class="navbar"><span class="footnote l2">Tuesday, Oct 13</span><div class="iconbtn"><span data-i="search"></span></div></div>
+      <div class="largetitle">Home</div>
+      <div style="padding:4px 16px 0"><div class="fcard" style="padding:16px">
+        <div class="row sb"><div class="eyebrow">2026 so far</div><span class="vis"><span data-i="lock" data-c="xs"></span>Only you</span></div>
+        <div class="row" style="margin-top:10px;gap:18px">
+          <div data-ringp="0.624" style="width:84px;height:84px;flex:none"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;flex:1">
+            <div class="stat"><div class="num v">62.4<span class="unit">h</span></div><div class="k">of 100 h goal</div></div>
+            <div class="stat"><div class="num v">38</div><div class="k">Flights</div></div>
+            <div class="stat"><div class="num v">21</div><div class="k">Airports</div></div>
+            <div class="stat"><div class="num v">4,812<span class="unit">nm</span></div><div class="k">Distance</div></div>
+          </div></div></div></div>
+      <div class="row sb" style="padding:22px 16px 10px"><div style="font:700 20px var(--sfd)">Recent flights</div><span class="subhead" style="color:var(--primary)">All flights</span></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+        <div data-flightcard="tahoe" data-vis="followers" data-compact="1"></div>
+        <div data-flightcard="monterey" data-vis="private" data-compact="1"></div>
+        <div data-flightcard="patternme" data-vis="private" data-compact="1"></div>
+      </div>
+      <div style="margin:12px 16px 0;padding:12px 14px;border-radius:14px;border:1px dashed var(--sep);display:flex;gap:10px;align-items:center" class="footnote l2"><span data-i="people" style="color:var(--primary)"></span>Following pilots is coming soon. Your flights stay private unless you choose otherwise.</div>
+    </div>
+    <div data-tabbar="home"></div><div class="homeind"></div>
+  </div></div><figcaption><b>Home · Journal (Dark variant)</b>Your year + recent flights; every card shows its visibility</figcaption></figure>
+  </div>
+</section>
+<section>
+  <h2><small>07 · SIGNATURE · SHAREABLE RECAPS</small>The flight recap <span class="sample">Sample data</span></h2>
+  <p class="lead">This is the image pilots will screenshot and post. Rendered natively with <code>ImageRenderer</code> at 1080×1920 (Story) and 1080×1080 (Post). The rules: the route is the one hero, four facts at most, privacy is applied <i>before</i> rendering, a small "Not for navigation" line, and a quiet Flyby mark that never sits on top of the route.</p>
+  <div class="stage darkstage" style="margin-top:24px;justify-content:center">
+    <figure><div data-recap="skyglass" id="r-story-skyglass"></div><figcaption><b>A · Skyglass · Story 1080×1920</b>Sky gradient, blue route, glass stats panel, home field hidden</figcaption></figure>
+    <figure><div data-recap="window" id="r-story-window"></div><figcaption><b>B · Window Seat · Story 1080×1920</b>Muted map framed in an aircraft window, tail number hidden. KPAO isn't the home field, so the start stays visible</figcaption></figure>
+    <figure><div data-recap="square" id="r-square"></div><figcaption><b>C · Logbook Card · Post 1080×1080</b>Map-forward, glass header, 4 stats</figcaption></figure>
+  </div>
+  <div class="card" style="margin-top:24px">
+    <h3 style="margin-top:0">Recap spec</h3>
+    <table>
+      <tr><th>Element</th><th>Rule</th></tr>
+      <tr><td>Route</td><td>Shared (trimmed) geometry only. Always on the muted activity basemap (map card), never bare on sky or photo. Solid Flyby Blue #0A63DB, about 5 pt at 1× (15 px at 1080) over a white casing 2 pt wider per side, round joins, soft drop shadow. The end dot is navy; the start dot appears only when the start isn't trimmed.</td></tr>
+      <tr><td>Airports</td><td>Home airport → region label ("Bay Area") with a <code>shield</code> "Home field hidden" note. Other airports use ICAO in SF Mono.</td></tr>
+      <tr><td>Facts</td><td>Up to 4 of: flight time, distance, max altitude, avg GS, aircraft type. Date only; exact times are off by default.</td></tr>
+      <tr><td>Tail number</td><td>Off by default. When on, it shows in full; otherwise it's masked or omitted ("Tail hidden").</td></tr>
+      <tr><td>Safe areas</td><td>Story: keep text out of the top 220 px and bottom 260 px at 1080×1920 (IG UI). Post: 72 px margin.</td></tr>
+      <tr><td>Disclaimer</td><td>"Not for navigation" in caption2 (≈27 px at 1080 wide), label3 color, bottom row next to the handle. Present on every template; never more prominent than the handle.</td></tr>
+      <tr><td>Glass</td><td>Recap panels use a strong (≥ 74% white) frosted panel, so text stays ≥ 4.5:1 on any sky or photo. Clear glass is never used for text in recaps.</td></tr><tr><td>Contrast</td><td>Ink on frosted panel ≥ 15:1; white on the deep-sky top (#1F5FD6) 5.7:1; navy on pale sky 12:1.</td></tr>
+    </table>
+  </div>
+  <h3>Privacy on shared maps</h3>
+  <div class="stage" id="privacy-compare" style="justify-content:center;gap:24px">
+    <figure><div class="fcard light" style="width:340px;color:#0B1220"><div data-map="tahoe" data-w="340" data-h="220" data-labels="1" data-ring="1"></div><div class="pad footnote" style="color:#4A5568"><b style="color:#0B1220">Owner view</b> · full recorded track, KSQL visible</div></div></figure>
+    <figure><div class="fcard light" style="width:340px;color:#0B1220"><div data-map="tahoe" data-w="340" data-h="220" data-labels="1" data-grid="1" data-trim="1" data-ring="1"></div><div class="pad footnote" style="color:#4A5568"><b style="color:#0B1220">Shared view</b> · home shown as "Bay Area", first 1.0 nm removed, route fades out near home, no start dot or zone ring</div></div></figure>
+  </div>
+  <ul class="clean" style="margin-top:14px">
+    <li>Sprint 1: trimming runs on-device in <code>TrackPrivacy.trim(_:distance:)</code> before any recap is rendered. Later, a Supabase function stores a separate shared geometry, so Followers and Public only ever receive the trimmed track (RLS on <code>tracks</code>). Very short tracks that can't be trimmed hide both endpoints and show a note.</li>
+    <li>The privacy-zone center is offset by a random amount fixed per pilot (not per flight), so repeated shares can't be averaged to find the field.</li>
+    <li>Applies to cards, detail views seen by others, recaps, and Explore airport pages (home airport never lists the pilot as "based here").</li>
+  </ul>
+  <h3 id="map-style">Map style · "Activity map" (Strava-inspired, Flyby-owned)</h3>
+  <p class="l2" style="max-width:820px">Strava's activity maps work because the basemap is quiet and the route is loud: a muted, low-contrast base (hillshade, faint contours, de-emphasized roads and labels), one thick saturated line with round joins and a slight shadow, and clear start/finish dots. Flyby keeps that hierarchy but uses its own palette: a <b>Flyby Blue route with a white casing</b> (not orange), a white start dot with a blue ring, and a navy end dot. Feed cards are map-heavy, with stats above an edge-to-edge map, and logbook rows get compact thumbnails.</p>
+  <div class="card">
+  <table>
+    <tr><th>Context</th><th>Size</th><th>Route stroke / casing</th><th>Markers</th><th>Labels</th></tr>
+    <tr><td>Flight Detail (owner)</td><td>393 × 470 pt, interactive</td><td>5 pt <code>route</code> over 9 pt white casing, round cap/join, shadow y1 blur 3 @ 28%</td><td>Start: white 14 pt dot + 2.6 pt blue ring. End: 15 pt white dot with navy core</td><td>Dep/arr ICAO in SF Mono Bold with land-colored halo</td></tr>
+    <tr><td>Feed card (shared)</td><td>361 × 212 pt, snapshot</td><td>4.6 pt over 8.6 pt casing</td><td>End only; start trimmed + faded</td><td>Arrival ICAO + "Bay Area" region</td></tr>
+    <tr><td>Logbook thumbnail</td><td>72 × 72 pt, r12, snapshot</td><td>3.2 pt over 6.4 pt casing</td><td>Both (owner's own logbook), 9 pt</td><td>None</td></tr>
+    <tr><td>Recaps</td><td>map card in 1080 export</td><td>5–5.4 pt (×3 at export) over white casing</td><td>End only when trimmed</td><td>ICAO + region</td></tr>
+  </table>
+  <p class="footnote l2" style="margin:10px 0 0">Contrast (non-text, WCAG 1.4.11): route #0A63DB vs map land #EEF0F2 = 4.8:1, vs water #D4DFE8 = 4.1:1; dark #4DA3FF vs land #171D27 = 6.4:1. The white casing separates the line from roads and water. An optional altitude gradient (altLow → altHigh) is a Flight Detail toggle only; the default is solid Flyby Blue.</p>
+  </div>
+<pre><span class="c">// MapKit (iOS 17+ SwiftUI Map; iOS 26 SDK). Muted base, no POIs, no nav affordances.</span>
+<span class="t">Map</span>(position: $camera, interactionModes: [.pan, .zoom]) {
+    <span class="c">// Casing first, then the route on top (MapPolyline has no built-in casing)</span>
+    <span class="t">MapPolyline</span>(coordinates: track).stroke(.white, style: <span class="t">StrokeStyle</span>(lineWidth: <span class="n">9</span>, lineCap: .round, lineJoin: .round))
+    <span class="t">MapPolyline</span>(coordinates: track).stroke(<span class="t">Color</span>.Flyby.route, style: <span class="t">StrokeStyle</span>(lineWidth: <span class="n">5</span>, lineCap: .round, lineJoin: .round))
+    <span class="k">if</span> isOwner { <span class="t">Annotation</span>(<span class="s">""</span>, coordinate: track.first!, anchor: .center) { <span class="t">StartDot</span>() } }   <span class="c">// hidden when shared</span>
+    <span class="t">Annotation</span>(<span class="s">""</span>, coordinate: track.last!, anchor: .center) { <span class="t">EndDot</span>() }
+}
+.mapStyle(.standard(elevation: .realistic, emphasis: .muted, pointsOfInterest: .excludingAll, showsTraffic: <span class="k">false</span>))
+.mapControlVisibility(.hidden)   <span class="c">// no compass/user-location/pitch buttons: journal, not navigation</span>
+
+<span class="c">// Snapshots for feed cards, thumbnails and recaps (UIKit config, same look)</span>
+<span class="k">let</span> config = <span class="t">MKStandardMapConfiguration</span>(elevationStyle: .flat, emphasisStyle: .muted)
+config.pointOfInterestFilter = .excludingAll
+config.showsTraffic = <span class="k">false</span>
+<span class="k">let</span> opts = <span class="t">MKMapSnapshotter.Options</span>()
+opts.preferredConfiguration = config
+opts.region = sharedRegion   <span class="c">// fit to TRIMMED geometry when shared, so the camera never centers on home</span>
+opts.size = <span class="t">CGSize</span>(width: <span class="n">361</span>, height: <span class="n">212</span>); opts.traitCollection = .init(userInterfaceStyle: scheme)
+<span class="c">// Draw casing + route + markers into the snapshot with snapshot.point(for:), using a CGPath with round joins.
+// Shared views: apply the home-fade mask (radial, 0 → 100% alpha over the trim radius) to the route layer only.</span></pre>
+</section>
+
+<section>
+  <h2><small>08 · MOTION</small>Motion &amp; haptics</h2>
+  <p class="lead">Motion explains state; it isn't decoration. All of it respects Reduce Motion: cross-fades replace movement, and the route appears already drawn.</p>
+  <div class="card motion" style="margin-top:24px;padding:12px 20px">
+  <table>
+    <tr><th>Moment</th><th>Behavior</th><th>SwiftUI</th><th>Haptic</th></tr>
+    <tr><td><b>Route draw-on</b></td><td>The track strokes from departure to arrival (trim 0 → 1), with the glow following 80 ms behind. The arrival pin pops at the end.</td><td>.trim(from: 0, to: p) · .timingCurve(0.22, 0.8, 0.18, 1, duration: 1.6) · pin .spring(response: 0.35, dampingFraction: 0.55)</td><td>.impact(weight: .light) on pin</td></tr>
+    <tr><td><b>Card → detail</b></td><td>The map thumbnail zooms into the full-bleed map, and the glass sheet rises to its medium detent.</td><td>.matchedTransitionSource + .navigationTransition(.zoom) · sheet .spring(response: 0.45, dampingFraction: 0.86)</td><td>none</td></tr>
+    <tr><td><b>Stat count-up</b></td><td>Numbers roll up to their value the first time they appear.</td><td>.contentTransition(.numericText()) · .spring(response: 0.6, dampingFraction: 0.9)</td><td>none</td></tr>
+    <tr><td><b>Profile scrub</b></td><td>Dragging along the chart snaps the cursor to samples, and a dot on the map mirrors the position.</td><td>.interactiveSpring(response: 0.25, dampingFraction: 0.9)</td><td>.selection at every 1,000 ft crossing</td></tr>
+    <tr><td><b>Visibility change</b></td><td>The pill morphs icon and label (lock → person.2 → globe).</td><td>.symbolEffect(.replace) · .snappy(duration: 0.25)</td><td>.selection</td></tr>
+    <tr><td><b>Save flight</b></td><td>The sheet dismisses, and the new card slides in at the top of the Journal.</td><td>.spring(response: 0.5, dampingFraction: 0.8) · .move(edge: .top) + .opacity</td><td>.success</td></tr>
+    <tr><td><b>Achievement unlocked</b></td><td>The badge scales from 0.6 to 1 with an amber shimmer. Confetti is reserved for milestones only.</td><td>.spring(response: 0.5, dampingFraction: 0.6) · .symbolEffect(.bounce)</td><td>.impact(.medium) then .success</td></tr>
+    <tr><td><b>Tailwind (like)</b></td><td>The wind glyph bounces and the count ticks up.</td><td>.symbolEffect(.bounce.up) · .numericText()</td><td>.impact(weight: .light)</td></tr>
+    <tr><td><b>Glass morph</b></td><td>Chips, the visibility picker and map control clusters merge and split fluidly; glass controls flex and shimmer on press.</td><td>GlassEffectContainer + .glassEffectID(_:in:) · .glassEffect(.regular.interactive()) · .bouncy(duration: 0.4)</td><td>.selection</td></tr>
+    <tr><td><b>Tab bar minimize</b></td><td>The bar shrinks on scroll down and returns on scroll up, giving maps and lists more room.</td><td>.tabBarMinimizeBehavior(.onScrollDown) (system animation)</td><td>none</td></tr>
+    <tr><td><b>Recap reveal</b></td><td>In Share, the preview builds in order: route draw, then stats fade up with a 40 ms stagger.</td><td>.spring(response: 0.55, dampingFraction: 0.85).delay(i * 0.04)</td><td>none</td></tr>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2><small>09 · IMPLEMENTATION PREVIEW</small>SwiftUI tokens</h2>
+<pre><span class="c">// FlybyTokens.swift (Skyglass): semantic tokens. Colors live in Assets.xcassets (Any / Dark + High Contrast).</span>
+<span class="k">import</span> SwiftUI
+
+<span class="k">extension</span> <span class="t">Color</span> {
+    <span class="k">enum</span> <span class="t">Flyby</span> {
+        <span class="k">static let</span> bg       = <span class="t">Color</span>(<span class="s">"bg"</span>)        <span class="c">// #F5F8FC / #0A0F1A</span>
+        <span class="k">static let</span> surface  = <span class="t">Color</span>(<span class="s">"surface"</span>)   <span class="c">// #FFFFFF / #141B28</span>
+        <span class="k">static let</span> surface2 = <span class="t">Color</span>(<span class="s">"surface2"</span>)  <span class="c">// #EEF3F9 / #1C2536</span>
+        <span class="k">static let</span> label    = <span class="t">Color</span>(<span class="s">"label"</span>)     <span class="c">// #0B1220 / #F2F5FA</span>
+        <span class="k">static let</span> label2   = <span class="t">Color</span>(<span class="s">"label2"</span>)    <span class="c">// #4A5568 / #A3AEC2</span>
+        <span class="k">static let</span> primary  = <span class="t">Color</span>(<span class="s">"primary"</span>)   <span class="c">// #0A63DB / #4DA3FF  "Flyby Blue"</span>
+        <span class="k">static let</span> gold     = <span class="t">Color</span>(<span class="s">"gold"</span>)      <span class="c">// #F2A93B achievements only (text on light: #9A5B00)</span>
+        <span class="k">static let</span> route    = <span class="t">Color</span>(<span class="s">"route"</span>)     <span class="c">// #0A63DB / #4DA3FF, drawn over a white casing (see Map style)</span>
+        <span class="k">static let</span> altitudeRamp = <span class="t">Gradient</span>(colors: [<span class="t">Color</span>(<span class="s">"altLow"</span>), <span class="t">Color</span>(<span class="s">"altMid"</span>), <span class="t">Color</span>(<span class="s">"altHigh"</span>)])
+
+        <span class="c">/// Maps altitude (ft MSL) onto the ramp for track segments and the profile chart.</span>
+        <span class="k">static func</span> altitude(<span class="k">_</span> ft: <span class="t">Double</span>, ceiling: <span class="t">Double</span> = <span class="n">18_000</span>) -&gt; <span class="t">Color</span> {
+            <span class="k">let</span> t = <span class="t">min</span>(<span class="t">max</span>(ft / ceiling, <span class="n">0</span>), <span class="n">1</span>)
+            <span class="k">return</span> t &lt; <span class="n">0.5</span>
+                ? <span class="t">Color</span>(<span class="s">"altLow"</span>).mix(with: <span class="t">Color</span>(<span class="s">"altMid"</span>), by: t * <span class="n">2</span>)
+                : <span class="t">Color</span>(<span class="s">"altMid"</span>).mix(with: <span class="t">Color</span>(<span class="s">"altHigh"</span>), by: (t - <span class="n">0.5</span>) * <span class="n">2</span>)
+        }
+    }
+}
+
+<span class="k">extension</span> <span class="t">Font</span> {
+    <span class="k">enum</span> <span class="t">Flyby</span> {
+        <span class="k">static let</span> statValue = <span class="t">Font</span>.system(.title2, design: .rounded, weight: .semibold).monospacedDigit()
+        <span class="k">static let</span> statLabel = <span class="t">Font</span>.caption.weight(.medium)
+        <span class="k">static let</span> eyebrow   = <span class="t">Font</span>.caption2.weight(.semibold)     <span class="c">// + .textCase(.uppercase) + .tracking(0.6)</span>
+        <span class="k">static let</span> routeCode = <span class="t">Font</span>.system(.title3, design: .monospaced, weight: .semibold)
+        <span class="k">static let</span> tail      = <span class="t">Font</span>.system(.footnote, design: .monospaced, weight: .medium)
+        <span class="c">/// Hero stat scales with Dynamic Type relative to .largeTitle.</span>
+        <span class="k">static func</span> statHero(<span class="k">_</span> size: <span class="t">CGFloat</span> = <span class="n">48</span>) -&gt; <span class="t">Font</span> {
+            .system(size: <span class="t">UIFontMetrics</span>(forTextStyle: .largeTitle).scaledValue(for: size), weight: .semibold, design: .rounded).monospacedDigit()
+        }
+    }
+}
+
+<span class="k">enum</span> <span class="t">Space</span>  { <span class="k">static let</span> xxs: <span class="t">CGFloat</span> = <span class="n">4</span>, xs: <span class="t">CGFloat</span> = <span class="n">8</span>, sm: <span class="t">CGFloat</span> = <span class="n">12</span>, md: <span class="t">CGFloat</span> = <span class="n">16</span>, lg: <span class="t">CGFloat</span> = <span class="n">24</span>, xl: <span class="t">CGFloat</span> = <span class="n">32</span>, xxl: <span class="t">CGFloat</span> = <span class="n">48</span> }
+<span class="k">enum</span> <span class="t">Radius</span> { <span class="k">static let</span> sm: <span class="t">CGFloat</span> = <span class="n">10</span>, md: <span class="t">CGFloat</span> = <span class="n">14</span>, tile: <span class="t">CGFloat</span> = <span class="n">18</span>, card: <span class="t">CGFloat</span> = <span class="n">24</span>, panel: <span class="t">CGFloat</span> = <span class="n">30</span> }
+
+<span class="c">// Liquid Glass (iOS 26). Nav layer only: TabView/toolbars get system glass automatically.</span>
+<span class="k">extension</span> <span class="t">View</span> {
+    <span class="c">/// Floating stats panel over the Flight Detail map.</span>
+    <span class="k">func</span> flybyGlassPanel() -&gt; <span class="k">some</span> <span class="t">View</span> {
+        padding(<span class="t">Space</span>.md).glassEffect(.regular, in: .rect(cornerRadius: <span class="t">Radius</span>.panel))
+    }
+}
+
+<span class="k">struct</span> <span class="t">RootView</span>: <span class="t">View</span> {
+    <span class="k">enum</span> <span class="t">TabID</span> { <span class="k">case</span> home, explore, record, flights, profile }
+    <span class="k">@State private var</span> selection: <span class="t">TabID</span> = .home
+    <span class="k">@State private var</span> lastTab: <span class="t">TabID</span> = .home
+    <span class="k">@State private var</span> showLog = <span class="k">false</span>
+
+    <span class="k">var</span> body: <span class="k">some</span> <span class="t">View</span> {
+        <span class="t">TabView</span>(selection: $selection) {
+            <span class="t">Tab</span>(<span class="s">"Home"</span>, systemImage: <span class="s">"house.fill"</span>, value: .home) { <span class="t">HomeView</span>() }.accessibilityIdentifier(<span class="s">"tab.home"</span>)
+            <span class="t">Tab</span>(<span class="s">"Explore"</span>, systemImage: <span class="s">"globe.americas.fill"</span>, value: .explore) { <span class="t">ExploreView</span>() }.accessibilityIdentifier(<span class="s">"tab.explore"</span>)
+            <span class="t">Tab</span>(<span class="s">"Record"</span>, systemImage: <span class="s">"plus.circle.fill"</span>, value: .record) { <span class="t">Color</span>.clear }.accessibilityIdentifier(<span class="s">"tab.record"</span>)
+            <span class="t">Tab</span>(<span class="s">"Flights"</span>, systemImage: <span class="s">"book.closed.fill"</span>, value: .flights) { <span class="t">FlightsView</span>() }.accessibilityIdentifier(<span class="s">"tab.flights"</span>)
+            <span class="t">Tab</span>(<span class="s">"Profile"</span>, systemImage: <span class="s">"person.crop.circle.fill"</span>, value: .profile) { <span class="t">ProfileView</span>() }.accessibilityIdentifier(<span class="s">"tab.profile"</span>)
+        }
+        .tint(<span class="t">Color</span>.<span class="t">Flyby</span>.primary)
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .onChange(of: selection) { old, new <span class="k">in</span>                <span class="c">// Record = action: present sheet, keep previous tab</span>
+            <span class="k">if</span> new == .record { selection = old; showLog = <span class="k">true</span> } <span class="k">else</span> { lastTab = new }
+        }
+        .sheet(isPresented: $showLog) { <span class="t">LogFlightView</span>() }        <span class="c">// sheet is glass by default on iOS 26</span>
+    }
+}
+
+<span class="k">extension</span> <span class="t">Animation</span> {
+    <span class="k">static let</span> routeDraw = <span class="t">Animation</span>.timingCurve(<span class="n">0.22</span>, <span class="n">0.8</span>, <span class="n">0.18</span>, <span class="n">1</span>, duration: <span class="n">1.6</span>)
+    <span class="k">static let</span> pinPop    = <span class="t">Animation</span>.spring(response: <span class="n">0.35</span>, dampingFraction: <span class="n">0.55</span>)
+    <span class="k">static let</span> sheetRise = <span class="t">Animation</span>.spring(response: <span class="n">0.45</span>, dampingFraction: <span class="n">0.86</span>)
+}
+
+<span class="k">enum</span> <span class="t">FlightVisibility</span>: <span class="t">String</span>, <span class="t">CaseIterable</span>, <span class="t">Codable</span> {
+    <span class="k">case</span> `private`, followers, `public`               <span class="c">// default is .private (also the DB column default)</span>
+    <span class="k">var</span> symbol: <span class="t">String</span> {
+        <span class="k">switch self</span> { <span class="k">case</span> .private: <span class="s">"lock.fill"</span>; <span class="k">case</span> .followers: <span class="s">"person.2.fill"</span>; <span class="k">case</span> .public: <span class="s">"globe.americas.fill"</span> }
+    }
+}
+</pre>
+</section>
+
+<section>
+  <h2><small>10 · PRINCIPLES</small>Accessibility, privacy &amp; scope guardrails</h2>
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h3 style="margin-top:0">Accessibility</h3><ul class="clean">
+      <li>WCAG AA for all text in both modes (see the table in §02). Non-text elements (route, toggles) are at least 3:1.</li>
+      <li>Dynamic Type up to AX5, with stat grids that reflow. Charts provide an Audio Graph (<code>AXChartDescriptor</code>) and a VoiceOver summary ("Climbed to 11,500 ft in 18 minutes…").</li>
+      <li>Maps: VoiceOver reads "Route from San Carlos to Lake Tahoe, 135 nautical miles."</li>
+      <li>Supports Reduce Motion, Reduce Transparency (materials become solid surfaces), and Increase Contrast variants for every token.</li>
+    </ul></div>
+    <div class="card"><h3 style="margin-top:0">Privacy &amp; scope</h3><ul class="clean">
+      <li>Every flight is <b>Private by default</b> (both the DB default and the UI default). Followers and Public are explicit choices, and every card shows which one applies.</li>
+      <li>The home airport is hidden and the track trimmed on every non-owner view and every recap image.</li>
+      <li>A journal, not a navigation tool: no live position, no guidance, no planning features. A small "Not for navigation" line appears on the detail screen and on recaps.</li>
+      <li>This document is a provisional local draft. Scope and naming may change.</li>
+    </ul></div>
+  </div>
+</section>
+</div>
+<script>
+const I={
+ house:'<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.5V20h4.5v-5.5h3V20H18V9.5"/>',
+ book:'<path d="M5 4.5h11.5A2.5 2.5 0 0 1 19 7v13H7.5A2.5 2.5 0 0 1 5 17.5z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15H19M9 8.5h6"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ person:'<circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="10" r="3.2"/><path d="M6.2 18.6c1.3-2.2 3.4-3.3 5.8-3.3s4.5 1.1 5.8 3.3"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+ people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><circle cx="17" cy="9" r="2.8"/><path d="M16.5 14.6c3 0 5 1.8 5 4.9"/>',
+ plane:'<path d="M10.5 3.6a1.5 1.5 0 0 1 3 0V9l7.5 4.5v2.2l-7.5-2.3v4.4l2.3 1.7V21L12 20l-3.8 1v-1.5l2.3-1.7v-4.4L3 15.7v-2.2L10.5 9z" fill="currentColor" stroke="none"/>',
+ wind:'<path d="M3 8.5h11a3 3 0 1 0-3-3M3 12.5h15.5a3 3 0 1 1-3 3M3 16.5h7"/>',
+ bubble:'<path d="M4 5.5h16v10.5H10l-5 4v-4H4z"/>',
+ share:'<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v8h14v-8"/>',
+ chevL:'<path d="M15 5l-7 7 7 7"/>', chevR:'<path d="M9 5l7 7-7 7"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
+ mountain:'<path d="M2.5 19.5 9 8l4 6.5 2.5-3.5 6 8.5z"/>',
+ camera:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7l1.7-2.5h3.6L15.5 7"/><circle cx="12" cy="13.5" r="3.4"/>',
+ import:'<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14"/>',
+ calendar:'<rect x="4" y="5" width="16" height="15.5" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>',
+ more:'<circle cx="6" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/>',
+ bell:'<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 1.8H4.2z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+ medal:'<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5a3 3 0 0 0 3 4M17 6h2.5a3 3 0 0 1-3 4M12 14v4M8.5 21h7"/>',
+ swap:'<path d="M7 20V4M4 7l3-3 3 3M17 4v16M14 17l3 3 3-3"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.4"/>',
+ search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/>',
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ scissors:'<circle cx="6" cy="6.5" r="2.8"/><circle cx="6" cy="17.5" r="2.8"/><path d="M8.3 8.1 20 17.5M8.3 15.9 20 6.5"/>',
+ shield:'<path d="M12 3l7.5 3v5.5c0 4.8-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.7-7.5-9.5V6z"/><path d="M9 12l2 2 4-4"/>',
+ x:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+ moon:'<path d="M19 14.5A8 8 0 0 1 9.5 5a8 8 0 1 0 9.5 9.5z"/>',
+ star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
+ waves:'<path d="M3 9c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0M3 15c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/>'
+};
+const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
+
+/* Stylized geography (sample, not to scale) */
+const FL={
+ tahoe:{dep:[112,236,'KSQL'],arr:[318,122,'KTVL'],d:'M112,236 C120,242 130,238 133,228 C138,210 150,202.8 166,194 Q246,150 318,122',trimD:'M142,204 Q152,201.7 166,194 Q246,150 318,122',gc:'M112,236 Q214,170 318,122'},
+ monterey:{dep:[124,246,'KPAO'],arr:[118,352,'KMRY'],d:'M124,246 C132,262 128,280 116,298 C104,316 104,338 118,352'},
+ pattern:{dep:[150,270,'KRHV'],arr:null,d:'M150,270 L170,262 C174,260 176,262 177,265 L182,278 C183,281 181,283 178,284 L158,292 C155,293 153,291 152,288 Z'}
+};
+FL.patternme=FL.pattern;
+function contours(){
+  let s='';
+  const ring=(cx,cy,rx,ry,rot,k,seed)=>{let p='';for(let a=0;a<=360;a+=12){const r=a*Math.PI/180;const n=1+0.09*Math.sin(r*3+seed+k)+0.06*Math.cos(r*5+seed*2);const x=rx*n*Math.cos(r),y=ry*n*Math.sin(r);const c=Math.cos(rot),sn=Math.sin(rot);p+=(a?'L':'M')+(cx+x*c-y*sn).toFixed(1)+','+(cy+x*sn+y*c).toFixed(1)}return p+'Z'};
+  for(let k=1;k<=8;k++) s+=ring(282,150,8+k*11,40+k*17,-0.35,k,1);
+  for(let k=1;k<=4;k++) s+=ring(330,60,6+k*8,12+k*10,0.3,k,2);
+  for(let k=1;k<=3;k++) s+=ring(140,290,5+k*7,18+k*10,-0.5,k,3);
+  for(let k=1;k<=3;k++) s+=ring(120,180,4+k*6,8+k*6,0.2,k,4);
+  return s;
+}
+const CONT=contours();
+const LAND='M60,-500 L60,0 L70,40 L58,90 L66,120 L84,150 L76,178 L70,200 L74,232 L66,262 L78,300 L102,318 L112,332 L104,344 L116,360 L112,384 L128,420 L120,900 L900,900 L900,-500 Z';
+const BAY='M92,150 C100,160 96,172 104,186 C112,200 118,214 130,232 C138,246 150,258 152,266 C140,262 124,246 114,230 C104,214 94,196 90,180 C86,168 88,156 92,150 Z M92,150 C110,138 130,140 136,150 C126,158 106,158 92,150 Z';
+const ROADS_MAJOR='M96,150 L104,190 L118,222 L134,246 L152,266 L172,292 L186,330 M84,170 L92,210 L110,240 L140,262 M136,150 L170,140 L210,128 L250,118 L290,110 L322,103 L350,98 M168,196 L200,172 L232,152 L268,136 L298,126 L318,122 L340,118';
+const ROADS_MINOR='M70,200 L74,232 L68,262 L80,300 L104,320 L118,352 M118,352 L140,330 L152,300 M124,246 L150,240 L180,232 M110,240 L96,262 L90,290 M250,118 L262,150 L276,180 M210,128 L214,160 L226,190 M300,126 L306,150 M140,262 L160,250';
+function hills(){let s='';const ring=(cx,cy,rx,ry,rot,k,seed)=>{let p='';for(let a=0;a<=360;a+=15){const r=a*Math.PI/180;const n=1+0.1*Math.sin(r*3+seed+k)+0.06*Math.cos(r*5+seed*2);const x=rx*n*Math.cos(r),y=ry*n*Math.sin(r);const c=Math.cos(rot),sn=Math.sin(rot);p+=(a?'L':'M')+(cx+x*c-y*sn).toFixed(1)+','+(cy+x*sn+y*c).toFixed(1)}return p+'Z'};
+  for(let k=1;k<=5;k++) s+=ring(282,150,8+k*13,40+k*20,-0.35,k,1);
+  for(let k=1;k<=3;k++) s+=ring(330,60,6+k*9,12+k*12,0.3,k,2);
+  for(let k=1;k<=2;k++) s+=ring(140,290,5+k*8,18+k*12,-0.5,k,3);
+  return s;}
+const HILL=hills();
+let UID=0;
+function mapSVG(o){
+  const f=FL[o.f]; const id='m'+(UID++);
+  let xs=[f.dep[0]],ys=[f.dep[1]]; if(f.arr){xs.push(f.arr[0]);ys.push(f.arr[1])}
+  if(o.f.startsWith('pattern')){xs=[146,186];ys=[258,296]}
+  if(o.f==='monterey'){xs.push(104,132)}
+  const minx=Math.min(...xs),maxx=Math.max(...xs),miny=Math.min(...ys),maxy=Math.max(...ys);
+  const pad=o.pad??0.28; const bw=maxx-minx,bh=maxy-miny; const cx=(minx+maxx)/2; let cy=(miny+maxy)/2;
+  const ar=o.w/o.h; const vw=Math.max(bw*(1+pad*2),bh*(1+pad*2)*ar), vh=vw/ar;
+  if(o.offy) cy+=vh*o.offy;
+  const vx=cx-vw/2, vy=cy-vh/2; const k=vw/o.w;
+  const routeCol=o.routeCol||'var(--route)', casing=o.casing||'var(--routeCasing)';
+  const [x1,y1]=f.dep, [x2,y2]=f.arr||[f.dep[0]+30,f.dep[1]+10];
+  const shared=!!(o.trim&&f.trimD); const d=shared?f.trimD:f.d;
+  const zc=o.zoneCol||'var(--label3)';
+  const big=o.w>=300;
+  let s=`<svg width="${o.w}" height="${o.h}" viewBox="${vx} ${vy} ${vw} ${vh}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Route map (sample data)">
+  <defs>
+   <linearGradient id="${id}g" gradientUnits="userSpaceOnUse" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"><stop offset="0" stop-color="var(--alt0)"/><stop offset=".45" stop-color="var(--alt1)"/><stop offset="1" stop-color="var(--alt2)"/></linearGradient>
+   <filter id="${id}s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="${1*k}" stdDeviation="${1.6*k}" flood-color="#0B1220" flood-opacity=".28"/></filter>
+   ${shared?`<radialGradient id="${id}fz" gradientUnits="userSpaceOnUse" cx="${x1+4}" cy="${y1-3}" r="${o.fadeR||70}"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000"/><stop offset="1" stop-color="#fff"/></radialGradient>
+   <mask id="${id}m" maskUnits="userSpaceOnUse" x="${vx-50}" y="${vy-50}" width="${vw+100}" height="${vh+100}"><rect x="${vx-50}" y="${vy-50}" width="${vw+100}" height="${vh+100}" fill="url(#${id}fz)"/></mask>`:''}
+  </defs>`;
+  if(!o.nobase){
+    s+=`<rect x="${vx-50}" y="${vy-50}" width="${vw+100}" height="${vh+100}" fill="var(--mapWater)"/>
+    <path d="${LAND}" fill="var(--mapLand)"/>
+    <path d="${HILL}" fill="var(--mapHill)" fill-rule="nonzero"/>
+    <path d="${CONT}" fill="none" stroke="var(--mapContour)" stroke-width="${.8*k}"/>
+    <path d="${BAY}" fill="var(--mapWater)"/><ellipse cx="313" cy="96" rx="7" ry="14" fill="var(--mapWater)"/>
+    <path d="${ROADS_MINOR}" fill="none" stroke="var(--mapRoad)" stroke-width="${(big?1.4:1)*k}" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${ROADS_MAJOR}" fill="none" stroke="var(--mapRoadCasing)" stroke-width="${(big?3.6:2.4)*k}" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${ROADS_MAJOR}" fill="none" stroke="var(--mapRoad)" stroke-width="${(big?2.4:1.6)*k}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  } else if(o.contourCol){ s+=`<path d="${CONT}" fill="none" stroke="${o.contourCol}" stroke-width="${k}"/>`; }
+  if(o.ring && !shared && o.f==='tahoe') s+=`<circle cx="${x1+4}" cy="${y1-3}" r="40" fill="none" stroke="${zc}" stroke-opacity=".7" stroke-width="${1.3*k}" stroke-dasharray="${4*k} ${3.5*k}"/>`;
+  const sw=(o.sw||(big?5:3.2))*k, cw=(o.cw||2)*k; const anim=o.anim?'class="route-anim" pathLength="1"':'';
+  const stroke=o.alt?`url(#${id}g)`:routeCol;
+  s+=`<g ${shared?`mask="url(#${id}m)"`:''}>
+   <path d="${d}" fill="none" stroke="${casing}" stroke-width="${sw+cw*2}" stroke-linecap="round" stroke-linejoin="round" filter="url(#${id}s)" ${anim}/>
+   <path d="${d}" fill="none" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" ${anim}/></g>`;
+  const mr=(o.mr||(big?7:4.6))*k;
+  const startM=(x,y)=>`<g filter="url(#${id}s)"><circle cx="${x}" cy="${y}" r="${mr}" fill="#fff"/><circle cx="${x}" cy="${y}" r="${mr-1.4*k}" fill="none" stroke="${routeCol}" stroke-width="${2.6*k}"/></g>`;
+  const endM=(x,y,cls)=>`<g class="${cls||''}" filter="url(#${id}s)"><circle cx="${x}" cy="${y}" r="${mr+.4*k}" fill="#fff"/><circle cx="${x}" cy="${y}" r="${mr-1.6*k}" fill="${o.endCol||'var(--routeEnd)'}"/></g>`;
+  if(!shared) s+=startM(x1,y1);
+  if(f.arr) s+=endM(x2,y2,o.anim?'pin-anim':'');
+  const fs=(o.fs||11)*k;
+  const lab=(x,y,t,dx,dy,anchor='start',col)=>`<text x="${x+dx*k}" y="${y+dy*k}" font-family="SF Mono,Geist Mono,monospace" font-weight="700" font-size="${fs}" fill="${col||o.labelCol||'var(--label)'}" text-anchor="${anchor}" paint-order="stroke" stroke="${o.haloCol||'var(--mapLand)'}" stroke-width="${3.2*k}" stroke-linejoin="round">${t}</text>`;
+  if(o.labels){ if(!shared) s+=lab(x1,y1,f.dep[2],11,4); else if(o.f==='tahoe') s+=lab(x1+4,y1+2,'BAY AREA',0,4,'middle',zc); if(f.arr) s+=lab(x2,y2,f.arr[2],-11,-11,'end'); }
+  return s+'</svg>';
+}
+
+/* Profile chart (sample track KSQL→KTVL) */
+const ALT=[[0,5],[2,900],[6,3600],[10,6300],[14,9000],[18,11500],[22,11500],[30,11520],[38,11480],[44,11500],[48,10200],[52,8500],[55,7200],[58,6269]];
+const GS=[[0,72],[2,98],[6,112],[10,118],[14,124],[18,150],[22,176],[30,178],[38,172],[44,180],[48,188],[52,150],[55,104],[58,70]];
+const TER=[[0,0],[5,150],[9,900],[12,1700],[15,500],[20,60],[25,120],[29,800],[33,2600],[37,5200],[40,7300],[43,8600],[45,9400],[47,7600],[49,8300],[51,7200],[54,6400],[58,6269]];
+function smooth(P){let d=`M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];d+=` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`}return d}
+function chartSVG(o){
+  const id='c'+(UID++); const W=o.w,H=o.h, L=o.compact?0:26, B=o.compact?2:16, T=o.compact?2:6;
+  const X=t=>L+(t/58)*(W-L-2), Y=a=>T+(1-a/13000)*(H-T-B), Ys=v=>T+(1-v/220)*(H-T-B);
+  const ap=ALT.map(p=>[X(p[0]),Y(p[1])]), tp=TER.map(p=>[X(p[0]),Y(p[1])]), gp=GS.map(p=>[X(p[0]),Ys(p[1])]);
+  const base=Y(0);
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Altitude, ground speed and terrain profile (sample data)">
+  <defs><linearGradient id="${id}a" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--alt0)" stop-opacity=".04"/><stop offset=".5" stop-color="var(--alt1)" stop-opacity=".2"/><stop offset="1" stop-color="var(--alt2)" stop-opacity=".38"/></linearGradient>
+  <linearGradient id="${id}l" gradientUnits="userSpaceOnUse" x1="0" y1="${base}" x2="0" y2="${T}"><stop offset="0" stop-color="var(--alt0)"/><stop offset=".5" stop-color="var(--alt1)"/><stop offset="1" stop-color="var(--alt2)"/></linearGradient></defs>`;
+  if(!o.compact){[0,4000,8000,12000].forEach(a=>{s+=`<path d="M${L},${Y(a)}H${W}" stroke="var(--sep)" stroke-width="1"/><text x="0" y="${Y(a)+3.5}" font-size="9.5" font-family="SF Mono,Geist Mono,monospace" fill="var(--label3)">${a?a/1000+'k':'0'}</text>`});
+    [0,15,30,45,58].forEach(t=>s+=`<text x="${X(t)}" y="${H-3}" font-size="9.5" font-family="SF Mono,Geist Mono,monospace" fill="var(--label3)" text-anchor="${t===0?'start':t===58?'end':'middle'}">0:${String(t).padStart(2,'0')}</text>`);}
+  s+=`<path d="${smooth(tp)} L${X(58)},${base} L${X(0)},${base}Z" fill="${o.terrainCol||'var(--terrain)'}"/>`;
+  s+=`<path d="${smooth(ap)} L${X(58)},${base} L${X(0)},${base}Z" fill="url(#${id}a)"/>`;
+  s+=`<path d="${smooth(ap)}" fill="none" stroke="url(#${id}l)" stroke-width="${o.compact?2.2:2.4}" stroke-linecap="round"/>`;
+  if(!o.noSpeed) s+=`<path d="${smooth(gp)}" fill="none" stroke="var(--beacon)" stroke-width="1.6" stroke-dasharray="4 3" stroke-opacity=".9"/>`;
+  if(o.scrub){const t=58*o.scrub, x=X(t), y=Y(11510); s+=`<path d="M${x},${T}V${base}" stroke="var(--label2)" stroke-width="1" stroke-opacity=".6"/><circle cx="${x}" cy="${y}" r="4.5" fill="var(--bg)" stroke="var(--alt2)" stroke-width="2.5"/><circle cx="${x}" cy="${Ys(178)}" r="3.5" fill="var(--beacon)"/>
+   <g transform="translate(${x-62},${T+50})"><rect width="124" height="24" rx="12" fill="var(--surface2)" stroke="var(--sep)"/><text x="62" y="16" text-anchor="middle" font-size="11" font-weight="700" font-family="SF Pro Rounded,Nunito,sans-serif" fill="var(--label)">11,500 ft · 178 kt · 0:32</text></g>`}
+  return s+'</svg>';
+}
+</script>
+<script>
+const DATA={
+ tahoe:{title:'Afternoon hop over the Sierra',route:['KSQL','KTVL'],ac:'Cirrus SR22',date:'Sat, Sep 19',stats:[['0:58',''],['135','nm'],['11,500','ft']],labels:['Flight','Distance','Max alt'],who:['Maya Chen','MC','linear-gradient(135deg,#818CF8,#22D3EE)','2h']},
+ monterey:{title:'Golden hour down the coast',route:['KPAO','KMRY'],ac:'Cessna 172S',date:'Sun, Oct 4',stats:[['0:44',''],['64','nm'],['5,500','ft']],labels:['Flight','Distance','Max alt'],who:['Alex Rivera','AR','linear-gradient(135deg,#0A5FD1,#22D3EE)','9d']},
+ pattern:{title:'First solo! 3 laps in the pattern',route:['KRHV','KRHV'],ac:'Cessna 152',date:'Mon, Oct 12',stats:[['0:24',''],['3',''],['1,100','ft']],labels:['Flight','Landings','Max alt'],who:['Jordan Ruiz','JR','linear-gradient(135deg,#F59E0B,#E8604C)','5h']},
+ patternme:{route:['KRHV','KRHV'],ac:'Cessna 172S · pattern work',date:'Mon, Sep 14',stats:[['0:42',''],['6','ldg'],['1,300','ft']]}
+};
+function visPill(v){return v==='private'?`<span class="vis">${ic('lock','xs')}Private</span>`:v==='followers'?`<span class="vis followers">${ic('people','xs')}Followers</span>`:`<span class="vis public">${ic('globe','xs')}Public</span>`}
+function flightCard(key,vis,compact){
+  const D=DATA[key];
+  if(compact){return `<div class="fcard" style="display:flex;gap:12px;padding:10px;align-items:center">
+   <div style="width:72px;height:72px;border-radius:12px;overflow:hidden;flex:none" class="map">${mapSVG({f:key,w:72,h:72,sw:3.2,cw:1.6,mr:4.4,pad:.24})}</div>
+   <div style="flex:1;min-width:0"><div class="row sb"><div style="font:600 16px var(--mono)">${D.route[0]}<span style="color:var(--label3);margin:0 5px">→</span>${D.route[1]}</div>${visPill(vis)}</div>
+   <div class="footnote l2" style="margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${D.date} · ${D.ac}</div>
+   <div class="row gap12" style="margin-top:5px">${D.stats.map(s=>`<span class="num" style="font-size:16px">${s[0]}<span class="unit" style="font-size:11px">${s[1]}</span></span>`).join('')}</div></div></div>`}
+  return `<div class="fcard"><div class="map" style="height:190px">${mapSVG({f:key,w:472,h:190,labels:1,pad:.16,sw:5})}</div>
+   <div class="pad"><div class="row sb"><div style="font:600 18px var(--mono)">${D.route[0]}<span style="color:var(--label3);margin:0 6px">→</span>${D.route[1]}</div>${visPill(vis)}</div>
+   <div class="subhead l2" style="margin-top:2px">${D.date} · ${D.ac}</div>
+   <div class="stats3" style="margin-top:10px">${D.stats.map((s,i)=>`<div class="stat"><div class="num v">${s[0]}<span class="unit">${s[1]}</span></div><div class="k">${D.labels[i]}</div></div>`).join('')}</div></div></div>`;
+}
+function post(key){
+  const D=DATA[key]; const solo=key==='pattern';
+  const stats=`<div class="stats3" style="padding:0 16px 12px">${D.stats.map((s,i)=>`<div class="stat"><div class="k" style="margin:0 0 1px">${D.labels[i]}</div><div class="num v" style="font-size:20px">${s[0]}<span class="unit">${s[1]}</span></div></div>`).join('')}</div>`;
+  return `<div class="fcard">
+   <div class="pad row gap10" style="padding-bottom:8px"><div class="avatar" style="background:${D.who[2]}">${D.who[1]}</div>
+    <div style="flex:1"><div class="headline" style="font-size:15px;line-height:19px">${D.who[0]}</div><div class="caption1 l2 row gap4">${D.who[3]} · ${D.ac} · ${solo?ic('globe','xs')+'Public':ic('people','xs')+'Followers'}</div></div><span class="l2">${ic('more')}</span></div>
+   <div style="padding:0 16px 8px"><div style="font:700 19px/24px var(--sfd)">${D.title}</div><div class="subhead l2" style="margin-top:1px"><span class="mono" style="font-size:13.5px">${solo?'KRHV · PATTERN':'BAY AREA → KTVL'}</span></div></div>
+   ${stats}
+   <div class="map" style="height:${solo?150:212}px;position:relative">${mapSVG({f:key,w:361,h:solo?150:212,labels:solo?0:1,trim:solo?0:1,pad:solo?.35:.12,sw:4.6})}
+     ${solo?`<div class="glass row gap8" style="position:absolute;left:12px;bottom:12px;border-radius:18px;padding:6px 12px 6px 6px"><div style="width:30px;height:30px;border-radius:10px;background:#F2A93B;color:#0B1220;display:grid;place-items:center">${ic('star','s')}</div><div><div style="font:700 13px var(--sf)">Achievement · First Solo</div><div class="caption1 l2">KRHV · Reid-Hillview</div></div></div>`:''}</div>
+   <div class="row sb" style="padding:10px 16px 12px"><div class="row gap6 footnote" style="color:var(--primary)">${ic('wind','s')}<b>${solo?48:23}</b> <span class="l2">Tailwinds</span></div><div class="row gap6 footnote l2">${ic('bubble','s')}${solo?17:4}</div><div class="l2">${ic('share','s')}</div></div></div>`;
+}
+function tabbar(on){
+  const t=[['house','Home','home'],['globe','Explore','explore'],['plus','Record','record'],['book','Flights','flights'],['person','Profile','profile']];
+  return `<div class="tabbar" role="tablist">${t.map(([i,l,k])=>k==='record'?`<div class="tab log" role="tab" data-a11y-id="tab.record" aria-label="Record a flight"><div class="plus">${ic('plus')}</div>${l}</div>`:`<div class="tab ${k===on?'on':''}" role="tab" aria-selected="${k===on}" data-a11y-id="tab.${k}">${ic(i)}<span>${l}</span></div>`).join('')}</div>`;
+}
+function visPicker(sel){
+  const o=[['private','Private','lock','Only you'],['followers','Followers','people','Approved followers'],['public','Public','globe','Anyone on Flyby']];
+  return `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" role="radiogroup" aria-label="Flight visibility">${o.map(([k,l,i,h])=>{const on=k===sel;return `<div role="radio" aria-checked="${on}" style="border-radius:14px;padding:10px 6px;text-align:center;background:var(--surface);box-shadow:${on?'0 0 0 2px var(--primary)':'0 0 0 .5px var(--sep)'};color:${on?'var(--primary)':'var(--label2)'}">
+   <div style="display:flex;justify-content:center">${ic(i,'l')}</div><div style="font:600 14px var(--sf);margin-top:3px;color:var(--label)">${l}</div><div class="caption1 l2" style="margin-top:1px;font-size:11px">${h}</div>${on?`<div class="caption1" style="color:var(--primary);font-weight:700;margin-top:2px;font-size:11px">✓ Default</div>`:''}</div>`}).join('')}</div>`;
+}
+function ringP(p){const r=36,c=2*Math.PI*r;return `<svg viewBox="0 0 84 84" width="84" height="84"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--alt0)"/><stop offset="1" stop-color="var(--alt2)"/></linearGradient></defs><circle cx="42" cy="42" r="${r}" fill="none" stroke="var(--fill)" stroke-width="9"/><circle cx="42" cy="42" r="${r}" fill="none" stroke="url(#rg)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c*p} ${c}" transform="rotate(-90 42 42)"/><text x="42" y="47" text-anchor="middle" font-family="SF Pro Rounded,Nunito,sans-serif" font-weight="700" font-size="16" fill="var(--label)">62%</text></svg>`}
+function bars(){const v=[2.1,3.4,5.8,4.2,6.9,8.4,7.1,9.3,10.2,6.6,4.0,1.8],m=['N','D','J','F','M','A','M','J','J','A','S','O'];const W=329,H=58,bw=18,g=(W-bw*12)/11;return `<svg width="${W}" height="${H+14}" role="img" aria-label="Hours by month">${v.map((x,i)=>{const h=x/10.2*H;return `<rect x="${i*(bw+g)}" y="${H-h}" width="${bw}" height="${h}" rx="5" fill="${i===8?'var(--primary)':'var(--primarySoft)'}"/><text x="${i*(bw+g)+bw/2}" y="${H+12}" font-size="10" text-anchor="middle" fill="var(--label3)" font-family="SF Pro Text,Inter,sans-serif">${m[i]}</text>`}).join('')}</svg>`}
+function badge(icon,c1,c2,label,locked,progress){return `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
+ <div style="width:60px;height:60px;border-radius:19px;background:${locked?'var(--surface2)':`linear-gradient(145deg,${c1},${c2})`};display:grid;place-items:center;color:${locked?'var(--label3)':'#fff'};box-shadow:${locked?'none':'0 6px 16px -6px '+c2};position:relative">${ic(icon,'l')}${progress?`<svg width="60" height="60" style="position:absolute;inset:0"><rect x="1.5" y="1.5" width="57" height="57" rx="18" fill="none" stroke="var(--primary)" stroke-width="3" pathLength="1" stroke-dasharray="${progress} 1" stroke-linecap="round"/></svg>`:''}</div>
+ <div class="caption1" style="font-weight:600;line-height:14px">${label}</div></div>`}
+function photo(n){const g=['linear-gradient(180deg,#7FB2E5,#E9C9A0 70%,#6E7F5A)','linear-gradient(180deg,#2B5C8A,#89B4D8 60%,#DDE7EE)','linear-gradient(160deg,#F2A65A,#D9546A 60%,#3B2A55)'][n-1];
+ return `<div style="width:100%;height:100%;border-radius:inherit;background:${g};position:relative;overflow:hidden" role="img" aria-label="Sample photo"><svg viewBox="0 0 84 84" preserveAspectRatio="none" width="100%" height="100%" style="position:absolute;inset:0">${n===1?'<path d="M0 62 L18 44 L30 54 L46 36 L64 52 L84 40 V84 H0Z" fill="#4C5E45" opacity=".85"/><ellipse cx="44" cy="72" rx="30" ry="6" fill="#3E7CB1" opacity=".85"/>':n===2?'<path d="M-6 30 L60 48 L86 46 L86 56 L-6 44Z" fill="#E8EEF3"/><path d="M50 46 L70 34 L76 35 L62 48Z" fill="#CFD8E0"/>':'<circle cx="60" cy="44" r="12" fill="#FFD48A" opacity=".9"/><path d="M0 58 Q42 50 84 60 V84 H0Z" fill="#2A1B3A"/>'}</svg></div>`}
+function logo(sz){return `<svg width="${sz}" height="${sz}" viewBox="0 0 44 44" aria-label="Flyby"><defs><linearGradient id="lg${sz}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0A63DB"/><stop offset=".55" stop-color="#2F80ED"/><stop offset="1" stop-color="#4BA3FF"/></linearGradient></defs><rect width="44" height="44" rx="12" fill="url(#lg${sz})"/><rect width="44" height="22" rx="12" fill="#fff" opacity=".18"/><path d="M9 32 Q21 30 35 12" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="35" cy="12" r="3.8" fill="#fff"/><circle cx="9" cy="32" r="2.6" fill="none" stroke="#fff" stroke-width="1.6"/></svg>`}
+function recap(kind){
+ const foot=(col)=>`<div style="position:absolute;bottom:20px;left:24px;right:24px;display:flex;justify-content:space-between;font:500 9.5px var(--sf);color:${col}"><span><span class="mono">@alexflies</span> on Flyby</span><span>Not for navigation · Sample data</span></div>`;
+ const clouds=(arr)=>arr.map(c=>`<div class="cloud" style="left:${c[0]}px;top:${c[1]}px;width:${c[2]}px;height:${c[3]}px;opacity:${c[4]}"></div>`).join('');
+ if(kind==='skyglass'){return `<div class="recap light" style="background:linear-gradient(180deg,#1F5FD6 0%,#3C86F0 28%,#8CC4FF 52%,#D9ECFF 74%,#F5F8FC 100%);color:#0B1220">
+  ${clouds([[-60,300,260,70,.55],[170,250,240,60,.45],[40,420,320,90,.7],[-40,520,440,120,.9]])}
+  <div class="map" style="position:absolute;left:16px;right:16px;top:162px;height:292px;border-radius:30px;overflow:hidden;box-shadow:0 18px 40px -14px rgba(16,42,90,.45),0 0 0 3px rgba(255,255,255,.55)">${mapSVG({f:'tahoe',w:328,h:292,trim:1,labels:1,pad:.1,offy:.12,sw:5.4,cw:2.2,mr:7.5,fs:11})}</div>
+  <div style="position:absolute;top:28px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;color:#fff"><div class="row gap6">${logo(22)}<span style="font:700 15px var(--sfr)">flyby</span></div><span style="font:600 10.5px var(--mono);letter-spacing:.1em">SAT · SEP 19 · 2026</span></div>
+  <div style="position:absolute;top:68px;left:24px;right:24px;color:#fff"><div style="font:700 27px/31px var(--sfd);letter-spacing:-.01em">Over the Sierra<br>to Tahoe</div><div style="font:500 13px var(--sf);margin-top:6px;opacity:.92">Alex Rivera · Cirrus SR22</div></div>
+  <div class="glass" style="position:absolute;left:28px;top:174px;font:600 9.5px var(--mono);letter-spacing:.08em;color:#0B1B3A;display:flex;gap:4px;align-items:center;padding:6px 10px;border-radius:13px">${ic('shield','xs')}HOME FIELD HIDDEN</div>
+  <div class="glass" style="position:absolute;left:16px;right:16px;bottom:44px;border-radius:32px;padding:18px 20px 14px;background:rgba(255,255,255,.78);box-shadow:0 18px 40px -12px rgba(16,42,90,.35),inset 0 1px 0 #fff,inset 0 0 0 .5px rgba(255,255,255,.9)">
+   <div style="display:flex;align-items:center;gap:10px"><span style="font:600 12px var(--mono);color:#4A5568;letter-spacing:.06em">BAY AREA</span><span style="flex:1;height:1.5px;background:linear-gradient(90deg,#8CCBFF,#2F80ED,#1E3A8A)"></span><span style="font:700 30px var(--mono);letter-spacing:-.02em;color:#0B1220">KTVL</span></div>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px">
+    ${[['FLIGHT TIME','0:58',''],['DISTANCE','135','nm'],['MAX ALTITUDE','11,500','ft'],['AVG GROUND SPEED','140','kt']].map(s=>`<div><div style="font:600 9.5px var(--sf);letter-spacing:.1em;color:#4A5568">${s[0]}</div><div class="num" style="font-size:29px;line-height:34px;color:#0B1220">${s[1]}<span class="unit" style="color:#4A5568;font-size:14px">${s[2]}</span></div></div>`).join('')}
+   </div>
+   <div style="margin-top:8px">${chartSVG({w:288,h:34,compact:1,noSpeed:1,terrainCol:'rgba(16,42,90,.08)'})}</div>
+  </div>${foot('#33415C')}</div>`}
+ if(kind==='window'){return `<div class="recap light" style="background:linear-gradient(180deg,#FFFFFF 0%,#EEF4FB 100%);color:#0B1220">
+  <div style="position:absolute;top:28px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center"><div class="row gap6">${logo(22)}<span style="font:700 15px var(--sfr)">flyby</span></div><span style="font:600 10.5px var(--mono);letter-spacing:.1em;color:#4A5568">SUN · OCT 4 · 2026</span></div>
+  <div style="position:absolute;left:50%;top:72px;transform:translateX(-50%);width:244px;height:340px;border-radius:122px;padding:14px;background:linear-gradient(145deg,#FFFFFF,#DCE6F2);box-shadow:0 24px 50px -18px rgba(16,42,90,.4),inset 0 2px 0 #fff,inset 0 -2px 6px rgba(16,42,90,.12)">
+   <div style="width:100%;height:100%;border-radius:108px;overflow:hidden;position:relative;background:linear-gradient(180deg,#2E6FE0 0%,#76B4FF 45%,#CFE6FF 70%,#F6E7D2 100%);box-shadow:inset 0 6px 18px rgba(16,42,90,.35)">
+    <div style="position:absolute;inset:0" class="map">${mapSVG({f:'monterey',w:216,h:312,pad:.22,sw:5,cw:2,mr:6.5,labels:1,fs:11})}</div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 50%,rgba(255,255,255,0) 60%,rgba(255,255,255,.55) 100%),linear-gradient(115deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 28%);box-shadow:inset 0 6px 18px rgba(16,42,90,.3);border-radius:inherit"></div>
+   </div></div>
+  <div style="position:absolute;left:24px;right:24px;top:430px;text-align:center">
+   <div style="font:700 34px var(--mono);letter-spacing:-.02em">KPAO <span style="color:#0A63DB">→</span> KMRY</div>
+   <div style="font:500 13px var(--sf);color:#4A5568;margin-top:2px;display:flex;justify-content:center;gap:6px;align-items:center">Palo Alto → Monterey · C172S · ${ic('lock','xs')}Tail hidden</div>
+  </div>
+  <div style="position:absolute;left:18px;right:18px;top:504px;display:grid;grid-template-columns:repeat(3,1fr);background:#FFFFFF;border-radius:24px;padding:12px 6px;box-shadow:0 1px 2px rgba(16,42,90,.06),0 10px 24px rgba(16,42,90,.08);text-align:center">
+   ${[['TIME','0:44',''],['DISTANCE','64','nm'],['MAX ALT','5,500','ft']].map(s=>`<div><div style="font:600 9px var(--sf);letter-spacing:.1em;color:#4A5568">${s[0]}</div><div class="num" style="font-size:27px;line-height:32px">${s[1]}<span class="unit" style="color:#4A5568;font-size:12px">${s[2]}</span></div></div>`).join('')}
+  </div>${foot('#4A5568')}</div>`}
+ if(kind==='square'){return `<div class="recap sq light" style="background:#F5F8FC;color:#0B1220">
+  <div style="position:absolute;left:14px;right:14px;top:14px;height:208px;border-radius:26px;overflow:hidden" class="map">${mapSVG({f:'tahoe',w:332,h:208,trim:1,labels:1,pad:.1,sw:5,fs:10})}
+   <div class="glass" style="position:absolute;top:10px;left:10px;display:flex;gap:6px;align-items:center;border-radius:999px;padding:4px 10px 4px 4px">${logo(18)}<span style="font:700 12px var(--sfr)">flyby</span></div></div>
+  <div style="position:absolute;left:22px;right:22px;top:234px">
+   <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:700 19px var(--mono)">BAY AREA <span style="color:#0A63DB">→</span> KTVL</div><div style="font:500 11px var(--sf);color:#4A5568">SR22 · Sep 19, 2026</div></div>
+   <div style="display:grid;grid-template-columns:repeat(4,1fr);margin-top:8px">${[['Flight','0:58',''],['Distance','135','nm'],['Max alt','11.5','k ft'],['Avg GS','140','kt']].map(s=>`<div><div class="num" style="font-size:23px;line-height:28px">${s[1]}<span class="unit" style="color:#4A5568;font-size:11px">${s[2]}</span></div><div style="font:500 10.5px var(--sf);color:#4A5568">${s[0]}</div></div>`).join('')}</div>
+   <div style="display:flex;justify-content:space-between;margin-top:10px;font:500 9px var(--sf);color:#647089"><span class="mono">@alexflies</span><span>Not for navigation · Sample data</span></div></div></div>`}
+}
+const statusHTML=`<span>9:41</span><span class="r"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.2c2.4 0 4.6.9 6.3 2.5l1.2-1.3C13.5 1.5 10.9.4 8 .4S2.5 1.5.5 3.4l1.2 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3C11.6 4.7 9.9 4 8 4s-3.6.7-4.9 1.9l1.2 1.3c1-.9 2.3-1.4 3.7-1.4zM8 9.3c-.6 0-1.2.2-1.6.6L8 11.6l1.6-1.7c-.4-.4-1-.6-1.6-.6z"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" stroke-opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.5" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" fill-opacity=".45"/></svg></span>`;
+const $$=s=>document.querySelectorAll(s);
+$$('[data-status]').forEach(e=>{e.classList.add('status');e.innerHTML=statusHTML});
+$$('[data-logo]').forEach(e=>e.innerHTML=logo(+e.dataset.logo));
+$$('[data-flightcard]').forEach(e=>e.outerHTML=flightCard(e.dataset.flightcard,e.dataset.vis,e.dataset.compact));
+$$('[data-post]').forEach(e=>e.outerHTML=post(e.dataset.post));
+$$('[data-tabbar]').forEach(e=>e.outerHTML=tabbar(e.dataset.tabbar));
+$$('[data-vispicker]').forEach(e=>e.outerHTML=visPicker(e.dataset.vispicker));
+$$('[data-ringp]').forEach(e=>e.innerHTML=ringP(+e.dataset.ringp));
+$$('[data-bars]').forEach(e=>e.innerHTML=bars());
+$$('[data-photo]').forEach(e=>e.innerHTML=photo(+e.dataset.photo));
+$$('[data-chart]').forEach(e=>e.innerHTML=chartSVG({w:+e.dataset.w,h:+e.dataset.h,scrub:+e.dataset.scrub||0}));
+$$('[data-badges]').forEach(e=>e.innerHTML=[badge('star','#F5A524','#E8604C','First Solo'),badge('mountain','#4BA3FF','#0A63DB','Sierra Crossing'),badge('moon','#2F4FA8','#1E2A5A','Night Owl'),badge('waves','','','Coast Hopper 7/10',1,.7)].join(''));
+$$('[data-recap]').forEach(e=>e.innerHTML=recap(e.dataset.recap));
+$$('[data-map]').forEach(e=>{const d=e.dataset;e.classList.add('map');const big=+d.h>300;e.innerHTML=mapSVG({f:d.map,w:+d.w,h:+d.h,ring:+d.ring,gc:+d.gc,labels:+d.labels,anim:+d.anim,grid:+d.grid,trim:+d.trim,pad:big?.1:.2,offy:big?-.03:0,fs:12})});
+$$('[data-i]').forEach(e=>e.outerHTML=ic(e.dataset.i,e.dataset.c||''));
+</script>
+</body></html>
