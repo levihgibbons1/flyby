@@ -1,4 +1,4 @@
-# Spec: Motion & haptics (v0.3, provisional)
+# Spec: Motion & haptics (v0.3.1, provisional)
 
 All motion respects **Reduce Motion**: movement becomes a cross-fade and the route appears already drawn. Glass motion is system-driven wherever possible. **Version gating (F1):** rows marked 18+ or 26 go through DesignSystem wrappers, and the iOS 17 fallback is listed in the row. Shimmer placeholders are static under Reduce Motion.
 
