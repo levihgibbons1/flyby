@@ -1,4 +1,4 @@
-# Spec: Navigation & tab bar (v0.3 Skyglass, provisional)
+# Spec: Navigation & tab bar (v0.3.1 Skyglass, provisional)
 
 Tabs (founder kickoff; matches `MVP-PLAN.md` D2), left to right:
 
