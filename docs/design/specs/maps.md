@@ -1,4 +1,4 @@
-# Spec: Activity maps (v0.3 Skyglass, provisional)
+# Spec: Activity maps (v0.3.1 Skyglass, provisional)
 
 References: `png/03-flight-detail.png`, `png/16-state-flights-map-states.png`, `png/20-state-components.png`, `png/21-sizes-flight-detail-se-promax.png`, `png/02-home-feed.png`, `png/01-home-journal.png`, `png/05-flights-logbook.png`, `png/10`–`12` recaps, `png/14-privacy-owner-vs-shared.png`
 
