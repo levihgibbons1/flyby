@@ -1,4 +1,4 @@
-# Research notes for v0.2 (Oct 13, 2026)
+# Research notes for v0.2–v0.3 (Oct 13, 2026)
 
 ## Apple Liquid Glass (iOS 26)
 Sources: Apple "Adopting Liquid Glass" (developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass), "Liquid Glass" technology overview, HIG "Tab bars", WWDC25 sessions 219 "Meet Liquid Glass" and 323 "Build a SwiftUI app with the new design".
