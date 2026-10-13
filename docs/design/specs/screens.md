@@ -1,4 +1,4 @@
-# Spec: Screen inventory (v0.3 Skyglass, provisional)
+# Spec: Screen inventory (v0.3.1 Skyglass, provisional)
 
 The primary frame is 393×852 pt (iPhone 15/16/17 Pro), exported at 3× (1179×2556). **Also specified:** iPhone SE 375×667 (home button, 20 pt status bar) and Pro Max 440×956. Light is primary; Dark is shown for Home. **Sample data.**
 
@@ -10,7 +10,7 @@ The primary frame is 393×852 pt (iPhone 15/16/17 Pro), exported at 3× (1179×2
 | 4 | Pilot Profile | `png/04-pilot-profile.png` |
 | 5 | Flights (logbook list) | `png/05-flights-logbook.png` |
 | 6 | Record → Log a Flight 1/2 | `png/06-log-flight-1.png` |
-| 7 | Record → Log a Flight 2/2 (visibility, privacy) | `png/07-log-flight-2-visibility.png` |
+| 7 | Record → Log a Flight 2/2 (visibility; read-only home-airport note) | `png/07-log-flight-2-visibility.png` |
 | 8 | Share Recap | `png/08-share-recap.png` |
 | 9 | Home: Journal (Dark variant) | `png/09-home-journal-dark.png` |
 | 10–12 | Recaps: Skyglass Story, Window Seat Story, Logbook Card Post | `png/10…`, `png/11…`, `png/12…` |
@@ -25,7 +25,8 @@ The primary frame is 393×852 pt (iPhone 15/16/17 Pro), exported at 3× (1179×2
 | 21 | Sizes: Flight Detail, SE + Pro Max (44 pt hit areas shown on SE) | `png/21-sizes-flight-detail-se-promax.png` |
 | 22 | Sizes: Log a Flight with the keyboard up, SE + Pro Max | `png/22-sizes-log-keyboard-se-promax.png` |
 | 23 | Sizes: Share preview, SE + Pro Max | `png/23-sizes-share-se-promax.png` |
-| 24 | Recap: Logbook Card, Night (fixed dark export) | `png/24-recap-square-night-1080x1080.png` |
+| 24 | Recap: Logbook Card, Night (fixed dark export; Night is Logbook Card only) | `png/24-recap-square-night-1080x1080.png` |
+| 25 | iOS 17 fallback: Flight Detail on iPhone SE + iPhone 15 Pro Max (thickMaterial + scrim, bordered buttons) | `png/25-ios17-fallback-flight-detail-se-15promax.png` |
 
 Profile (`png/04`): the gear icon (44 pt hit area) opens **Settings** (`png/19`):
 - **Privacy:** default visibility Private; **Hide home airport, global, On by default**; home airport (only you); default trim 1.0 nm.
