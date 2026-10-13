@@ -105,3 +105,71 @@ Decisions in effect: minimum iOS 17. Home airport sharing is optional and off by
 - Add AC: builds and runs on an iOS 17.x simulator runtime; glass falls back gracefully (F1).
 - Add map fixtures and tests: empty, 1-point, invalid-coordinate and antimeridian tracks (F2, F3).
 - Expand the A7 id list with the F9 ids.
+
+---
+
+## v0.3 verification (Oct 13, 2026, 1:15 PM PT)
+Type: read-only review of the design v0.3 specs (`DESIGN_SYSTEM.md`, `specs/*` including the new `platform-fallbacks.md`, `accessibility.md` and `states.md`) and the changelog in `proposal.html` §11. **No build or tests were executed.** I checked the new mockups (png/15–24) by filename and spec reference only, not pixel by pixel, so each "Resolved" means resolved in the spec. Device verification is still pending in Claude Code/Codex runs on iOS 17 and iOS 26.
+
+| # | Status | Evidence / remaining gap |
+|---|---|---|
+| F1 iOS 17 vs iOS 26 APIs | **Resolved (spec)** | platform-fallbacks.md: wrappers in `DesignSystem/`, an `#available` table, a CI grep rule. navigation, motion and flight-detail list the 17/18 fallbacks. Still needs a real build on an iOS 17 runtime (smoke test updated) |
+| F2 force unwraps / empty track | **Resolved** | maps.md: `RouteDisplay` enum, `if let`, snapshots take `ValidTrack`, fixtures for 0, 1 and 2 points |
+| F3 invalid coords / antimeridian | **Resolved** | maps.md "Geometry validation": NaN, range and (0,0) points are dropped; dedupe, spike removal, unwrap and split at ±180°, `MKGeodesicPolyline`; PHNL–NZAA and PANC–UHMA fixtures |
+| F4 empty/loading/error | **Resolved** | states.md: EmptyStateView on `ContentUnavailableView` (iOS 17), 15 cases with copy, png/15–18 and 20. See N1 |
+| F5 44 pt targets | **Resolved** | accessibility.md §1: 40 pt visuals with 44 pt hit areas, chips at 44, dots not interactive, Inspector audit AC |
+| F6 contrast / export style | **Partially resolved** | A `mapScrim` token, measured worst cases and fixed Light/Night export are all specified. Gap: contrast is measured only for the iOS 26 `glassStrong` and scrim. It isn't measured for the iOS 17 `.ultraThinMaterial` fallback (see N2) |
+| F7 Dynamic Type | **Resolved** | accessibility.md §4: per-screen AX3 rules; recaps are excluded from Dynamic Type |
+| F8 VoiceOver | **Resolved** | accessibility.md §5: a table per screen, FlightCard combined, disclaimer read aloud |
+| F9 ids | **Resolved** | accessibility.md §6 and the per-spec id lists; `visibilityPicker` → `log.visibility` |
+| F10 SE / Pro Max | **Resolved (spec)** | `clamp(0.55×H, 280, 520)`; snapshots sized from width × scale; png/21–23. Pixel check pending |
+| F11 home airport precedence | **Resolved** | privacy-sharing.md: one global setting, On by default; precedence share > flight > global; a per-share change isn't persisted. Matches the founder's decision. See N4 |
+| F12 About disclaimer | **Resolved** | DESIGN_SYSTEM §8.1, png/19, `about.disclaimer`; the exact substring is used everywhere |
+| F13 reliability implications | **Resolved** | "rec"/"Entered" labels, "approx.", "Terrain illustrative", "Approximate route (not flown track)", "not a certified logbook" |
+| F14 Photos permission | **Resolved** | log-flight.md: PhotosPicker with no prompt; recaps.md: add-only only on Save, plus a denied state |
+| F15 proposal version | **Resolved** | proposal.html title is "v0.3 Skyglass" (legacy "v0.2 offers two directions" copy remains in §02; cosmetic) |
+
+### New issues introduced by v0.3
+**N1. "Offline" copy promises a sync that doesn't exist yet**
+- Label: code review finding · **Severity: Low**
+- File/section: states.md "Offline" ("Changes will sync when you reconnect")
+- Issue: Sprint 1 has no networking, so this promises behavior that doesn't exist.
+- Fix: mark the row "post-Sprint 1 (Supabase)" and don't build it in Sprint 1.
+
+**N2. iOS 17/18 fallback contrast isn't measured**
+- Label: code review finding · **Severity: Medium**
+- File/section: platform-fallbacks.md API table; accessibility.md §2
+- Issue: `.ultraThinMaterial` is lighter than `glassStrong`. Without the scrim, the dark sheet disclaimer measures 2.7:1, and the iOS 17 sheet with the scrim has no measured value.
+- Fix: use `.regularMaterial` (or `.thickMaterial`) plus the scrim on the iOS 17 map surfaces, measure them, and add the values to the §2 table.
+
+**N3. CI lint rule is too broad**
+- Label: code review finding · **Severity: Low**
+- File/section: platform-fallbacks.md "Rule"
+- Issue: the pattern `.glass` would also match tokens such as `Color.Flyby.glassStrong` or `glass.regular` outside `DesignSystem/`, causing false failures.
+- Fix: match `buttonStyle(.glass` / `.glassProminent` precisely (as in the updated QA smoke test).
+
+**N4. Spec mixes in database work for a mock-only sprint**
+- Label: code review finding · **Severity: Low**
+- File/section: privacy-sharing.md (`profiles.hide_home_airport … default true`, `flights.hide_home_override`)
+- Issue: these are DB columns, but Sprint 1 is mock-only.
+- Fix: state that Sprint 1 stores the setting in the in-memory/mock `ProfileStore` (default `true`) and that the DB columns arrive with the Supabase schema PR, which needs a migration test asserting `default true`.
+
+**N5. Test seam would ship in the release app**
+- Label: code review finding · **Severity: Low**
+- File/section: platform-fallbacks.md "QA hooks" (`DesignSystem.forceLegacy`)
+- Fix: wrap it in `#if DEBUG` so the seam can't ship in release builds.
+
+**N6. Device/OS pairing in the smoke test**
+- Label: code review finding · **Severity: Low**
+- File/section: QA smoke test
+- Issue: the iPhone 17 Pro Max simulator can't run iOS 17.
+- Fix: already applied in the QA docs. On iOS 17 the largest device is now the iPhone 15 Pro Max (430×932); the 440 pt width is covered on iOS 26 only.
+
+### QA doc updates made in this pass
+- `MVP-PLAN.md`:
+  - added iOS 17.x and 26.x runtimes to the assumptions and the Definition of Done
+  - rewrote the smoke test: build on SE with iOS 17; tests on SE and 15 Pro Max on iOS 17, and on SE and 17 Pro Max on iOS 26
+  - added a grep for gated APIs and a check that Hide home airport defaults to `true`
+  - added new tests: `PrivacySettingsTests` and `TrackGeometryTests`
+  - updated the manual pass with steps 6 and 10, AC6.4 for the global On default, and open question 5 marked decided
+- `sprint1-acceptance-criteria.md`: [S1] build (both runtimes plus the wrapper rule), Recap and Privacy (global Hide home On by default), and the smoke test commands and checklist for iOS 17 and iOS 26.
