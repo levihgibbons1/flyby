@@ -10,7 +10,8 @@ Sprint 1 rules: **mock data only** (no Supabase or networking), PRs only, no dep
 **Labels:** `sprint-1`, `ios`
 
 - [ ] A fresh clone builds with ⌘B. No manual steps, and no signing team needed for the simulator.
-- [ ] Runs on the iPhone SE (3rd gen) and iPhone 17 Pro Max simulators with no crash
+- [ ] Runs on the iPhone SE (3rd gen) and a Pro Max simulator with no crash, on **both an iOS 17.x and an iOS 26.x runtime** (iPhone 17 Pro Max on 26; iPhone 15 Pro Max on 17)
+- [ ] iOS 18/26-only APIs (Liquid Glass, `Tab`, zoom transition, tab-bar minimize) are only used inside `DesignSystem/` wrappers with iOS 17 fallbacks
 - [ ] `xcodebuild build` and `xcodebuild test` pass from the CLI
 - [ ] No network calls, no Supabase SDK or URLs. Mock data only.
 - [ ] README covers open/build/run/test and the required Xcode and iOS versions (iOS 17+)
@@ -72,7 +73,7 @@ Sprint 1 rules: **mock data only** (no Supabase or networking), PRs only, no dep
 - [ ] "Share Recap" on Flight Detail opens a preview (map, route, date, aircraft, stats, branding)
 - [ ] The image is rendered **only after the user taps** Share or Save. No background pre-rendering or disk caching.
 - [ ] Sharing uses the system `ShareLink` or share sheet. The app never posts on its own.
-- [ ] "Hide home airport" and "Trim track start/end" toggles are **on by default** and update the preview live
+- [ ] "Hide home airport" and "Trim track start/end" toggles are **on by default** and update the preview live. Hide home airport starts from the global Profile → Privacy setting (**On by default**); a per-share change isn't persisted
 - [ ] The recap includes a "Not for navigation" line
 - [ ] Export uses a fixed, legible style no matter what the device appearance is
 - [ ] Photos permission (add-only) is requested only when the user taps Save
@@ -84,7 +85,7 @@ Sprint 1 rules: **mock data only** (no Supabase or networking), PRs only, no dep
 
 - [ ] **User-initiated export only:** no recap image is created, cached, or shared without a user tap (unit test with a renderer spy)
 - [ ] **Default visibility is Private:** the `Flight` model and Log form both default to `.private` (unit + UI test)
-- [ ] **Hide or trim the home airport and track ends where feasible:** mock home airport in Profile. Recaps hide a matching endpoint and trim about 1 nm or N points from the track ends. Very short tracks fall back to hiding the endpoints. Covered by `TrackPrivacyTests`.
+- [ ] **Hide or trim the home airport and track ends where feasible:** mock home airport in Profile, and a global "Hide home airport" setting that defaults to **On** (sharing it is opt-in). Recaps hide a matching endpoint and trim about 1 nm or N points from the track ends. Very short tracks fall back to hiding the endpoints. Covered by `TrackPrivacyTests`.
 - [ ] **No keys or secrets in the repo:** `.gitignore` covers `.env*`, `*.p8`, `*.p12`, `*.xcconfig.local`, and `xcuserdata/`. Secret scan is clean.
 - [ ] **Not-for-navigation disclaimer** in Flight Detail, Recap preview, and Profile → About, as real text that VoiceOver reads
 - [ ] No permissions besides Photos add-only (on Save). No analytics or tracking SDKs.
@@ -108,14 +109,19 @@ Sprint 1 rules: **mock data only** (no Supabase or networking), PRs only, no dep
 **Labels:** `sprint-1`, `qa`
 
 ```bash
-xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)' clean build CODE_SIGNING_ALLOWED=NO
-xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max' test CODE_SIGNING_ALLOWED=NO
-xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)' test CODE_SIGNING_ALLOWED=NO
+# Set to installed runtimes (xcrun simctl list runtimes)
+IOS17=17.5; IOS26=26.0
+xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=$IOS17" clean build CODE_SIGNING_ALLOWED=NO
+xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=$IOS17" test CODE_SIGNING_ALLOWED=NO
+xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination "platform=iOS Simulator,name=iPhone 15 Pro Max,OS=$IOS17" test CODE_SIGNING_ALLOWED=NO
+xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination "platform=iOS Simulator,name=iPhone SE (3rd generation),OS=$IOS26" test CODE_SIGNING_ALLOWED=NO
+xcodebuild -project Flyby.xcodeproj -scheme Flyby -destination "platform=iOS Simulator,name=iPhone 17 Pro Max,OS=$IOS26" test CODE_SIGNING_ALLOWED=NO
 gitleaks detect --source . --no-banner   # or the git grep scan in MVP-PLAN.md
 git grep -nE "import Supabase|URLSession" -- '*.swift' || echo "OK: no network code"
 git grep -niE "not for navigation" -- '*.swift'
+git grep -nE "glassEffect|GlassEffectContainer|glassEffectID|buttonStyle\(\.glass|tabBarMinimizeBehavior|navigationTransition|matchedTransitionSource" -- '*.swift' ':!Flyby/DesignSystem/*' && echo "FAIL" || echo "OK: gated APIs wrapped"
 ```
 
-- [ ] Build passes on SE, and tests pass on SE and Pro Max
+- [ ] Build passes on SE (iOS 17), and tests pass on SE and Pro Max on **both iOS 17 and iOS 26**
 - [ ] Secret scan clean, and no network code
-- [ ] Manual pass in Light and Dark on both devices: tabs → flight detail (map + disclaimer) → log a flight (defaults to Private, shows in Flights, stats update) → invalid input errors → Share Recap (privacy toggles on, share sheet) → no location prompt → AX3 spot-check → VoiceOver spot-check
+- [ ] Manual pass in Light and Dark on both devices, on iOS 17 and iOS 26: tabs → flight detail (map + disclaimer) → log a flight (defaults to Private, shows in Flights, stats update) → invalid input errors → Settings → Privacy shows Hide home airport **On** by default → Share Recap (privacy toggles on, home field shown as region, share sheet) → no location prompt → AX3 spot-check → VoiceOver spot-check
