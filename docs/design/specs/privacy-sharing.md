@@ -1,24 +1,26 @@
-# Spec: Visibility & location privacy (v0.3, provisional)
+# Spec: Visibility & location privacy (v0.3.1, provisional)
 
 References: `png/14-privacy-owner-vs-shared.png`, `png/19-settings-privacy-about.png`, `png/07`, `png/08`
 
 ## Visibility
-- `FlightVisibility` = `private` (default) | `followers` | `public`. This is the default in the model initializer, in the Log form, and later as the DB column default.
+- `FlightVisibility` = `private` (default) | `followers` | `public`. This is the default in the model initializer and in the Log form. *(Future, not Sprint 1: also the DB column default.)*
 - Shown on **every** flight card, on Flight Detail, and in the Journal summary ("Only you"). Changing it uses `.symbolEffect(.replace)` plus a selection haptic.
 
 ## Home airport: one global setting (F11)
-- **Profile → Settings → Privacy → "Hide home airport"**, a single global boolean, **On by default** (privacy-first; sharing the home airport is opt-in). Stored on the profile (`profiles.hide_home_airport boolean not null default true`). id `settings.hideHome`.
+- **Profile → Settings → Privacy → "Hide home airport"**, a single global boolean, **On by default** (privacy-first; sharing the home airport is opt-in). id `settings.hideHome`.
+  - **Sprint 1 (mock-only):** stored in the in-memory/mock `ProfileStore` as `hideHomeAirport: Bool = true`. It's covered by `PrivacySettingsTests` (the default is `true`; a share override doesn't mutate it).
+  - *Future (Supabase schema PR, not Sprint 1):* `profiles.hide_home_airport boolean not null default true`, plus a migration test asserting `default true`.
 - Also in Settings: Home airport (precise, never displayed to others; "only you"), Default visibility (Private), Default trim (1.0 nm). The public profile shows a region only ("Home base: Bay Area").
-- **Precedence:** per-share override → per-flight override → global setting.
+- **Precedence (Sprint 1):** per-share override → global setting. A per-flight override is **deferred** (PM scope trim) and would slot in between later.
 
 | Level | Where | Stored? | Initial value |
 |---|---|---|---|
 | Global | Settings → Privacy | profile | **On** |
-| Per flight (optional; may be omitted in Sprint 1) | Log a Flight → "Privacy when shared" | `flights.hide_home_override` (nullable; `null` = follow global) | `null` (shows the global value + "Your default…" caption) |
-| Per share | Share Recap toggles | **not persisted** (applies to this export only) | the effective flight value |
+| ~~Per flight~~ **Deferred past Sprint 1** | Log a Flight shows a read-only note instead ("Home airport hidden when shared · from your privacy setting") | *Future:* `flights.hide_home_override` (nullable; `null` = follow global) | — |
+| Per share | Share Recap toggles | **not persisted** (applies to this export only) | the global value |
 
-- Turning the toggle off in Share **doesn't** change the flight or the global setting, and the next share starts from the default again. A flight override only changes that flight.
-- Changing the global setting re-renders cached shared geometry for flights that have `null` overrides.
+- Turning the toggle off in Share **doesn't** change the global setting, and the next share starts from the default again.
+- Changing the global setting invalidates cached shared snapshots (cache key includes the effective setting).
 
 ## Track trimming and home hiding (applied to every non-owner view, recap and share)
 If DEP or ARR matches the home airport and the effective "Hide home airport" is On:
@@ -35,5 +37,5 @@ Edge cases:
 
 Implementation:
 - **Sprint 1:** on-device `TrackPrivacy.trim(_:distance:)` / `hideHomeAirport` after `TrackGeometry.validated`.
-- **Later:** shared geometry is stored separately, with RLS so only the owner can read the precise `tracks` rows.
+- *Future (not Sprint 1):* shared geometry is stored separately, with RLS so only the owner can read the precise `tracks` rows.
 - The owner's own Flight Detail shows the full track, with the privacy zone ring as a preview.
