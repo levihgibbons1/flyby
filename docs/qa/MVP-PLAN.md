@@ -19,11 +19,12 @@ A native SwiftUI prototype that builds and runs in Xcode with mock data. Covers 
 - Single app target `Flyby`, plus a `FlybyTests` unit test target and a `FlybyUITests` UI test target
 - No third-party dependencies in Sprint 1
 - Mock data lives in `Flyby/Mock/` (for example `MockFlights.swift` and `MockAirports.swift`) behind a `FlightStore` protocol, so Supabase can replace it later without UI changes
+- Test OS runtimes: **iOS 17.x** (minimum; exercises the Material/classic-TabView/standard-push fallbacks) and **iOS 26.x** (Liquid Glass). Install the iOS 17 runtime via Xcode → Settings → Components if missing.
 - Test devices: smallest = **iPhone SE (3rd gen)** simulator (375×667 pt; use iPhone 13 mini or 16e if SE isn't available in your Xcode), largest = **iPhone 17 Pro Max** simulator (440×956 pt, or the current Pro Max)
 
 ### Definition of Done (whole sprint)
 - [ ] Every deliverable below meets all of its acceptance criteria (AC)
-- [ ] The smoke test checklist (bottom of this section) passes on the smallest and largest simulators
+- [ ] The smoke test checklist (bottom of this section) passes on the smallest and largest simulators, on both the iOS 17 and iOS 26 runtimes
 - [ ] Builds with zero errors and zero new warnings (or warnings are listed in the PR)
 - [ ] No keys, secrets, or tokens in the repo
 - [ ] Work is merged through PRs. No direct pushes to `main`, no deploys, no TestFlight uploads.
@@ -81,7 +82,7 @@ A native SwiftUI prototype that builds and runs in Xcode with mock data. Covers 
 - [ ] AC6.1 Flight Detail has a "Share Recap" button that opens a recap preview: map snapshot or polyline, route, date, aircraft, key stats, and Flyby branding.
 - [ ] AC6.2 The recap image (for example 1080×1350 or 1080×1920) is rendered with `ImageRenderer` (or `MKMapSnapshotter` + overlay) **only after the user taps** Share or Save (P1).
 - [ ] AC6.3 Sharing uses the system `ShareLink` or share sheet. Flyby never posts anywhere on its own.
-- [ ] AC6.4 Privacy controls on the preview are **on by default**: "Hide home airport" and "Trim track start/end" (P3). Toggling them updates the preview right away.
+- [ ] AC6.4 Privacy controls on the preview are **on by default**: "Hide home airport" and "Trim track start/end" (P3). "Hide home airport" starts from the global Profile → Privacy setting, which is **On by default** (sharing the home airport is opt-in). Toggling them updates the preview right away; a per-share change is not persisted and doesn't change the global setting.
 - [ ] AC6.5 The recap includes a small "Not for navigation" line, or the disclaimer appears on the preview screen (P5).
 - [ ] AC6.6 The recap looks right in light and dark mode. The exported image uses a fixed, legible style no matter what the device appearance is.
 - [ ] AC6.7 Saving to Photos (if included) uses add-only permission (`NSPhotoLibraryAddUsageDescription`) and asks only when the user taps Save.
@@ -126,24 +127,38 @@ Run on **iPhone SE (3rd gen)** (375×667 pt, home button, no Dynamic Island) and
 Run from the repo root. Change the scheme or simulator names if yours differ (`xcrun simctl list devices available`).
 
 ```bash
-# 0. Toolchain
+# 0. Toolchain + runtimes (need an iOS 17.x AND an iOS 26.x simulator runtime)
 xcodebuild -version
+xcrun simctl list runtimes | grep -E "iOS (17|26)\." || echo "FAIL: install iOS 17 and iOS 26 simulator runtimes"
 xcrun simctl list devices available | grep -E "iPhone SE|Pro Max"
+# Set these to match your Xcode (OS= must name an installed runtime):
+IOS17=17.5   # any installed 17.x
+IOS26=26.0   # any installed 26.x
+SE="iPhone SE (3rd generation)"
+BIG="iPhone 17 Pro Max"          # iPhone 17 Pro Max needs iOS 26; on iOS 17 use iPhone 15 Pro Max
+BIG17="iPhone 15 Pro Max"
 
-# 1. Clean build (smallest device)
+# 1. Clean build on the minimum OS (smallest device, iOS 17)
 xcodebuild -project Flyby.xcodeproj -scheme Flyby \
-  -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)' \
+  -destination "platform=iOS Simulator,name=$SE,OS=$IOS17" \
   clean build CODE_SIGNING_ALLOWED=NO | xcpretty || exit 1
 
-# 2. Unit + UI tests (largest device)
-xcodebuild -project Flyby.xcodeproj -scheme Flyby \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max' \
-  test CODE_SIGNING_ALLOWED=NO | xcpretty || exit 1
+# 2. Unit + UI tests on iOS 17 (fallback paths): smallest + largest
+for D in "$SE" "$BIG17"; do
+  xcodebuild -project Flyby.xcodeproj -scheme Flyby \
+    -destination "platform=iOS Simulator,name=$D,OS=$IOS17" \
+    test CODE_SIGNING_ALLOWED=NO | xcpretty || exit 1
+done
 
-# 3. Unit + UI tests (smallest device)
-xcodebuild -project Flyby.xcodeproj -scheme Flyby \
-  -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)' \
-  test CODE_SIGNING_ALLOWED=NO | xcpretty || exit 1
+# 3. Unit + UI tests on iOS 26 (Liquid Glass paths): smallest + largest
+for D in "$SE" "$BIG"; do
+  xcodebuild -project Flyby.xcodeproj -scheme Flyby \
+    -destination "platform=iOS Simulator,name=$D,OS=$IOS26" \
+    test CODE_SIGNING_ALLOWED=NO | xcpretty || exit 1
+done
+
+# 3b. iOS 18/26-only APIs must stay inside DesignSystem/ (expect no output)
+git grep -nE "glassEffect|GlassEffectContainer|glassEffectID|buttonStyle\(\.glass|tabBarMinimizeBehavior|navigationTransition|matchedTransitionSource" -- '*.swift' ':!Flyby/DesignSystem/*' && echo "FAIL: gated API outside DesignSystem" || echo "OK: gated APIs wrapped"
 
 # 4. Secret scan (expect no output / zero findings)
 #    Preferred: gitleaks detect --source . --no-banner
@@ -156,12 +171,15 @@ git grep -nE "import Supabase|URLSession|supabase" -- '*.swift' || echo "OK: no 
 # 6. Privacy defaults present
 git grep -nE "visibility.*=.*\.private|case private" -- '*.swift'
 git grep -niE "not for navigation" -- '*.swift'
+git grep -nE "hideHomeAirport.*=.*true|hideHomeAirport: Bool = true" -- '*.swift' || echo "CHECK: global Hide home airport should default to true"
 ```
 
 Automated tests that should exist (in `FlybyTests` / `FlybyUITests`):
 - [ ] `FlightTests.testDefaultVisibilityIsPrivate`
 - [ ] `FlightValidationTests` (required airports, arrival after departure, unknown airport rejected)
 - [ ] `TrackPrivacyTests` (trim removes start/end, hide home airport, short-track fallback)
+- [ ] `PrivacySettingsTests.testHideHomeAirportDefaultsOn` and `testShareOverrideDoesNotPersist`
+- [ ] `TrackGeometryTests` (0/1/2/512-point, corrupt-point and antimeridian fixtures from `design/specs/maps.md`)
 - [ ] `FlightStoreTests.testSaveAddsFlightAndUpdatesStats`
 - [ ] `RecapTests.testNoImageRenderedBeforeUserAction`: the renderer is invoked lazily, checked with a spy or counter
 - [ ] UI: `testTabBarHasFiveTabsInOrder`
@@ -169,16 +187,17 @@ Automated tests that should exist (in `FlybyTests` / `FlybyUITests`):
 - [ ] UI: `testFlightDetailShowsMapAndDisclaimer`
 - [ ] UI: `testShareRecapShowsPreviewWithPrivacyTogglesOn`
 
-Manual smoke pass (about 10 minutes, on each of the two devices, in Light and then Dark):
+Manual smoke pass (about 10 minutes, on each of the two devices, on **iOS 17 and iOS 26**, in Light and then Dark):
 1. [ ] Launch the app. Home loads with mock recaps.
 2. [ ] Tap through all 5 tabs and confirm the order and labels.
 3. [ ] Flights → open a flight. The map draws the route and the disclaimer is visible.
 4. [ ] Record → log a new flight. Visibility shows **Private**. Save, and it shows at the top of Flights, opens in detail, and Profile stats update.
 5. [ ] Try invalid input (missing arrival, arrival before departure) and confirm the inline errors.
-6. [ ] Flight Detail → Share Recap. Preview opens with Hide home airport and Trim ends **on**. Toggle them and the preview updates. Tap Share and the system share sheet appears. Cancel.
+6. [ ] Profile → Settings → Privacy shows "Hide home airport" **On** by default. Flight Detail → Share Recap on a flight from the mock home airport: the preview opens with Hide home airport and Trim ends **on** and the home field shown as a region label. Toggle them and the preview updates. Tap Share and the system share sheet appears. Cancel.
 7. [ ] Confirm no location permission prompt appeared at any point.
 8. [ ] Set text size to AX3 and repeat steps 2–4 briefly.
 9. [ ] Turn VoiceOver on and swipe through Flights and one Flight Detail. Labels make sense.
+10. [ ] On iOS 17 only: glass surfaces fall back to Material/bordered buttons, the tab bar is the classic bar with all 5 tabs, Record opens the Log sheet, and nothing is missing or crashes.
 
 ### Out of scope for Sprint 1
 Supabase, auth or Sign in with Apple, networking, real GPS recording, GPX/KML import, social features (follows, feed, kudos, comments), achievements, widgets, TestFlight, App Store work.
@@ -278,4 +297,4 @@ A TestFlight-ready iOS app where a pilot can:
 2. Monetization model and timing
 3. Seed airport data source and licensing
 4. Minimum iOS version (plan assumes iOS 17+)
-5. Default for "Hide home airport" outside recaps (feed/profile). Proposal: on.
+5. Default for "Hide home airport" outside recaps (feed/profile). **Decided:** one global setting, On by default; sharing the home airport is opt-in (low priority for Sprint 1).
