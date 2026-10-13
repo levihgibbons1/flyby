@@ -1,4 +1,4 @@
-# Spec: Flight Detail (v0.3 Skyglass, provisional)
+# Spec: Flight Detail (v0.3.1 Skyglass, provisional)
 
 References: `png/03-flight-detail.png` (6.3"), `png/21-sizes-flight-detail-se-promax.png` (SE, Pro Max), `png/16`/`png/20` (map states)
 
@@ -19,7 +19,7 @@ References: `png/03-flight-detail.png` (6.3"), `png/21-sizes-flight-detail-se-pr
 - **Glass pills over the map:** VisibilityPill (e.g. Followers). For the owner, also "Home airport hidden when shared", with a dashed privacy-zone ring around the home field (owner only).
 - **Floating sheet:**
   - iOS 26: system glass sheet, medium detent, inset 8 pt, ≈ 44 pt corners.
-  - iOS 17/18: standard sheet with `.ultraThinMaterial` + scrim.
+  - iOS 17/18: standard sheet; content on `mapScrim` + **`.thickMaterial`** (worst case 15.9 / 6.4 / 4.7 light, 14.0 / 6.9 / 5.8 dark; `accessibility.md` §2b). Glass controls and pills on the map use the same fallback.
   - SE: no inset, 22 pt top corners.
   - Contents, top to bottom:
     1. grabber
