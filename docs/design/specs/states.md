@@ -1,4 +1,4 @@
-# Spec: Empty, loading & error states (v0.3, provisional)
+# Spec: Empty, loading & error states (v0.3.1, provisional)
 
 References: `png/15-state-home-empty.png`, `png/16-state-flights-map-states.png`, `png/17-state-log-import-error.png`, `png/18-state-share-photos-denied.png`, `png/20-state-components.png`
 
@@ -26,6 +26,6 @@ References: `png/15-state-home-empty.png`, `png/16-state-flights-map-states.png`
 | Required fields missing | Log a Flight | `exclamationmark.triangle` | Inline under the section: "Add From and To, or import a track, to save." Save is disabled (`label3`) | — |
 | Recap export failed | Share | `exclamationmark.triangle` | "Couldn't create the image" / "Your flight is safe." | Try again |
 | Photos permission denied | Share → Save | `photo` | "Flyby can't save to Photos" / "Allow "Add Photos Only" in Settings, or share the image instead." | Open Settings (`UIApplication.openSettingsURLString`) · Share instead |
-| Offline | any list | `wifi.slash` | Inline footer "You're offline. Changes will sync when you reconnect." | — |
+| Offline *(post-Sprint 1, with Supabase. Don't build in Sprint 1: there's no networking or sync yet)* | any list | `wifi.slash` | Draft copy for later: "You're offline. Showing flights saved on this iPhone." Don't promise syncing until sync exists | — |
 
 Copy is in plain English, never blames the user, and always says what happens to their data ("Nothing was changed", "Your flight is safe").
