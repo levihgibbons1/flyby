@@ -1,8 +1,8 @@
-# Flyby Design System: "Skyglass" (v0.3, provisional)
+# Flyby Design System: "Skyglass" (v0.3.1, provisional)
 
 > Local draft, Oct 13, 2026. **Replaces v0.1 "Contrail"** (dark), per founder feedback. Scope is provisional. All data in the mockups is **sample data**.
 > Visual reference: `proposal.html` (open in a browser) and `png/`. Research notes: `specs/research.md`.
-> **v0.3** addresses QA review `qa/design-review-sprint1.md` (F1–F15). **Deployment target: iOS 17.0.** New specs: `specs/platform-fallbacks.md`, `specs/accessibility.md`, `specs/states.md`.
+> **v0.3.1** closes the v0.3 QA follow-ups N1–N6 and the PM scope trims. **v0.3** addressed QA review `qa/design-review-sprint1.md` (F1–F15). **Deployment target: iOS 17.0.** New specs: `specs/platform-fallbacks.md`, `specs/accessibility.md`, `specs/states.md`.
 
 ## 1. Direction
 | | **A · Skyglass** (recommended) | B · Contrail (v0.1, retired) |
@@ -13,7 +13,7 @@
 What carries over from v0.1: optional altitude-tinted routes (Flight Detail toggle), rounded tabular numerals, SF Mono codes, the privacy model, the not-for-navigation stance.
 
 ## 2. Liquid Glass usage (from Apple's guidance)
-> **Platform rule (F1):** everything in this section is iOS 26 (and `Tab(...)` / the zoom transition are iOS 18). Feature views call only the DesignSystem wrappers `flybyGlass()`, `flybyGlassButton()`, `FlybyGlassGroup`, `flybyTabBarMinimizeOnScroll()` and `flybyZoomSource/Destination`. They gate with `#available` and fall back to `.ultraThinMaterial` (+ `mapScrim` on maps), `.bordered/.borderedProminent`, the classic `.tabItem` TabView and a standard push on iOS 17. See `specs/platform-fallbacks.md`.
+> **Platform rule (F1):** everything in this section is iOS 26 (and `Tab(...)` / the zoom transition are iOS 18). Feature views call only the DesignSystem wrappers `flybyGlass()`, `flybyGlassButton()`, `FlybyGlassGroup`, `flybyTabBarMinimizeOnScroll()` and `flybyZoomSource/Destination`. They gate with `#available` and fall back to `.thickMaterial` + `mapScrim` on maps or `.regularMaterial` elsewhere (never ultraThin/thin under text), `.bordered/.borderedProminent`, the classic `.tabItem` TabView and a standard push on iOS 17. See `specs/platform-fallbacks.md`.
 
 - Glass is a **functional layer for navigation and controls** that floats above content. Content itself (flight cards, lists, forms) stays on solid `surface`.
 - Use system components so glass is real: `TabView` (floating glass tab bar, `.tabBarMinimizeBehavior(.onScrollDown)`), toolbars, sheets, `.buttonStyle(.glass)` and `.glassProminent`. **No custom backgrounds on bars.**
@@ -106,15 +106,15 @@ HIG note: tab bars are for navigation, not actions. Record is a real `Tab` whose
 ## 8. Principles
 1. **Journal, not navigation.** No live position, ownship, guidance, ETA or planning UI. A small "Not for navigation" line on Flight Detail, the Log save footer, every recap (both styles) and Profile → Settings → About. About also says Flyby is not a certified logbook. Values are labeled recorded/entered and approximate; terrain is illustrative.
 2. **Private by default.** Model and UI default to Private; visibility shows on every card.
-3. **Privacy before pixels.** One global **Hide home airport** setting, **On by default**, that can be overridden per flight (optional) or per share (not persisted). Track trimming happens before any shared view or recap renders.
+3. **Privacy before pixels.** One global **Hide home airport** setting, **On by default**, that can be overridden per share (not persisted). The per-flight override is deferred past Sprint 1. Track trimming happens before any shared view or recap renders.
 4. **Glass for chrome, white for content.** Color comes from content; tint only the primary action.
 5. **Accessible by construction.** AA in both modes with measured glass-over-map values, 44 pt targets, AX3 layouts, VoiceOver tables and stable ids (`specs/accessibility.md`), Reduce Motion / Transparency / Increase Contrast.
 6. **Robust geometry.** No force unwraps. Tracks need ≥ 2 valid points; coordinates are validated and antimeridian-safe (`specs/maps.md`).
-7. **Recaps have a fixed style.** Light by default, optional Night. They never follow the system appearance.
+7. **Recaps have a fixed style.** Light by default; an optional Night style on the Logbook Card only. They never follow the system appearance.
 
 
 ## Activity maps
 The look is Strava-inspired: a muted base with a loud route. The basemap is MapKit `.standard(emphasis: .muted, pointsOfInterest: .excludingAll)`. The route is solid Flyby Blue over a white casing: 5/9 pt on detail, 4.6/8.6 pt on cards, 3.2/6.4 pt on thumbnails, with round joins and a soft shadow. The start dot is white with a blue ring; the end dot is white with a navy core. Shared views have no start dot, the route fades out near home, and there's no zone ring. Full spec and MapKit code: `specs/maps.md`.
 
-## Spec index (v0.3)
+## Spec index (v0.3.1)
 `specs/navigation.md` · `flight-detail.md` · `log-flight.md` · `maps.md` · `privacy-sharing.md` · `recaps.md` · `states.md` · `accessibility.md` · `platform-fallbacks.md` · `motion.md` · `screens.md` · `research.md`
