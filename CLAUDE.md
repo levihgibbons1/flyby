@@ -45,15 +45,20 @@ Five tabs, with these accessibility identifiers:
 - No secrets in the repo. No deploys. No paid services or new packages/dependencies without asking first.
 
 ## Build order (Sprint 1)
-1. #1 Xcode project scaffold
-2. #2 TabView with the 5 tabs
-3. #4 Flight model + mock data
-4. #3 Design system (Skyglass)
-5. #5 Flight Detail
-6. #6 Flight logging
-7. #7 Recap / share
-8. #9 CI
+1. #1 Xcode project scaffold — done (PR #13, awaiting merge approval)
+2. #2 TabView with the 5 tabs — done (PR #14, awaiting merge approval; merge after #13)
+3. #9 CI — next
+4. #4 Flight model + mock data
+5. #3 Design system (Skyglass)
+6. #5 Flight Detail
+7. #6 Flight logging
+8. #7 Recap / share
 - #8 is the QA plan (see `docs/qa/`), not a build task.
+
+Notes:
+- #9 CI must pin an iOS 17.5 simulator runtime plus iOS 26, run tests on iPhone SE and iPhone 15 Pro Max, and attach test results to PRs. It lands before #4 and #3 are reviewed.
+- QA follow-up QA-14-02 goes into #3: the accessibility audit test must also cover Dark mode and AX (accessibility) text sizes, with less filtering of issues.
+- Tab ids must not rely on UIKit internals.
 
 ## Docs map (on `main`)
 - `README.md` — project intro
