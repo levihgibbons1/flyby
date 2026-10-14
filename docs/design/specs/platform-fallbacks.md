@@ -1,4 +1,4 @@
-# Spec: Platform fallbacks (v0.3.1, provisional)
+# Spec: Platform fallbacks (v0.3.2, provisional)
 
 **Deployment target: iOS 17.0** (MVP-PLAN, AC S1). Skyglass is designed for iOS 26 Liquid Glass and degrades gracefully on iOS 17 and 18.
 
@@ -8,7 +8,7 @@ Feature views **never** call iOS 18 or iOS 26 APIs directly. Every gated API liv
 ! grep -rnE '\.glassEffect\(|GlassEffectContainer|\.glassEffectID\(|buttonStyle\(\.glass(Prominent)?\)|\.tabBarMinimizeBehavior\(|\.navigationTransition\(|\.matchedTransitionSource\(' \
     --include='*.swift' Flyby/ | grep -v '/DesignSystem/'
 ```
-(`Tab(` is not grepped because it's too generic; the iOS 18 tab path is covered by the iOS 17 build.)
+(`Tab(` is not grepped because it's too generic. Since v0.3.2 the app doesn't use `Tab(...)` at all: one `.tabItem` path on every OS, see `navigation.md`.)
 
 ## API table
 | API | Min iOS | Flyby wrapper | iOS 17 fallback |
@@ -18,7 +18,7 @@ Feature views **never** call iOS 18 or iOS 26 APIs directly. Every gated API liv
 | `.buttonStyle(.glass)` / `.glassProminent` | 26 | `flybyGlassButton(prominent:onMap:)` | `.bordered` / `.borderedProminent`, `.buttonBorderShape(.circle/.capsule)`; same 40 pt visual / 44 pt hit area. **On maps** the bordered fill is replaced by the `flybyGlass(onMap: true)` background (scrim + `.thickMaterial`), with a `label`-colored glyph (≥ 14:1) |
 | `.tabBarMinimizeBehavior(.onScrollDown)` | 26 | `flybyTabBarMinimizeOnScroll()` | No-op |
 | Floating glass tab bar, glass sheets, scroll-edge effect | 26 (system) | — (automatic) | Classic system tab bar and sheets (the Flight Detail sheet's content uses `flybyGlass(onMap: true)`, i.e. `.thickMaterial` + scrim). A 110 pt `bg` 85% → 0 gradient keeps the status bar legible on maps |
-| `Tab(_:systemImage:value:)` | 18 | `FlybyTabView` (in RootView) | `.tabItem { Label(…) }.tag(TabID…)`, same ids `tab.*`, same Record intercept via `onChange(of:)` |
+| `Tab(_:systemImage:value:)` | 18 | **Not used (v0.3.2)**; `RootView` uses `.tabItem` on every OS | `.tabItem { Label(…) }.tag(AppTab…)` on iOS 17 → 26 (iOS 26 still gets the floating glass bar). Ids `tab.*` are set via `App/TabBarAccessibilityIdentifiers.swift`. Record is intercepted in the `TabView(selection:)` binding setter (shows the sheet; selection is unchanged), not via `onChange(of:)` |
 | `.matchedTransitionSource` / `.navigationTransition(.zoom)` | 18 | `flybyZoomSource` / `flybyZoomDestination` | Standard `NavigationStack` push |
 | `Color.mix(with:by:)` | 18 | `Color.Flyby.altitude(_:)` | Stepped 3-stop ramp (`altLow / altMid / altHigh`) |
 | `.presentationSizing`, `.scrollEdgeEffectStyle` | 18 / 26 | not used in Sprint 1 | — |
@@ -63,3 +63,7 @@ enum DesignSystem {
 // wrappers: if !DesignSystem.useLegacy, #available(iOS 26, *) { … } else { fallback }
 ```
 - Release builds contain no `forceLegacy` symbol. A CI step runs `nm` on the Release binary and fails if `forceLegacy` is found.
+
+## Changelog
+- **v0.3.2 (Oct 13, 2026):** matches `navigation.md` v0.3.2 (design review `review-pr13-14.md`, L1). The iOS 18+ `Tab(...)` / `FlybyTabView` path was dropped. `.tabItem` is used everywhere, and Record is intercepted in the selection-binding setter. Tab ids `tab.*` are unchanged.
+- v0.3.1: QA follow-ups N1–N6 and PM trims.
