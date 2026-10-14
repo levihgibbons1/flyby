@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flyby — Design Direction Proposal (v0.3.1 Skyglass, local draft)</title>
+<title>Flyby — Design Direction Proposal (v0.3.2 Skyglass, local draft)</title>
 <style>
 :root{
   --sf:-apple-system,"SF Pro Text","SF Pro Display",Inter,system-ui,"Helvetica Neue",sans-serif;
@@ -179,7 +179,7 @@ td.warn{color:#C2261F;font-weight:600}
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;position:relative"><span data-logo="44"></span><span style="font:700 26px var(--sfr);letter-spacing:-.01em">flyby</span></div>
   <h1 style="position:relative">Design direction<br>proposal · <span style="color:#0A63DB">Skyglass</span></h1>
   <p style="position:relative">A premium flight journal for pilots: log flights, keep a beautiful private logbook, and share recaps with the people you fly with when you want to. Light-first, white and blue, built on iOS 26 Liquid Glass (with graceful iOS 17 fallbacks). iOS 17+ · SwiftUI · MapKit · Supabase.</p>
-  <div class="meta" style="position:relative"><span class="tag">v0.3.1 · Oct 13, 2026</span><span class="tag">QA sprint-1 fixes + follow-ups</span><span class="tag">iOS 17 minimum · Liquid Glass on iOS 26</span><span class="tag">Strava-style activity maps</span><span class="tag">Replaces v0.1 "Contrail"</span><span class="tag">Local draft · provisional scope</span><span class="tag amber">All data shown is sample data</span><span class="tag">Journal, not navigation</span></div>
+  <div class="meta" style="position:relative"><span class="tag">v0.3.2 · Oct 13, 2026</span><span class="tag">QA sprint-1 fixes + follow-ups</span><span class="tag">iOS 17 minimum · Liquid Glass on iOS 26</span><span class="tag">Strava-style activity maps</span><span class="tag">Replaces v0.1 "Contrail"</span><span class="tag">Local draft · provisional scope</span><span class="tag amber">All data shown is sample data</span><span class="tag">Journal, not navigation</span></div>
 </header>
 
 <section>
@@ -845,39 +845,28 @@ struct FlybyGlassGroup&lt;Content: View&gt;: View {        <span class="c">// Gl
     }
 }
 
-struct RootView: View {
-    enum TabID: Hashable { case home, explore, record, flights, profile }
-    @State private var selection: TabID = .home
+struct RootView: View {                                  <span class="c">// v0.3.2: one .tabItem path on iOS 17 → 26 (matches PR #14)</span>
+    enum AppTab: Hashable, CaseIterable { case home, explore, record, flights, profile }
+    @State private var selection: AppTab = .home
     @State private var showLog = false
 
-    var body: some View {
-        tabs
-            .tint(Color.Flyby.primary)
-            .flybyTabBarMinimizeOnScroll()
-            .onChange(of: selection) { old, new in         <span class="c">// Record = action: present sheet, keep previous tab</span>
-                if new == .record { selection = old; showLog = true }
-            }
-            .sheet(isPresented: $showLog) { LogFlightView() }   <span class="c">// glass on iOS 26, opaque system sheet on 17</span>
+    <span class="c">// Record = action: the setter intercepts it, shows the sheet, and never changes selection (no flash)</span>
+    private var tabSelection: Binding&lt;AppTab&gt; {
+        Binding(get: { selection }, set: { new in if new == .record { showLog = true } else { selection = new } })
     }
 
-    @ViewBuilder private var tabs: some View {
-        if #available(iOS 18, *) {
-            TabView(selection: $selection) {
-                Tab("Home", systemImage: "house.fill", value: .home) { HomeView() }.accessibilityIdentifier("tab.home")
-                Tab("Explore", systemImage: "globe.americas.fill", value: .explore) { ExploreView() }.accessibilityIdentifier("tab.explore")
-                Tab("Record", systemImage: "plus.circle.fill", value: .record) { Color.clear }.accessibilityIdentifier("tab.record")
-                Tab("Flights", systemImage: "book.closed.fill", value: .flights) { FlightsView() }.accessibilityIdentifier("tab.flights")
-                Tab("Profile", systemImage: "person.crop.circle.fill", value: .profile) { ProfileView() }.accessibilityIdentifier("tab.profile")
-            }
-        } else {                                              <span class="c">// iOS 17: classic TabView + .tabItem</span>
-            TabView(selection: $selection) {
-                HomeView().tabItem { Label("Home", systemImage: "house.fill") }.tag(TabID.home).accessibilityIdentifier("tab.home")
-                ExploreView().tabItem { Label("Explore", systemImage: "globe.americas.fill") }.tag(TabID.explore).accessibilityIdentifier("tab.explore")
-                Color.clear.tabItem { Label("Record", systemImage: "plus.circle.fill") }.tag(TabID.record).accessibilityIdentifier("tab.record")
-                FlightsView().tabItem { Label("Flights", systemImage: "book.closed.fill") }.tag(TabID.flights).accessibilityIdentifier("tab.flights")
-                ProfileView().tabItem { Label("Profile", systemImage: "person.crop.circle.fill") }.tag(TabID.profile).accessibilityIdentifier("tab.profile")
-            }
+    var body: some View {
+        TabView(selection: tabSelection) {                   <span class="c">// iOS 26 still gets the floating Liquid Glass bar</span>
+            NavigationStack { HomeView() }.tabItem { Label("Home", systemImage: "house.fill") }.tag(AppTab.home)
+            NavigationStack { ExploreView() }.tabItem { Label("Explore", systemImage: "globe.americas.fill") }.tag(AppTab.explore)
+            Color.clear.tabItem { Label("Record", systemImage: "plus.circle.fill") }.tag(AppTab.record)
+            NavigationStack { FlightsView() }.tabItem { Label("Flights", systemImage: "book.closed.fill") }.tag(AppTab.flights)
+            NavigationStack { ProfileView() }.tabItem { Label("Profile", systemImage: "person.crop.circle.fill") }.tag(AppTab.profile)
         }
+        .tint(Color.Flyby.primary)
+        .flybyTabBarMinimizeOnScroll()
+        .background { TabBarAccessibilityIdentifiers(identifiers: ["tab.home", "tab.explore", "tab.record", "tab.flights", "tab.profile"]) }
+        .sheet(isPresented: $showLog) { LogFlightView() }   <span class="c">// glass on iOS 26, opaque system sheet on 17</span>
     }
 }
 
@@ -922,7 +911,7 @@ func routeDisplay(raw: [CLLocationCoordinate2D]?, dep: Airport?, arr: Airport?) 
     <tr><td><code>.glassEffect</code>, <code>GlassEffectContainer</code>, <code>glassEffectID</code></td><td>26</td><td><code>flybyGlass()</code> → <code>.thickMaterial</code> + map scrim on maps, <code>.regularMaterial</code> elsewhere; Reduce Transparency → solid <code>surface</code>. <code>FlybyGlassGroup</code> → HStack, no morph</td></tr>
     <tr><td><code>.buttonStyle(.glass / .glassProminent)</code></td><td>26</td><td><code>flybyGlassButton()</code> → <code>.bordered</code> / <code>.borderedProminent</code>, circle shape, 44 pt hit area</td></tr>
     <tr><td><code>.tabBarMinimizeBehavior</code></td><td>26</td><td>No-op (bar stays full size)</td></tr>
-    <tr><td><code>Tab(…)</code> in TabView</td><td>18</td><td>Classic <code>.tabItem</code> + <code>.tag</code>; same ids, same Record intercept</td></tr>
+    <tr><td>TabView items</td><td>17</td><td>v0.3.2: classic <code>.tabItem</code> + <code>.tag</code> on every OS (no version split); ids <code>tab.*</code> via <code>TabBarAccessibilityIdentifiers</code>; Record intercepted in the selection-binding setter</td></tr>
     <tr><td><code>.navigationTransition(.zoom)</code>, <code>.matchedTransitionSource</code></td><td>18</td><td>Standard push</td></tr>
     <tr><td><code>Color.mix(with:by:)</code></td><td>18</td><td>Stepped altitude ramp (3 stops)</td></tr>
     <tr><td>Glass sheets, scroll-edge effect</td><td>26 (system)</td><td>Opaque system sheet; a 110 pt <code>bg</code> gradient at the top of maps</td></tr>
@@ -945,6 +934,11 @@ func routeDisplay(raw: [CLLocationCoordinate2D]?, dep: Airport?, arr: Airport?) 
   </table>
   <p class="footnote l2">Region labels moved from label3 (4.4, failed) to label2. With Increase Contrast on: <code>glassStrong</code> plus a 1 pt <code>sep</code> border. With Reduce Transparency on: solid <code>surface</code>.</p></div>
   </div>
+  <div class="card" style="margin-top:20px"><h3 style="margin-top:0">Changelog v0.3.1 → v0.3.2 (PR #14 design review)</h3>
+  <table>
+    <tr><th>Item</th><th>Change</th><th>Where</th></tr>
+    <tr><td>L1</td><td>Adopted the PR #14 implementation as spec: <code>.tabItem</code> on iOS 17 → 26 (the iOS 18 tab-API path was dropped), Record intercepted in the <code>TabView(selection:)</code> binding setter (not an <code>onChange</code> revert), ids via <code>TabBarAccessibilityIdentifiers</code>, Record tint baked into the symbol image. Tab order, symbols and <code>tab.*</code> ids are unchanged</td><td>navigation.md, platform-fallbacks.md, DESIGN_SYSTEM.md §2, this page §10–11</td></tr>
+  </table></div>
   <div class="card" style="margin-top:20px"><h3 style="margin-top:0">Changelog v0.3 → v0.3.1 (QA follow-ups + PM scope)</h3>
   <table>
     <tr><th>Item</th><th>Fix</th><th>Where</th></tr>
