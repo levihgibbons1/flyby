@@ -1,0 +1,642 @@
+===== 1-home
+Attributes: Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101d1dff0, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101d1bf90, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101d0c510, {{0.0, 0.0}, {430.0, 932.0}}
+          Other, 0x101d1c2f0, {{0.0, 0.0}, {430.0, 932.0}}
+            Other, 0x101d1daa0, {{0.0, 0.0}, {430.0, 932.0}}
+              Other, 0x101d1c640, {{215.0, 478.7}, {0.0, 0.0}}
+              Other, 0x101d1c990, {{0.0, 0.0}, {430.0, 932.0}}
+                Other, 0x101d1bc40, {{0.0, 0.0}, {430.0, 932.0}}
+                  Other, 0x101d1b560, {{0.0, 0.0}, {430.0, 932.0}}
+                    Other, 0x101d1b1d0, {{0.0, 0.0}, {430.0, 932.0}}
+                      Other, 0x101d1ae80, {{0.0, 0.0}, {430.0, 932.0}}
+                        Other, 0x101d1ab20, {{0.0, 0.0}, {430.0, 932.0}}
+                          Other, 0x101d1a7b0, {{0.0, 0.0}, {430.0, 932.0}}
+                            NavigationBar, 0x101d1a440, {{0.0, 53.7}, {430.0, 96.0}}, identifier: 'Home'
+                              StaticText, 0x101d1a0e0, {{20.0, 101.3}, {94.3, 40.7}}, label: 'Home'
+                            Other, 0x101d19d70, {{0.0, 0.0}, {430.0, 932.0}}
+                              Other, 0x101d19460, {{0.0, 0.0}, {430.0, 932.0}}
+                                Other, 0x101d19100, {{0.0, 0.0}, {430.0, 932.0}}
+                                  Other, 0x101d18db0, {{0.0, 0.0}, {430.0, 932.0}}
+                                    CollectionView, 0x101d18a60, {{0.0, 0.0}, {430.0, 932.0}}
+                                      Other, 0x101d186e0, {{-20.0, -1714.3}, {470.0, 2003.7}}
+                                      Cell, 0x101d18370, {{20.0, 149.7}, {390.0, 122.0}}
+                                        Other, 0x101d17ff0, {{20.0, 149.7}, {390.0, 122.0}}
+                                          Other, 0x101d17c80, {{20.0, 149.7}, {390.0, 122.0}}
+                                        Other, 0x101d17930, {{20.0, 149.7}, {390.0, 122.0}}
+                                          Other, 0x101d175b0, {{20.0, 149.7}, {390.0, 122.0}}
+                                            Other, 0x101d17240, {{20.0, 149.7}, {390.0, 122.0}}
+                                              StaticText, 0x101d16ef0, {{20.0, 149.7}, {390.0, 122.0}}, label: '2026 so far, Your year in flight will appear here: hours, flights, airports and distance., Only you'
+                                                StaticText, 0x101d16b70, {{40.0, 164.7}, {91.3, 20.3}}, label: '2026 so far'
+                                                StaticText, 0x101d16810, {{40.0, 193.0}, {337.3, 38.0}}, label: 'Your year in flight will appear here: hours, flights, airports and distance.'
+                                                Image, 0x101d164c0, {{48.7, 240.3}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101d16170, {{48.7, 240.3}, {86.3, 15.1}}, label: 'Only you'
+                                      Other, 0x101d15df0, {{-20.0, 289.3}, {470.0, 322.7}}
+                                      Cell, 0x101d15a80, {{20.0, 289.3}, {390.0, 41.0}}
+                                        Other, 0x101d20c50, {{20.0, 289.3}, {390.0, 41.0}}
+                                        Other, 0x101d20fa0, {{20.0, 289.3}, {390.0, 41.0}}
+                                          Other, 0x101d21300, {{20.0, 289.3}, {390.0, 41.0}}
+                                            Other, 0x101d21650, {{20.0, 289.3}, {390.0, 41.0}}
+                                              StaticText, 0x101d219a0, {{20.0, 289.3}, {390.0, 41.0}}, label: 'Recent flights'
+                                      Cell, 0x101d21d30, {{20.0, 330.3}, {390.0, 66.0}}
+                                        Other, 0x101d22090, {{20.0, 330.3}, {390.0, 66.0}}
+                                          Other, 0x101d223e0, {{20.0, 330.3}, {390.0, 66.0}}
+                                        Other, 0x101d22760, {{20.0, 330.3}, {390.0, 66.0}}
+                                          Other, 0x101d22b00, {{20.0, 330.3}, {390.0, 66.0}}
+                                            Other, 0x101d22e70, {{20.0, 330.3}, {390.0, 66.0}}
+                                              StaticText, 0x101d231d0, {{20.0, 330.3}, {390.0, 66.0}}, label: 'KPAO → KMRY, Oct 4 · C172S, Private'
+                                                StaticText, 0x101d23530, {{40.0, 343.2}, {115.7, 20.3}}, label: 'KPAO → KMRY'
+                                                StaticText, 0x101d238a0, {{40.0, 365.5}, {94.3, 18.0}}, label: 'Oct 4 · C172S'
+                                                Image, 0x101d23be0, {{314.0, 356.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101d23f40, {{314.0, 356.0}, {76.0, 15.0}}, label: 'Private'
+                                      Cell, 0x101d242a0, {{20.0, 396.3}, {390.0, 66.0}}
+                                        Other, 0x101d24620, {{20.0, 396.3}, {390.0, 66.0}}
+                                          Other, 0x101d249a0, {{20.0, 396.3}, {390.0, 66.0}}
+                                        Other, 0x101d24d30, {{20.0, 396.3}, {390.0, 66.0}}
+                                          Other, 0x101d25080, {{20.0, 396.3}, {390.0, 66.0}}
+                                            Other, 0x101d25420, {{20.0, 396.3}, {390.0, 66.0}}
+                                              StaticText, 0x101d257a0, {{20.0, 396.3}, {390.0, 66.0}}, label: 'KSQL → KTVL, Sep 19 · SR22, Private'
+                                                StaticText, 0x101d25b30, {{40.0, 409.2}, {115.7, 20.3}}, label: 'KSQL → KTVL'
+                                                StaticText, 0x101d25e90, {{40.0, 431.5}, {95.3, 18.0}}, label: 'Sep 19 · SR22'
+                                                Image, 0x101d26200, {{314.0, 422.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101d26570, {{314.0, 422.0}, {76.0, 15.0}}, label: 'Private'
+                                      Other, 0x101d268f0, {{349.3, 396.0}, {60.7, 0.3}}
+                                      Cell, 0x101d26c60, {{20.0, 462.3}, {390.0, 66.0}}
+                                        Other, 0x101d26fc0, {{20.0, 462.3}, {390.0, 66.0}}
+                                          Other, 0x101d27310, {{20.0, 462.3}, {390.0, 66.0}}
+                                        Other, 0x101d27690, {{20.0, 462.3}, {390.0, 66.0}}
+                                          Other, 0x101d27a10, {{20.0, 462.3}, {390.0, 66.0}}
+                                            Other, 0x101d27d60, {{20.0, 462.3}, {390.0, 66.0}}
+                                              StaticText, 0x101d280d0, {{20.0, 462.3}, {390.0, 66.0}}, label: 'KHAF → KSQL, Sep 7 · C172S, Private'
+                                                StaticText, 0x101d28440, {{40.0, 475.2}, {115.7, 20.3}}, label: 'KHAF → KSQL'
+                                                StaticText, 0x101d287a0, {{40.0, 497.5}, {95.0, 18.0}}, label: 'Sep 7 · C172S'
+                                                Image, 0x101d28b00, {{314.0, 488.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101d28e70, {{314.0, 488.0}, {76.0, 15.0}}, label: 'Private'
+                                      Other, 0x101d291e0, {{349.3, 462.0}, {60.7, 0.3}}
+                                      Cell, 0x101d29580, {{20.0, 528.3}, {390.0, 66.0}}
+                                        Other, 0x101d298e0, {{20.0, 528.3}, {390.0, 66.0}}
+                                          Other, 0x101d29c60, {{20.0, 528.3}, {390.0, 66.0}}
+                                        Other, 0x101d29ff0, {{20.0, 528.3}, {390.0, 66.0}}
+                                          Other, 0x101d2a390, {{20.0, 528.3}, {390.0, 66.0}}
+                                            Other, 0x101d2a710, {{20.0, 528.3}, {390.0, 66.0}}
+                                              Button, 0x101d2aab0, {{20.0, 528.3}, {390.0, 66.0}}, identifier: 'home.allFlights', label: 'All flights'
+                                      Other, 0x101d2ae10, {{349.3, 528.0}, {60.7, 0.3}}
+                                      Other, 0x101d2b190, {{-20.0, 612.0}, {470.0, 1959.7}}
+                                      Cell, 0x101d2b510, {{20.0, 629.7}, {390.0, 58.0}}
+                                        Other, 0x101d2b880, {{20.0, 629.7}, {390.0, 58.0}}
+                                          Other, 0x101d2bc20, {{20.0, 629.7}, {390.0, 58.0}}
+                                            Other, 0x101d2bfa0, {{20.0, 629.7}, {390.0, 58.0}}
+                                        Other, 0x101d2c300, {{20.0, 629.7}, {390.0, 58.0}}
+                                          Other, 0x101d2c650, {{20.0, 629.7}, {390.0, 58.0}}
+                                            Other, 0x101d2d160, {{20.0, 629.7}, {390.0, 58.0}}
+                                              Button, 0x101d2d4b0, {{20.0, 629.7}, {390.0, 58.0}}, identifier: 'home.logFlight', label: 'Log a Flight'
+                                      Other, 0x101d2d820, {{397.0, 103.0}, {30.0, 746.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101d2db60, {{0.0, 849.0}, {430.0, 83.0}}, label: 'Tab Bar'
+                  Button, 0x101d2deb0, {{2.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.home', label: 'Home', Selected
+                    Image, 0x101d2e220, {{26.0, 852.3}, {33.3, 28.3}}, identifier: 'house.fill', label: 'home'
+                  Button, 0x101d2e590, {{88.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.explore', label: 'Explore'
+                  Button, 0x101d2e8e0, {{174.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101d2ec40, {{201.0, 854.0}, {27.3, 27.3}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101d2efa0, {{260.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.flights', label: 'Flights'
+                  Button, 0x101d2f300, {{346.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.profile', label: 'Profile'
+Path to element:
+ →Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101c3b6f0, pid: 70092, label: 'Flyby'
+  }
+
+
+===== 2-home-bottom
+Attributes: Application, 0x101a22ac0, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101a22ac0, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101a23760, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101a257d0, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101a25b40, {{0.0, 0.0}, {430.0, 932.0}}
+          Other, 0x101a25680, {{0.0, 0.0}, {430.0, 932.0}}
+            Other, 0x101a24780, {{0.0, 0.0}, {430.0, 932.0}}
+              Other, 0x101a25c60, {{215.0, 478.7}, {0.0, 0.0}}
+              Other, 0x101a25d80, {{0.0, 0.0}, {430.0, 932.0}}
+                Other, 0x101a25ea0, {{0.0, 0.0}, {430.0, 932.0}}
+                  Other, 0x101a25fc0, {{0.0, 0.0}, {430.0, 932.0}}
+                    Other, 0x101a260e0, {{0.0, 0.0}, {430.0, 932.0}}
+                      Other, 0x101a26200, {{0.0, 0.0}, {430.0, 932.0}}
+                        Other, 0x101a26320, {{0.0, 0.0}, {430.0, 932.0}}
+                          Other, 0x101a26440, {{0.0, 0.0}, {430.0, 932.0}}
+                            NavigationBar, 0x101a26560, {{0.0, 53.7}, {430.0, 96.0}}, identifier: 'Home'
+                              StaticText, 0x101a26680, {{20.0, 101.3}, {94.3, 40.7}}, label: 'Home'
+                            Other, 0x101a267a0, {{0.0, 0.0}, {430.0, 932.0}}
+                              Other, 0x101a268c0, {{0.0, 0.0}, {430.0, 932.0}}
+                                Other, 0x101a269e0, {{0.0, 0.0}, {430.0, 932.0}}
+                                  Other, 0x101a26b00, {{0.0, 0.0}, {430.0, 932.0}}
+                                    CollectionView, 0x101a26c20, {{0.0, 0.0}, {430.0, 932.0}}
+                                      Other, 0x101a26d40, {{-20.0, -1714.3}, {470.0, 2003.7}}
+                                      Cell, 0x101a26e60, {{20.0, 149.7}, {390.0, 122.0}}
+                                        Other, 0x101a26f80, {{20.0, 149.7}, {390.0, 122.0}}
+                                          Other, 0x101a270a0, {{20.0, 149.7}, {390.0, 122.0}}
+                                        Other, 0x101a271c0, {{20.0, 149.7}, {390.0, 122.0}}
+                                          Other, 0x101a272e0, {{20.0, 149.7}, {390.0, 122.0}}
+                                            Other, 0x101a27400, {{20.0, 149.7}, {390.0, 122.0}}
+                                              StaticText, 0x101a27520, {{20.0, 149.7}, {390.0, 122.0}}, label: '2026 so far, Your year in flight will appear here: hours, flights, airports and distance., Only you'
+                                                StaticText, 0x101a27640, {{40.0, 164.7}, {91.3, 20.3}}, label: '2026 so far'
+                                                StaticText, 0x101a27760, {{40.0, 193.0}, {337.3, 38.0}}, label: 'Your year in flight will appear here: hours, flights, airports and distance.'
+                                                Image, 0x101a27880, {{48.7, 240.3}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101a279a0, {{48.7, 240.3}, {86.3, 15.1}}, label: 'Only you'
+                                      Other, 0x101a27ac0, {{-20.0, 289.3}, {470.0, 322.7}}
+                                      Cell, 0x101a27be0, {{20.0, 289.3}, {390.0, 41.0}}
+                                        Other, 0x101a27d00, {{20.0, 289.3}, {390.0, 41.0}}
+                                        Other, 0x101a27e20, {{20.0, 289.3}, {390.0, 41.0}}
+                                          Other, 0x101a27f40, {{20.0, 289.3}, {390.0, 41.0}}
+                                            Other, 0x101a28060, {{20.0, 289.3}, {390.0, 41.0}}
+                                              StaticText, 0x101a28180, {{20.0, 289.3}, {390.0, 41.0}}, label: 'Recent flights'
+                                      Cell, 0x101a282a0, {{20.0, 330.3}, {390.0, 66.0}}
+                                        Other, 0x101a283c0, {{20.0, 330.3}, {390.0, 66.0}}
+                                          Other, 0x101a284e0, {{20.0, 330.3}, {390.0, 66.0}}
+                                        Other, 0x101a28600, {{20.0, 330.3}, {390.0, 66.0}}
+                                          Other, 0x101a28720, {{20.0, 330.3}, {390.0, 66.0}}
+                                            Other, 0x101a28840, {{20.0, 330.3}, {390.0, 66.0}}
+                                              StaticText, 0x101a28960, {{20.0, 330.3}, {390.0, 66.0}}, label: 'KPAO → KMRY, Oct 4 · C172S, Private'
+                                                StaticText, 0x101a28a80, {{40.0, 343.2}, {115.7, 20.3}}, label: 'KPAO → KMRY'
+                                                StaticText, 0x101a28ba0, {{40.0, 365.5}, {94.3, 18.0}}, label: 'Oct 4 · C172S'
+                                                Image, 0x101a28cc0, {{314.0, 356.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101a28de0, {{314.0, 356.0}, {76.0, 15.0}}, label: 'Private'
+                                      Cell, 0x101a28f00, {{20.0, 396.3}, {390.0, 66.0}}
+                                        Other, 0x101a29020, {{20.0, 396.3}, {390.0, 66.0}}
+                                          Other, 0x101a29140, {{20.0, 396.3}, {390.0, 66.0}}
+                                        Other, 0x101a29260, {{20.0, 396.3}, {390.0, 66.0}}
+                                          Other, 0x101a29380, {{20.0, 396.3}, {390.0, 66.0}}
+                                            Other, 0x101a294a0, {{20.0, 396.3}, {390.0, 66.0}}
+                                              StaticText, 0x101a295c0, {{20.0, 396.3}, {390.0, 66.0}}, label: 'KSQL → KTVL, Sep 19 · SR22, Private'
+                                                StaticText, 0x101a296e0, {{40.0, 409.2}, {115.7, 20.3}}, label: 'KSQL → KTVL'
+                                                StaticText, 0x101a29800, {{40.0, 431.5}, {95.3, 18.0}}, label: 'Sep 19 · SR22'
+                                                Image, 0x101a29920, {{314.0, 422.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101a29a40, {{314.0, 422.0}, {76.0, 15.0}}, label: 'Private'
+                                      Other, 0x101a29b60, {{349.3, 396.0}, {60.7, 0.3}}
+                                      Cell, 0x101a29c80, {{20.0, 462.3}, {390.0, 66.0}}
+                                        Other, 0x101a29da0, {{20.0, 462.3}, {390.0, 66.0}}
+                                          Other, 0x101a29ec0, {{20.0, 462.3}, {390.0, 66.0}}
+                                        Other, 0x101a29fe0, {{20.0, 462.3}, {390.0, 66.0}}
+                                          Other, 0x101a2a100, {{20.0, 462.3}, {390.0, 66.0}}
+                                            Other, 0x101a2a220, {{20.0, 462.3}, {390.0, 66.0}}
+                                              StaticText, 0x101a2a340, {{20.0, 462.3}, {390.0, 66.0}}, label: 'KHAF → KSQL, Sep 7 · C172S, Private'
+                                                StaticText, 0x101a2a460, {{40.0, 475.2}, {115.7, 20.3}}, label: 'KHAF → KSQL'
+                                                StaticText, 0x101a2a580, {{40.0, 497.5}, {95.0, 18.0}}, label: 'Sep 7 · C172S'
+                                                Image, 0x101a2a6a0, {{314.0, 488.0}, {10.7, 15.0}}, label: 'Lock'
+                                                StaticText, 0x101a2a7c0, {{314.0, 488.0}, {76.0, 15.0}}, label: 'Private'
+                                      Other, 0x101a2a8e0, {{349.3, 462.0}, {60.7, 0.3}}
+                                      Cell, 0x101a2aa00, {{20.0, 528.3}, {390.0, 66.0}}
+                                        Other, 0x101a2ab20, {{20.0, 528.3}, {390.0, 66.0}}
+                                          Other, 0x101a2ac40, {{20.0, 528.3}, {390.0, 66.0}}
+                                        Other, 0x101a2ad60, {{20.0, 528.3}, {390.0, 66.0}}
+                                          Other, 0x101a2ae80, {{20.0, 528.3}, {390.0, 66.0}}
+                                            Other, 0x101a2afa0, {{20.0, 528.3}, {390.0, 66.0}}
+                                              Button, 0x101a2b0c0, {{20.0, 528.3}, {390.0, 66.0}}, identifier: 'home.allFlights', label: 'All flights'
+                                      Other, 0x101a2b1e0, {{349.3, 528.0}, {60.7, 0.3}}
+                                      Other, 0x101a2b300, {{-20.0, 612.0}, {470.0, 1959.7}}
+                                      Cell, 0x101a2b420, {{20.0, 629.7}, {390.0, 58.0}}
+                                        Other, 0x101a2b540, {{20.0, 629.7}, {390.0, 58.0}}
+                                          Other, 0x101a2b660, {{20.0, 629.7}, {390.0, 58.0}}
+                                            Other, 0x101a2b780, {{20.0, 629.7}, {390.0, 58.0}}
+                                        Other, 0x101a2b8a0, {{20.0, 629.7}, {390.0, 58.0}}
+                                          Other, 0x101a2b9c0, {{20.0, 629.7}, {390.0, 58.0}}
+                                            Other, 0x101a2bae0, {{20.0, 629.7}, {390.0, 58.0}}
+                                              Button, 0x101a2bc00, {{20.0, 629.7}, {390.0, 58.0}}, identifier: 'home.logFlight', label: 'Log a Flight'
+                                      Other, 0x101a2bd20, {{397.0, 103.0}, {30.0, 746.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101a2be40, {{0.0, 849.0}, {430.0, 83.0}}, label: 'Tab Bar'
+                  Button, 0x101a2bf60, {{2.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.home', label: 'Home', Selected
+                    Image, 0x101a2c080, {{26.0, 852.3}, {33.3, 28.3}}, identifier: 'house.fill', label: 'home'
+                  Button, 0x101a2c1a0, {{88.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.explore', label: 'Explore'
+                  Button, 0x101a2c2c0, {{174.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101a2c3e0, {{201.0, 854.0}, {27.3, 27.3}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101a2c500, {{260.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.flights', label: 'Flights'
+                  Button, 0x101a2c620, {{346.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.profile', label: 'Profile'
+Path to element:
+ →Application, 0x101a22ac0, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+  }
+
+
+===== 3-explore
+Attributes: Application, 0x101b35690, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101b35690, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101b358b0, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101b37bc0, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101b37ce0, {{0.0, 0.0}, {430.0, 932.0}}
+          Other, 0x101b37a70, {{0.0, 0.0}, {430.0, 932.0}}
+            Other, 0x101b36330, {{0.0, 0.0}, {430.0, 932.0}}
+              Other, 0x101b37e00, {{215.0, 478.7}, {0.0, 0.0}}
+              Other, 0x101b37f20, {{0.0, 0.0}, {430.0, 932.0}}
+                Other, 0x101b38040, {{0.0, 0.0}, {430.0, 932.0}}
+                  Other, 0x101b38160, {{0.0, 0.0}, {430.0, 932.0}}
+                    Other, 0x101b38280, {{0.0, 0.0}, {430.0, 932.0}}
+                      Other, 0x101b383a0, {{0.0, 0.0}, {430.0, 932.0}}
+                        Other, 0x101b384c0, {{0.0, 0.0}, {430.0, 932.0}}
+                          Other, 0x101b385e0, {{0.0, 0.0}, {430.0, 932.0}}
+                            NavigationBar, 0x101b38700, {{0.0, 53.7}, {430.0, 96.0}}, identifier: 'Explore'
+                              StaticText, 0x101b38820, {{20.0, 101.3}, {118.7, 40.7}}, label: 'Explore'
+                            Other, 0x101b38940, {{0.0, 0.0}, {430.0, 932.0}}
+                              Other, 0x101b38a60, {{0.0, 0.0}, {430.0, 932.0}}
+                                Other, 0x101b38b80, {{0.0, 0.0}, {430.0, 932.0}}
+                                  Other, 0x101b38ca0, {{0.0, 0.0}, {430.0, 932.0}}
+                                    CollectionView, 0x101b38dc0, {{0.0, 0.0}, {430.0, 932.0}}
+                                      Other, 0x101b38ee0, {{-20.0, -1714.3}, {470.0, 1941.7}}
+                                      Cell, 0x101b39000, {{20.0, 149.7}, {390.0, 60.0}}
+                                        Other, 0x101b39120, {{20.0, 149.7}, {390.0, 60.0}}
+                                          Other, 0x101b39240, {{20.0, 149.7}, {390.0, 60.0}}
+                                        Other, 0x101b39360, {{20.0, 149.7}, {390.0, 60.0}}
+                                          Other, 0x101b39480, {{20.0, 149.7}, {390.0, 60.0}}
+                                            Other, 0x101b395a0, {{20.0, 149.7}, {390.0, 60.0}}
+                                              StaticText, 0x101b396c0, {{20.0, 149.7}, {390.0, 60.0}}, label: 'Discover airports you've visited and the ones on your wishlist.'
+                                      Other, 0x101b397e0, {{-20.0, 227.3}, {470.0, 2255.0}}
+                                      Cell, 0x101b39900, {{20.0, 227.3}, {390.0, 41.0}}
+                                        Other, 0x101b39a20, {{20.0, 227.3}, {390.0, 41.0}}
+                                        Other, 0x101b39b40, {{20.0, 227.3}, {390.0, 41.0}}
+                                          Other, 0x101b39c60, {{20.0, 227.3}, {390.0, 41.0}}
+                                            Other, 0x101b39d80, {{20.0, 227.3}, {390.0, 41.0}}
+                                              StaticText, 0x101b39ea0, {{20.0, 227.3}, {390.0, 41.0}}, label: 'Visited'
+                                      Cell, 0x101b39fc0, {{20.0, 268.3}, {390.0, 66.0}}
+                                        Other, 0x101b3a0e0, {{20.0, 268.3}, {390.0, 66.0}}
+                                          Other, 0x101b3a200, {{20.0, 268.3}, {390.0, 66.0}}
+                                        Other, 0x101b3a320, {{20.0, 268.3}, {390.0, 66.0}}
+                                          Other, 0x101b3a440, {{20.0, 268.3}, {390.0, 66.0}}
+                                            Other, 0x101b3a560, {{20.0, 268.3}, {390.0, 66.0}}
+                                              StaticText, 0x101b3a680, {{20.0, 268.3}, {390.0, 66.0}}, label: 'KSQL, San Carlos'
+                                                StaticText, 0x101b3a7a0, {{40.0, 291.2}, {42.3, 20.3}}, label: 'KSQL'
+                                                StaticText, 0x101b3a8c0, {{94.3, 291.2}, {82.0, 20.3}}, label: 'San Carlos'
+                                      Cell, 0x101b3a9e0, {{20.0, 334.3}, {390.0, 66.0}}
+                                        Other, 0x101b3ab00, {{20.0, 334.3}, {390.0, 66.0}}
+                                          Other, 0x101b3ac20, {{20.0, 334.3}, {390.0, 66.0}}
+                                        Other, 0x101b3ad40, {{20.0, 334.3}, {390.0, 66.0}}
+                                          Other, 0x101b3ae60, {{20.0, 334.3}, {390.0, 66.0}}
+                                            Other, 0x101b3af80, {{20.0, 334.3}, {390.0, 66.0}}
+                                              StaticText, 0x101b3b0a0, {{20.0, 334.3}, {390.0, 66.0}}, label: 'KPAO, Palo Alto'
+                                                StaticText, 0x101b3b1c0, {{40.0, 357.2}, {42.3, 20.3}}, label: 'KPAO'
+                                                StaticText, 0x101b3b2e0, {{94.3, 357.2}, {67.0, 20.3}}, label: 'Palo Alto'
+                                      Other, 0x101b3b400, {{40.0, 334.0}, {370.0, 0.3}}
+                                      Cell, 0x101b3b520, {{20.0, 400.3}, {390.0, 66.0}}
+                                        Other, 0x101b3b640, {{20.0, 400.3}, {390.0, 66.0}}
+                                          Other, 0x101b3b760, {{20.0, 400.3}, {390.0, 66.0}}
+                                        Other, 0x101b3b880, {{20.0, 400.3}, {390.0, 66.0}}
+                                          Other, 0x101b3b9a0, {{20.0, 400.3}, {390.0, 66.0}}
+                                            Other, 0x101b3bac0, {{20.0, 400.3}, {390.0, 66.0}}
+                                              StaticText, 0x101b3bbe0, {{20.0, 400.3}, {390.0, 66.0}}, label: 'KMRY, Monterey Regional'
+                                                StaticText, 0x101b3bd00, {{40.0, 423.2}, {42.3, 20.3}}, label: 'KMRY'
+                                                StaticText, 0x101b3be20, {{94.3, 423.2}, {142.0, 20.3}}, label: 'Monterey Regional'
+                                      Other, 0x101b3bf40, {{40.0, 400.0}, {370.0, 0.3}}
+                                      Cell, 0x101b3c060, {{20.0, 466.3}, {390.0, 66.0}}
+                                        Other, 0x101b3c180, {{20.0, 466.3}, {390.0, 66.0}}
+                                          Other, 0x101b3c2a0, {{20.0, 466.3}, {390.0, 66.0}}
+                                        Other, 0x101b3c3c0, {{20.0, 466.3}, {390.0, 66.0}}
+                                          Other, 0x101b3c4e0, {{20.0, 466.3}, {390.0, 66.0}}
+                                            Other, 0x101b3c600, {{20.0, 466.3}, {390.0, 66.0}}
+                                              StaticText, 0x101b3c720, {{20.0, 466.3}, {390.0, 66.0}}, label: 'KTVL, Lake Tahoe'
+                                                StaticText, 0x101b3c840, {{40.0, 489.2}, {42.3, 20.3}}, label: 'KTVL'
+                                                StaticText, 0x101b3c960, {{94.3, 489.2}, {86.3, 20.3}}, label: 'Lake Tahoe'
+                                      Other, 0x101b3ca80, {{40.0, 466.0}, {370.0, 0.3}}
+                                      Cell, 0x101b3cba0, {{20.0, 532.3}, {390.0, 66.0}}
+                                        Other, 0x101b3ccc0, {{20.0, 532.3}, {390.0, 66.0}}
+                                          Other, 0x101b3cde0, {{20.0, 532.3}, {390.0, 66.0}}
+                                        Other, 0x101b3cf00, {{20.0, 532.3}, {390.0, 66.0}}
+                                          Other, 0x101b3d020, {{20.0, 532.3}, {390.0, 66.0}}
+                                            Other, 0x101b3d140, {{20.0, 532.3}, {390.0, 66.0}}
+                                              StaticText, 0x101b3d260, {{20.0, 532.3}, {390.0, 66.0}}, label: 'KHAF, Half Moon Bay'
+                                                StaticText, 0x101b3d380, {{40.0, 555.2}, {42.3, 20.3}}, label: 'KHAF'
+                                                StaticText, 0x101b3d4a0, {{94.3, 555.2}, {111.0, 20.3}}, label: 'Half Moon Bay'
+                                      Other, 0x101b3d5c0, {{40.0, 532.0}, {370.0, 0.3}}
+                                      Other, 0x101b3d6e0, {{397.0, 103.0}, {30.0, 746.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101b3d800, {{0.0, 849.0}, {430.0, 83.0}}, label: 'Tab Bar'
+                  Button, 0x101b3d920, {{2.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.home', label: 'Home'
+                  Button, 0x101b3da40, {{88.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.explore', label: 'Explore', Selected
+                    Image, 0x101b3db60, {{115.0, 854.0}, {27.3, 27.3}}, identifier: 'globe.americas.fill', label: 'globe.americas.fill'
+                  Button, 0x101b3dc80, {{174.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101b3dda0, {{201.0, 854.0}, {27.3, 27.3}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101b3dec0, {{260.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.flights', label: 'Flights'
+                  Button, 0x101b3dfe0, {{346.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.profile', label: 'Profile'
+Path to element:
+ →Application, 0x101b35690, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+  }
+
+
+===== 4-flights
+Attributes: Application, 0x101d2dba0, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101d2dba0, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101d2e8e0, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101d1bf90, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101d1daa0, {{0.0, 0.0}, {430.0, 932.0}}
+          Other, 0x101d1dff0, {{0.0, 0.0}, {430.0, 932.0}}
+            Other, 0x101d304a0, {{0.0, 0.0}, {430.0, 932.0}}
+              Other, 0x101d2e590, {{215.0, 478.7}, {0.0, 0.0}}
+              Other, 0x101d2f300, {{0.0, 0.0}, {430.0, 932.0}}
+                Other, 0x101d2e220, {{0.0, 0.0}, {430.0, 932.0}}
+                  Other, 0x101d2ec40, {{0.0, 0.0}, {430.0, 932.0}}
+                    Other, 0x101d2deb0, {{0.0, 0.0}, {430.0, 932.0}}
+                      Other, 0x101d1bc40, {{0.0, 0.0}, {430.0, 932.0}}
+                        Other, 0x101d1ae80, {{0.0, 0.0}, {430.0, 932.0}}
+                          Other, 0x101d1b560, {{0.0, 0.0}, {430.0, 932.0}}
+                            NavigationBar, 0x101d2efa0, {{0.0, 53.7}, {430.0, 96.0}}, identifier: 'Flights'
+                              StaticText, 0x101d1a7b0, {{20.0, 101.3}, {107.3, 40.7}}, label: 'Flights'
+                            Other, 0x101d1ab20, {{0.0, 0.0}, {430.0, 932.0}}
+                              Other, 0x101d19100, {{0.0, 0.0}, {430.0, 932.0}}
+                                Other, 0x101d18a60, {{0.0, 0.0}, {430.0, 932.0}}
+                                  Other, 0x101d19460, {{0.0, 0.0}, {430.0, 932.0}}
+                                    CollectionView, 0x101d1b1d0, {{0.0, 0.0}, {430.0, 932.0}}
+                                      Other, 0x101d2b510, {{-20.0, -1714.3}, {470.0, 3987.0}}
+                                      Cell, 0x101d19d70, {{20.0, 149.7}, {390.0, 41.0}}
+                                        Other, 0x101d2d820, {{20.0, 149.7}, {390.0, 41.0}}
+                                        Other, 0x101d2c300, {{20.0, 149.7}, {390.0, 41.0}}
+                                          Other, 0x101d2d160, {{20.0, 149.7}, {390.0, 41.0}}
+                                            Other, 0x101d2d4b0, {{20.0, 149.7}, {390.0, 41.0}}
+                                              StaticText, 0x101d2b880, {{20.0, 149.7}, {390.0, 41.0}}, label: 'October 2026'
+                                      Cell, 0x101d2c650, {{20.0, 190.7}, {390.0, 66.0}}
+                                        Other, 0x101d2bc20, {{20.0, 190.7}, {390.0, 66.0}}
+                                          Other, 0x101d18db0, {{20.0, 190.7}, {390.0, 66.0}}
+                                        Other, 0x101d2bfa0, {{20.0, 190.7}, {390.0, 66.0}}
+                                          Other, 0x101d2b190, {{20.0, 190.7}, {390.0, 66.0}}
+                                            Other, 0x101d2ae10, {{20.0, 190.7}, {390.0, 66.0}}
+                                              Button, 0x101d29580, {{20.0, 190.7}, {390.0, 66.0}}, identifier: 'flights.row.1', label: 'KPAO → KMRY, Oct 4 · C172S, Private'
+                                                StaticText, 0x101d29ff0, {{40.0, 203.5}, {331.7, 40.3}}, label: 'KPAO → KMRY, Oct 4 · C172S, Private'
+                                                  StaticText, 0x101d2a390, {{40.0, 203.5}, {115.7, 20.3}}, label: 'KPAO → KMRY'
+                                                  StaticText, 0x101d2a710, {{40.0, 225.8}, {94.3, 18.0}}, label: 'Oct 4 · C172S'
+                                                  Image, 0x101d2aab0, {{295.7, 216.3}, {10.7, 15.0}}, label: 'Lock'
+                                                  StaticText, 0x101d298e0, {{295.7, 216.3}, {76.0, 15.0}}, label: 'Private'
+                                                Image, 0x101d29c60, {{382.3, 217.7}, {7.0, 12.0}}
+                                      Cell, 0x101d291e0, {{20.0, 256.7}, {390.0, 66.0}}
+                                        Other, 0x101d26c60, {{20.0, 256.7}, {390.0, 66.0}}
+                                          Other, 0x101d27690, {{20.0, 256.7}, {390.0, 66.0}}
+                                        Other, 0x101d27a10, {{20.0, 256.7}, {390.0, 66.0}}
+                                          Other, 0x101d27d60, {{20.0, 256.7}, {390.0, 66.0}}
+                                            Other, 0x101d280d0, {{20.0, 256.7}, {390.0, 66.0}}
+                                              Button, 0x101d28e70, {{20.0, 256.7}, {390.0, 66.0}}, identifier: 'flights.row.2', label: 'KSQL → KTVL, Sep 19 · SR22, Private'
+                                                StaticText, 0x101d28b00, {{40.0, 269.5}, {331.7, 40.3}}, label: 'KSQL → KTVL, Sep 19 · SR22, Private'
+                                                  StaticText, 0x101d287a0, {{40.0, 269.5}, {115.7, 20.3}}, label: 'KSQL → KTVL'
+                                                  StaticText, 0x101d28440, {{40.0, 291.8}, {95.3, 18.0}}, label: 'Sep 19 · SR22'
+                                                  Image, 0x101d26fc0, {{295.7, 282.3}, {10.7, 15.0}}, label: 'Lock'
+                                                  StaticText, 0x101d27310, {{295.7, 282.3}, {76.0, 15.0}}, label: 'Private'
+                                                Image, 0x101d268f0, {{382.3, 283.7}, {7.0, 12.0}}
+                                      Other, 0x101d242a0, {{331.0, 256.3}, {79.0, 0.3}}
+                                      Cell, 0x101d24d30, {{20.0, 322.7}, {390.0, 66.0}}
+                                        Other, 0x101d25080, {{20.0, 322.7}, {390.0, 66.0}}
+                                          Other, 0x101d25420, {{20.0, 322.7}, {390.0, 66.0}}
+                                        Other, 0x101d257a0, {{20.0, 322.7}, {390.0, 66.0}}
+                                          Other, 0x101d26570, {{20.0, 322.7}, {390.0, 66.0}}
+                                            Other, 0x101d26200, {{20.0, 322.7}, {390.0, 66.0}}
+                                              Button, 0x101d25e90, {{20.0, 322.7}, {390.0, 66.0}}, identifier: 'flights.row.3', label: 'KHAF → KSQL, Sep 7 · C172S, Private'
+                                                StaticText, 0x101d25b30, {{40.0, 335.5}, {331.7, 40.3}}, label: 'KHAF → KSQL, Sep 7 · C172S, Private'
+                                                  StaticText, 0x101d24620, {{40.0, 335.5}, {115.7, 20.3}}, label: 'KHAF → KSQL'
+                                                  StaticText, 0x101d249a0, {{40.0, 357.8}, {95.0, 18.0}}, label: 'Sep 7 · C172S'
+                                                  Image, 0x101d21d30, {{295.7, 348.3}, {10.7, 15.0}}, label: 'Lock'
+                                                  StaticText, 0x101d22760, {{295.7, 348.3}, {76.0, 15.0}}, label: 'Private'
+                                                Image, 0x101d22b00, {{382.3, 349.7}, {7.0, 12.0}}
+                                      Other, 0x101d22e70, {{331.0, 322.3}, {79.0, 0.3}}
+                                      Other, 0x101d231d0, {{397.0, 103.0}, {30.0, 746.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101d23f40, {{0.0, 849.0}, {430.0, 83.0}}, label: 'Tab Bar'
+                  Button, 0x101d23be0, {{2.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.home', label: 'Home'
+                  Button, 0x101d238a0, {{88.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.explore', label: 'Explore'
+                  Button, 0x101d23530, {{174.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101d22090, {{201.0, 854.0}, {27.3, 27.3}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101d223e0, {{260.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.flights', label: 'Flights', Selected
+                    Image, 0x101d15a80, {{288.3, 853.3}, {25.3, 28.7}}, identifier: 'book.closed.fill', label: 'book.closed.fill'
+                  Button, 0x101d20fa0, {{346.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.profile', label: 'Profile'
+Path to element:
+ →Application, 0x101d2dba0, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+  }
+
+
+===== 5-profile
+Attributes: Application, 0x101d161b0, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101d161b0, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101d21300, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101d219a0, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101d17c80, {{0.0, 0.0}, {430.0, 932.0}}
+          Other, 0x101d21650, {{0.0, 0.0}, {430.0, 932.0}}
+            Other, 0x101d20c50, {{0.0, 0.0}, {430.0, 932.0}}
+              Other, 0x101d18370, {{215.0, 478.7}, {0.0, 0.0}}
+              Other, 0x101d175b0, {{0.0, 0.0}, {430.0, 932.0}}
+                Other, 0x101d17930, {{0.0, 0.0}, {430.0, 932.0}}
+                  Other, 0x101d164c0, {{0.0, 0.0}, {430.0, 932.0}}
+                    Other, 0x101d16ef0, {{0.0, 0.0}, {430.0, 932.0}}
+                      Other, 0x101d16810, {{0.0, 0.0}, {430.0, 932.0}}
+                        Other, 0x101d17240, {{0.0, 0.0}, {430.0, 932.0}}
+                          Other, 0x101d1a440, {{0.0, 0.0}, {430.0, 932.0}}
+                            NavigationBar, 0x101d16b70, {{0.0, 53.7}, {430.0, 96.0}}, identifier: 'Profile'
+                              StaticText, 0x101d17ff0, {{20.0, 101.3}, {102.3, 40.7}}, label: 'Profile'
+                            Other, 0x101d186e0, {{0.0, 0.0}, {430.0, 932.0}}
+                              Other, 0x101d1c640, {{0.0, 0.0}, {430.0, 932.0}}
+                                Other, 0x101d2f660, {{0.0, 0.0}, {430.0, 932.0}}
+                                  Other, 0x101d1a0e0, {{0.0, 0.0}, {430.0, 932.0}}
+                                    CollectionView, 0x101d2fda0, {{0.0, 0.0}, {430.0, 932.0}}
+                                      Other, 0x101d30bb0, {{-20.0, -1714.3}, {470.0, 1964.3}}
+                                      Cell, 0x101d2fa00, {{20.0, 149.7}, {390.0, 82.7}}
+                                        Other, 0x101d30120, {{20.0, 149.7}, {390.0, 82.7}}
+                                          Other, 0x101d30f20, {{20.0, 149.7}, {390.0, 82.7}}
+                                        Other, 0x101d315e0, {{20.0, 149.7}, {390.0, 82.7}}
+                                          Other, 0x101d31950, {{20.0, 149.7}, {390.0, 82.7}}
+                                            Other, 0x101d30810, {{20.0, 149.7}, {390.0, 82.7}}
+                                              StaticText, 0x101d31cd0, {{20.0, 149.7}, {390.0, 82.7}}, label: 'Pilot, Totals, aircraft and achievements will appear here.'
+                                                Image, 0x101d31280, {{43.0, 174.0}, {34.0, 34.0}}, label: 'Account'
+                                                StaticText, 0x101d32060, {{92.0, 160.7}, {35.7, 20.3}}, label: 'Pilot'
+                                                StaticText, 0x101d323d0, {{92.0, 183.3}, {256.3, 38.0}}, label: 'Totals, aircraft and achievements will appear here.'
+                                      Other, 0x101d32e60, {{-20.0, 250.0}, {470.0, 102.7}}
+                                      Cell, 0x101d32ac0, {{20.0, 250.0}, {390.0, 41.0}}
+                                        Other, 0x101d32740, {{20.0, 250.0}, {390.0, 41.0}}
+                                        Other, 0x101d33510, {{20.0, 250.0}, {390.0, 41.0}}
+                                          Other, 0x101d33890, {{20.0, 250.0}, {390.0, 41.0}}
+                                            Other, 0x101d33f60, {{20.0, 250.0}, {390.0, 41.0}}
+                                              StaticText, 0x101d33c00, {{20.0, 250.0}, {390.0, 41.0}}, label: 'Privacy'
+                                      Cell, 0x101d342c0, {{20.0, 291.0}, {390.0, 44.0}}
+                                        Other, 0x101d34610, {{20.0, 291.0}, {390.0, 44.0}}
+                                          Other, 0x101d34cf0, {{20.0, 291.0}, {390.0, 44.0}}
+                                        Other, 0x101d331b0, {{20.0, 291.0}, {390.0, 44.0}}
+                                          Other, 0x101d34990, {{20.0, 291.0}, {390.0, 44.0}}
+                                            Other, 0x101d35040, {{20.0, 291.0}, {390.0, 44.0}}
+                                              Image, 0x101d35b40, {{46.7, 302.7}, {14.7, 21.0}}, label: 'Lock'
+                                              StaticText, 0x101d35ec0, {{20.0, 291.0}, {390.0, 44.0}}, label: 'New flights are Private by default'
+                                      Other, 0x101d36210, {{-20.0, 352.7}, {470.0, 1991.7}}
+                                      Cell, 0x101d36570, {{20.0, 352.7}, {390.0, 41.0}}
+                                        Other, 0x101d368e0, {{20.0, 352.7}, {390.0, 41.0}}
+                                        Other, 0x101d36c50, {{20.0, 352.7}, {390.0, 41.0}}
+                                          Other, 0x101d36fb0, {{20.0, 352.7}, {390.0, 41.0}}
+                                            Other, 0x101d37310, {{20.0, 352.7}, {390.0, 41.0}}
+                                              StaticText, 0x101d37660, {{20.0, 352.7}, {390.0, 41.0}}, label: 'About'
+                                      Cell, 0x101d379b0, {{20.0, 393.7}, {390.0, 66.7}}
+                                        Other, 0x101d37d30, {{20.0, 393.7}, {390.0, 66.7}}
+                                          Other, 0x101d380a0, {{20.0, 393.7}, {390.0, 66.7}}
+                                        Other, 0x101d38410, {{20.0, 393.7}, {390.0, 66.7}}
+                                          Other, 0x101d38790, {{20.0, 393.7}, {390.0, 66.7}}
+                                            Other, 0x101d38b30, {{20.0, 393.7}, {390.0, 66.7}}
+                                              Image, 0x101d38eb0, {{43.3, 406.7}, {21.7, 21.7}}, identifier: 'profile.disclaimer', label: 'Info'
+                                              StaticText, 0x101d39200, {{20.0, 393.7}, {390.0, 66.7}}, identifier: 'profile.disclaimer', label: 'Flyby is a flight journal. Not for navigation.'
+                                      Other, 0x101d39570, {{397.0, 103.0}, {30.0, 746.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101d398f0, {{0.0, 849.0}, {430.0, 83.0}}, label: 'Tab Bar'
+                  Button, 0x101d39c50, {{2.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.home', label: 'Home'
+                  Button, 0x101d39fe0, {{88.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.explore', label: 'Explore'
+                  Button, 0x101d3a350, {{174.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101d3a6b0, {{201.0, 854.0}, {27.3, 27.3}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101d3a9f0, {{260.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.flights', label: 'Flights'
+                  Button, 0x101d3ad60, {{346.0, 850.0}, {82.0, 48.0}}, identifier: 'tab.profile', label: 'Profile', Selected
+                    Image, 0x101d3b0b0, {{373.0, 854.0}, {27.3, 27.3}}, identifier: 'person.crop.circle.fill', label: 'account'
+Path to element:
+ →Application, 0x101d161b0, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101a22ac0, pid: 70092, label: 'Flyby'
+  }
+
+
+===== 6-log-flight
+Attributes: Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+Element subtree:
+ →Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+    Window (Main), 0x101b36330, {{0.0, 0.0}, {430.0, 932.0}}
+      Other, 0x101b3a820, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101b3a940, {{20.0, 59.0}, {390.0, 845.3}}
+          Other, 0x101b3a6d0, {{-370.0, -786.3}, {1170.0, 2535.9}}
+          Other, 0x101b36970, {{20.0, 59.0}, {390.0, 845.3}}
+            Other, 0x101b3aa60, {{20.0, 59.0}, {390.0, 845.3}}
+              Other, 0x101b3ab80, {{215.0, 493.1}, {0.0, 0.0}}
+              Other, 0x101b3aca0, {{20.0, 59.0}, {390.0, 845.3}}
+                Other, 0x101b3adc0, {{20.0, 59.0}, {390.0, 845.3}}
+                  Other, 0x101b3aee0, {{20.0, 59.0}, {390.0, 845.3}}
+                    Other, 0x101b3b000, {{20.0, 59.0}, {390.0, 845.3}}
+                      Other, 0x101b3b120, {{20.0, 59.0}, {390.0, 845.3}}
+                        Other, 0x101b3b240, {{20.0, 59.0}, {390.0, 845.3}}
+                          Other, 0x101b3b360, {{20.0, 59.0}, {390.0, 845.3}}
+                            NavigationBar, 0x101b3b480, {{20.0, 107.7}, {390.0, 87.1}}, identifier: 'Profile'
+                              StaticText, 0x101b3b5a0, {{38.1, 150.9}, {92.8, 36.9}}, label: 'Profile'
+                            Other, 0x101b3b6c0, {{20.0, 59.0}, {390.0, 845.3}}
+                              Other, 0x101b3b7e0, {{20.0, 59.0}, {390.0, 845.3}}
+                                Other, 0x101b3b900, {{20.0, 59.0}, {390.0, 845.3}}
+                                  Other, 0x101b3ba20, {{20.0, 59.0}, {390.0, 845.3}}
+                                    CollectionView, 0x101b3bb40, {{20.0, 59.0}, {390.0, 845.3}}
+                                      Other, 0x101b3bc60, {{1.9, -1495.9}, {426.3, 1781.6}}
+                                      Cell, 0x101b3bd80, {{38.1, 194.7}, {353.7, 75.0}}
+                                        Other, 0x101b3bea0, {{38.1, 194.7}, {353.7, 75.0}}
+                                          Other, 0x101b3bfc0, {{38.1, 194.7}, {353.7, 75.0}}
+                                        Other, 0x101b3c0e0, {{38.1, 194.7}, {353.7, 75.0}}
+                                          Other, 0x101b3c200, {{38.1, 194.7}, {353.7, 75.0}}
+                                            Other, 0x101b3c320, {{38.1, 194.7}, {353.7, 75.0}}
+                                              StaticText, 0x101b3c440, {{38.1, 194.7}, {353.7, 75.0}}, label: 'Pilot, Totals, aircraft and achievements will appear here.'
+                                                Image, 0x101b3c560, {{59.0, 216.8}, {30.8, 30.8}}, label: 'Account'
+                                                StaticText, 0x101b3c680, {{103.4, 204.7}, {32.3, 18.4}}, label: 'Pilot'
+                                                StaticText, 0x101b3c7a0, {{103.4, 225.3}, {232.5, 34.5}}, label: 'Totals, aircraft and achievements will appear here.'
+                                      Other, 0x101b3c8c0, {{1.9, 285.7}, {426.3, 93.1}}
+                                      Cell, 0x101b3c9e0, {{38.1, 285.7}, {353.7, 37.2}}
+                                        Other, 0x101b3cb00, {{38.1, 285.7}, {353.7, 37.2}}
+                                        Other, 0x101b3cc20, {{38.1, 285.7}, {353.7, 37.2}}
+                                          Other, 0x101b3cd40, {{38.1, 285.7}, {353.7, 37.2}}
+                                            Other, 0x101b3ce60, {{38.1, 285.7}, {353.7, 37.2}}
+                                              StaticText, 0x101b3cf80, {{38.1, 285.7}, {353.7, 37.2}}, label: 'Privacy'
+                                      Cell, 0x101b3d0a0, {{38.1, 322.9}, {353.7, 39.9}}
+                                        Other, 0x101b3d1c0, {{38.1, 322.9}, {353.7, 39.9}}
+                                          Other, 0x101b3d2e0, {{38.1, 322.9}, {353.7, 39.9}}
+                                        Other, 0x101b3d400, {{38.1, 322.9}, {353.7, 39.9}}
+                                          Other, 0x101b3d520, {{38.1, 322.9}, {353.7, 39.9}}
+                                            Other, 0x101b3d640, {{38.1, 322.9}, {353.7, 39.9}}
+                                              Image, 0x101b3d760, {{62.3, 333.5}, {13.3, 19.0}}, label: 'Lock'
+                                              StaticText, 0x101b3d880, {{38.1, 322.9}, {353.7, 39.9}}, label: 'New flights are Private by default'
+                                      Other, 0x101b3d9a0, {{1.9, 378.9}, {426.3, 1806.4}}
+                                      Cell, 0x101b3dac0, {{38.1, 378.9}, {353.7, 37.2}}
+                                        Other, 0x101b3dbe0, {{38.1, 378.9}, {353.7, 37.2}}
+                                        Other, 0x101b3dd00, {{38.1, 378.9}, {353.7, 37.2}}
+                                          Other, 0x101b3de20, {{38.1, 378.9}, {353.7, 37.2}}
+                                            Other, 0x101b3df40, {{38.1, 378.9}, {353.7, 37.2}}
+                                              StaticText, 0x101b40720, {{38.1, 378.9}, {353.7, 37.2}}, label: 'About'
+                                      Cell, 0x101b40840, {{38.1, 416.0}, {353.7, 60.5}}
+                                        Other, 0x101b40960, {{38.1, 416.0}, {353.7, 60.5}}
+                                          Other, 0x101b40a80, {{38.1, 416.0}, {353.7, 60.5}}
+                                        Other, 0x101b40ba0, {{38.1, 416.0}, {353.7, 60.5}}
+                                          Other, 0x101b40cc0, {{38.1, 416.0}, {353.7, 60.5}}
+                                            Other, 0x101b40de0, {{38.1, 416.0}, {353.7, 60.5}}
+                                              Image, 0x101b40f00, {{59.3, 427.8}, {19.7, 19.7}}, identifier: 'profile.disclaimer', label: 'Info'
+                                              StaticText, 0x101b41020, {{38.1, 416.0}, {353.7, 60.5}}, identifier: 'profile.disclaimer', label: 'Flyby is a flight journal. Not for navigation.'
+                                      Other, 0x101b41140, {{380.1, 152.4}, {27.2, 676.6}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                TabBar, 0x101b41260, {{20.0, 829.0}, {390.0, 75.3}}, label: 'Tab Bar'
+                  Button, 0x101b41380, {{21.8, 829.9}, {74.4, 43.5}}, identifier: 'tab.home', label: 'Home'
+                  Button, 0x101b414a0, {{99.8, 829.9}, {74.4, 43.5}}, identifier: 'tab.explore', label: 'Explore'
+                  Button, 0x101b415c0, {{177.8, 829.9}, {74.4, 43.5}}, identifier: 'tab.record', label: 'Record'
+                    Image, 0x101b416e0, {{202.3, 833.6}, {24.8, 24.8}}, identifier: 'plus.circle.fill', label: 'add'
+                  Button, 0x101b41800, {{255.8, 829.9}, {74.4, 43.5}}, identifier: 'tab.flights', label: 'Flights'
+                  Button, 0x101b41920, {{333.8, 829.9}, {74.4, 43.5}}, identifier: 'tab.profile', label: 'Profile', Selected
+                    Image, 0x101b41a40, {{358.3, 833.6}, {24.8, 24.8}}, identifier: 'person.crop.circle.fill', label: 'account'
+      Other, 0x101b41b60, {{0.0, 0.0}, {430.0, 932.0}}
+        Other, 0x101b41c80, {{-430.0, -932.0}, {1290.0, 2796.0}}
+        Other, 0x101b41da0, {{0.0, 69.0}, {430.0, 863.0}}
+          Other, 0x101b41ec0, {{0.0, 69.0}, {430.0, 863.0}}
+            Other, 0x101b41fe0, {{0.0, 69.0}, {430.0, 863.0}}
+              Other, 0x101b42100, {{0.0, 69.0}, {430.0, 863.0}}
+                Other, 0x101b42220, {{0.0, 69.0}, {430.0, 863.0}}
+                  Other, 0x101b42340, {{0.0, 69.0}, {430.0, 863.0}}, identifier: 'log.sheet'
+                    NavigationBar, 0x101b42460, {{0.0, 69.0}, {430.0, 56.0}}, identifier: 'Log a Flight'
+                      Button, 0x101b42580, {{12.0, 75.0}, {41.3, 44.0}}, identifier: 'log.cancel', label: 'Cancel'
+                      StaticText, 0x101b426a0, {{169.3, 86.7}, {91.7, 20.3}}, label: 'Log a Flight'
+                    Other, 0x101b427c0, {{0.0, 69.0}, {430.0, 863.0}}
+                      Other, 0x101b428e0, {{0.0, 69.0}, {430.0, 863.0}}
+                        Other, 0x101b42a00, {{0.0, 69.0}, {430.0, 863.0}}
+                          Other, 0x101b42b20, {{0.0, 69.0}, {430.0, 863.0}}
+                            CollectionView, 0x101b42c40, {{0.0, 69.0}, {430.0, 863.0}}
+                              Other, 0x101b42d60, {{-20.0, -1601.0}, {470.0, 1891.7}}
+                              Cell, 0x101b42e80, {{20.0, 160.0}, {390.0, 69.0}}
+                                Other, 0x101b42fa0, {{20.0, 160.0}, {390.0, 69.0}}
+                                  Other, 0x101b430c0, {{20.0, 160.0}, {390.0, 69.0}}
+                                Other, 0x101b431e0, {{20.0, 160.0}, {390.0, 69.0}}
+                                  Other, 0x101b43300, {{20.0, 160.0}, {390.0, 69.0}}
+                                    Other, 0x101b43420, {{20.0, 160.0}, {390.0, 69.0}}
+                                      Image, 0x101b43540, {{44.7, 173.0}, {22.7, 22.7}}, label: 'Compose'
+                                      StaticText, 0x101b43660, {{20.0, 160.0}, {390.0, 69.0}}, label: 'Manual flight logging is coming in the next build.'
+                              Cell, 0x101b43780, {{20.0, 229.0}, {390.0, 44.0}}
+                                Other, 0x101b438a0, {{20.0, 229.0}, {390.0, 44.0}}
+                                  Other, 0x101b439c0, {{20.0, 229.0}, {390.0, 44.0}}
+                                Other, 0x101b43ae0, {{20.0, 229.0}, {390.0, 44.0}}
+                                  Other, 0x101b43c00, {{20.0, 229.0}, {390.0, 44.0}}
+                                    Other, 0x101b43d20, {{20.0, 229.0}, {390.0, 44.0}}
+                                      Image, 0x101b43e40, {{42.7, 240.0}, {22.3, 22.0}}, label: 'Location Services Off'
+                                      StaticText, 0x101b43f60, {{20.0, 229.0}, {390.0, 44.0}}, label: 'Flyby never records your live position.'
+                              Other, 0x101b44080, {{84.0, 228.7}, {326.0, 0.3}}
+                              Other, 0x101b441a0, {{-20.0, 290.7}, {470.0, 102.0}}
+                              Cell, 0x101b442c0, {{20.0, 308.3}, {390.0, 66.7}}
+                                Other, 0x101b443e0, {{20.0, 308.3}, {390.0, 66.7}}
+                                  Other, 0x101b44500, {{20.0, 308.3}, {390.0, 66.7}}
+                                Other, 0x101b44620, {{20.0, 308.3}, {390.0, 66.7}}
+                                  Other, 0x101b44740, {{20.0, 308.3}, {390.0, 66.7}}
+                                    Other, 0x101b44860, {{20.0, 308.3}, {390.0, 66.7}}
+                                      Image, 0x101b44980, {{46.7, 321.3}, {14.7, 21.0}}, label: 'Lock'
+                                      StaticText, 0x101b44aa0, {{20.0, 308.3}, {390.0, 66.7}}, label: 'Private by default. Only you can see a new flight.'
+                              Other, 0x101b44bc0, {{-20.0, 392.7}, {470.0, 1807.7}}
+                              Cell, 0x101b44ce0, {{20.0, 410.3}, {390.0, 44.0}}
+                                Other, 0x101b44e00, {{20.0, 410.3}, {390.0, 44.0}}
+                                  Other, 0x101b44f20, {{20.0, 410.3}, {390.0, 44.0}}
+                                Other, 0x101b45040, {{20.0, 410.3}, {390.0, 44.0}}
+                                  Other, 0x101b45160, {{20.0, 410.3}, {390.0, 44.0}}
+                                    Other, 0x101b45280, {{20.0, 410.3}, {390.0, 44.0}}
+                                      Image, 0x101b453a0, {{45.7, 424.0}, {16.7, 16.7}}, label: 'Info'
+                                      StaticText, 0x101b454c0, {{20.0, 410.3}, {390.0, 44.0}}, label: 'Flyby is a journal · Not for navigation'
+                              Other, 0x101b455e0, {{397.0, 125.0}, {30.0, 757.7}}, label: 'Vertical scroll bar, 1 page', value: 0%
+Path to element:
+ →Application, 0x101b320b0, pid: 70092, label: 'Flyby'
+Query chain:
+ →Find: Target Application 'com.levihgibbons.flyby'
+  Output: {
+    Application, 0x101c40310, pid: 70092, label: 'Flyby'
+  }
+
+
