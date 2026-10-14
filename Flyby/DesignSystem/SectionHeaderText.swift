@@ -17,5 +17,7 @@ struct SectionHeaderText: View {
             .textCase(nil)
             .foregroundStyle(Color.label2)
             .accessibilityAddTraits(.isHeader)
+            // Lets the accessibility audit recognize section headers (see AccessibilityAuditUITests).
+            .accessibilityIdentifier("header.\(title)")
     }
 }

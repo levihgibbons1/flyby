@@ -28,21 +28,21 @@ final class ScreenshotCaptureUITests: XCTestCase {
         }
 
         try capture("1-home")
-        app.swipeUp()
-        app.swipeUp()
-        try capture("2-home-bottom")
-        // Scrolling down minimizes the iOS 26 tab bar; scroll back to restore it.
-        app.swipeDown()
-        app.swipeDown()
         app.tabBars.buttons["tab.explore"].tap()
-        try capture("3-explore")
+        try capture("2-explore")
         app.tabBars.buttons["tab.flights"].tap()
-        try capture("4-flights")
+        try capture("3-flights")
+        app.buttons["flights.row.ksql-ktvl-20260919"].tap()
+        XCTAssertTrue(app.navigationBars["KSQL → KTVL"].waitForExistence(timeout: 3))
+        try capture("4-flight-detail")
         app.tabBars.buttons["tab.profile"].tap()
         try capture("5-profile")
+        app.buttons["profile.settings"].tap()
+        XCTAssertTrue(app.switches["settings.hideHome"].waitForExistence(timeout: 3))
+        try capture("6-settings")
         app.tabBars.buttons["tab.record"].tap()
         XCTAssertTrue(app.navigationBars["Log a Flight"].waitForExistence(timeout: 3))
-        try capture("6-log-flight")
+        try capture("7-log-flight")
 
         try accessibilityTree.write(
             to: outputURL.appendingPathComponent("\(prefix)-accessibility.txt"),
