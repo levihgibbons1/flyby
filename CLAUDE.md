@@ -68,9 +68,11 @@ Notes:
 - `docs/BOTS.md` — bot team
 - `docs/research/flight-capture.md` — flight recording research
 - `docs/qa/MVP-PLAN.md` — QA test plan and MVP plan
-- `docs/qa/sprint1-acceptance-criteria.md` — acceptance criteria per issue
+- `docs/qa/sprint1-acceptance-criteria.md` — acceptance criteria per issue (incl. N2 contrast check, M3/M5 ids)
 - `docs/qa/design-review-sprint1.md` — QA review of design (v0.3 fixes)
-- `docs/design/DESIGN_SYSTEM.md` — Skyglass design system (source of truth)
+- `docs/qa/pr13-14-review.md` — QA review of PRs #13 and #14
+- `docs/design/DESIGN_SYSTEM.md` — Skyglass design system v0.3.1 (source of truth)
 - `docs/design/proposal.html` — design proposal
-- `docs/design/specs/` — navigation.md, screens.md, flight-detail.md, log-flight.md, recaps.md, privacy-sharing.md, maps.md, motion.md, research.md
-- `docs/design/png/` — 14 mockups (01-home-journal … 14-privacy-owner-vs-shared)
+- `docs/design/review-pr13-14.md` — Design review of PRs #13 and #14 (M1–M5, L1–L6)
+- `docs/design/specs/` — navigation.md, screens.md, flight-detail.md, log-flight.md, recaps.md, privacy-sharing.md, maps.md, motion.md, research.md, platform-fallbacks.md, accessibility.md, states.md
+- `docs/design/png/` — 25 mockups (01-home-journal … 25-ios17-fallback-flight-detail-se-15promax)
