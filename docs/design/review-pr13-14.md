@@ -40,7 +40,7 @@ Accessibility basics hold on all 4 devices: 44 pt targets, Dynamic Type through 
 | Spacing / radius | ⚠️ Deferred | System List insets and radii. Card 24 and tile 18 aren't applied yet (M2) |
 | Glass / fallback | ✅ / Med | iOS 26: floating glass tab bar, lens selection, glass sheet, glass X close button, `.glassProminent` CTA. iOS 17: classic bar, `.borderedProminent` capsule. No thin or ultraThin material anywhere. Map variant missing (M4) |
 | Map style | n/a | No maps in #13/#14; this becomes the #5 gate |
-| Tab bar | ✅ | Order, symbols, ids, Record as the only tinted item, intercept, minimize-on-scroll (iOS 26). Low: `Tab(...)` isn't used on iOS 18+ (L1) |
+| Tab bar | ✅ | Order, symbols, ids, Record as the only tinted item, intercept, minimize-on-scroll (iOS 26). L1 resolved: `.tabItem` everywhere is now the spec (v0.3.2) |
 | Disclaimer | ✅ / Med | "Not for navigation" appears in Profile → About and in the Log footer. Copy and ids are off spec (M3) |
 | Privacy | ✅ / Med | "Private" on every row, "Only you" on the summary, the sheet states Private by default, no location code. Hide home airport setting missing (M5) |
 | 44 pt targets | ✅ | Rows, All flights and the CTA use `minHeight: 44`; system toolbar and tab items |
@@ -106,16 +106,10 @@ Accessibility basics hold on all 4 devices: 44 pt targets, Dynamic Type through 
   - Sprint-1 AC manual pass: "Settings → Privacy shows Hide home airport On"
 - **Fix:** out of scope for #2, but tie it to an issue (#4 or the Settings issue). Add a 44 pt Settings gear in Profile's toolbar that pushes Privacy (`Toggle("Hide home airport", isOn: $store.hideHomeAirport)`, id `settings.hideHome`) and About. Move the About disclaimer into Settings to match `png/19`.
 
-### L1 · Low · `.tabItem` is used on every OS; spec calls for `Tab(_:systemImage:value:)` on iOS 18+
-- **Screenshot:** visually fine. `se-ios26` and `pm-ios26` already get the floating glass bar.
-- **Spec:**
-  - `navigation.md` Behavior (version gating)
-  - `platform-fallbacks.md` (`FlybyTabView`)
-- **Fix:** either:
-  - add `FlybyTabView` with an `if #available(iOS 18)` `Tab(value:)` path, which may also let you drop the UIKit id shim; or
-  - record a spec deviation: `.tabItem` works on iOS 26.
-- If you keep `.tabItem`, add `.tint(Color.Flyby.primary)` explicitly on the TabView instead of relying on AccentColor.
-- The binding-setter intercept (instead of `onChange`) is **better** than spec, because the bar never flashes Record. Keep it and update `navigation.md`.
+### L1 · Low · ✅ Resolved in spec v0.3.2: `.tabItem` on every OS is now the spec
+- **Was:** the v0.3.1 spec called for a separate iOS 18+ tab-API path, while PR #14 uses `.tabItem` on every OS.
+- **Resolution:** spec v0.3.2 adopts the PR #14 approach. That covers `.tabItem` on iOS 17 → 26, the Record intercept in the selection-binding setter (better than an `onChange` revert, with no flash), ids via `TabBarAccessibilityIdentifiers`, and the baked Record tint. Updated in `navigation.md`, `platform-fallbacks.md`, `DESIGN_SYSTEM.md` §2 and `proposal.html`.
+- **Remaining nit:** add `.tint(Color.Flyby.primary)` explicitly on the TabView instead of relying on AccentColor.
 
 ### L2 · Low · Visibility is a bare caption Label, not a VisibilityPill
 - **Screenshot:** the Home and Flights rows: lock icon, a wide gap, then "Private" at ~12 pt (`se-ios17` Light).
