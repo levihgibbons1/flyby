@@ -38,6 +38,8 @@ struct HomeView: View {
                 Button(action: onLogFlight) {
                     Text("Log a Flight")
                         .font(.headline)
+                        // Navy on light-blue in dark mode (7.2:1); system white would be ~2.6:1.
+                        .foregroundStyle(Color.onPrimary)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.vertical, 4)

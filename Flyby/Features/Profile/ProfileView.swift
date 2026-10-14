@@ -3,10 +3,16 @@ import SwiftUI
 /// Profile: totals, aircraft, achievements, settings & privacy.
 /// Placeholder until the pilot model (#4) lands.
 struct ProfileView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
+        // Stack the avatar above the text at accessibility sizes so the text keeps the full width.
+        let headerLayout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 12))
         List {
             Section {
-                HStack(spacing: 12) {
+                headerLayout {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.largeTitle)
                         .foregroundStyle(.tint)
