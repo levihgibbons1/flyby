@@ -48,7 +48,7 @@ final class TabBarUITests: XCTestCase {
     @MainActor
     func testNavigationStateSurvivesTabSwitch() throws {
         app.tabBars.buttons["tab.flights"].tap()
-        app.buttons["flights.row.1"].tap()
+        app.buttons["flights.row.kpao-kmry-20261004"].tap()
         XCTAssertTrue(app.navigationBars["KPAO → KMRY"].waitForExistence(timeout: 3))
 
         app.tabBars.buttons["tab.home"].tap()

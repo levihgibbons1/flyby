@@ -1,26 +1,32 @@
 import SwiftUI
 
-/// Explore: airports visited and wishlisted (discovery, not planning).
-/// Placeholder until the airport map lands.
+/// Explore: airports visited (discovery, not planning).
 struct ExploreView: View {
+    @Environment(FlightStore.self) private var store
+
     var body: some View {
         List {
             Section {
-                Text("Discover airports you've visited and the ones on your wishlist.")
+                Text("Airports you've flown to and from. Wishlists and airport pages come later.")
                     .font(.subheadline)
                     .foregroundStyle(Color.label2)
             }
 
             Section {
-                ForEach(PlaceholderFlights.airports, id: \.code) { airport in
+                ForEach(store.visitedAirports, id: \.airport) { entry in
                     HStack(spacing: 12) {
-                        Text(airport.code)
+                        Text(entry.airport.icao)
                             .font(.body.monospaced().weight(.semibold))
-                        Text(airport.name)
+                        Text(entry.airport.name)
+                            .foregroundStyle(Color.label2)
+                        Spacer(minLength: 8)
+                        Text(entry.visits == 1 ? "1 visit" : "\(entry.visits) visits")
+                            .font(.subheadline)
                             .foregroundStyle(Color.label2)
                     }
                     .frame(minHeight: 44)
                     .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("explore.airport.\(entry.airport.icao)")
                 }
             } header: {
                 SectionHeaderText("Visited")
@@ -32,4 +38,5 @@ struct ExploreView: View {
 
 #Preview {
     NavigationStack { ExploreView() }
+        .environment(FlightStore())
 }

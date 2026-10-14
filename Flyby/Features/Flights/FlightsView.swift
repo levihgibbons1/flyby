@@ -1,47 +1,48 @@
 import SwiftUI
 
-/// Flights: the pilot's logbook list. Placeholder until the Flight model (#4)
-/// and Flight Detail (#5) land.
+/// Flights: the pilot's logbook, grouped by month.
 struct FlightsView: View {
+    var onLogFlight: () -> Void = {}
+
+    @Environment(FlightStore.self) private var store
+
     var body: some View {
-        List {
-            Section {
-                ForEach(PlaceholderFlights.recent) { flight in
-                    NavigationLink(value: flight) {
-                        PlaceholderFlightRow(flight: flight)
-                    }
-                    .accessibilityIdentifier("flights.row.\(flight.id)")
+        Group {
+            if store.flights.isEmpty {
+                ContentUnavailableView {
+                    Label("No flights yet", systemImage: "book.closed")
+                        .accessibilityIdentifier("empty.state")
+                } description: {
+                    Text("Logged flights appear here, grouped by month.")
+                } actions: {
+                    Button("Log a Flight", action: onLogFlight)
+                        .buttonStyle(.borderedProminent)
+                        .accessibilityIdentifier("empty.action")
                 }
-            } header: {
-                SectionHeaderText("October 2026")
+            } else {
+                List {
+                    ForEach(store.monthSections()) { section in
+                        Section {
+                            ForEach(section.flights) { flight in
+                                NavigationLink(value: FlightLink(id: flight.id)) {
+                                    FlightRow(flight: flight)
+                                }
+                                .accessibilityIdentifier("flights.row.\(flight.id)")
+                            }
+                        } header: {
+                            SectionHeaderText(section.month.formatted(.dateTime.month(.wide).year()))
+                        }
+                    }
+                }
+                .accessibilityIdentifier("flights.list")
             }
         }
         .navigationTitle("Flights")
-        .navigationDestination(for: PlaceholderFlight.self) { flight in
-            PlaceholderFlightDetail(flight: flight)
-        }
-    }
-}
-
-private struct PlaceholderFlightDetail: View {
-    let flight: PlaceholderFlight
-
-    var body: some View {
-        List {
-            Section {
-                PlaceholderFlightRow(flight: flight)
-            }
-            Section {
-                Text("The full Flight Detail map and stats arrive in #5.")
-                    .foregroundStyle(Color.label2)
-            }
-        }
-        .navigationTitle(flight.routeTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .accessibilityIdentifier("flightDetail.placeholder")
+        .flightDestination()
     }
 }
 
 #Preview {
     NavigationStack { FlightsView() }
+        .environment(FlightStore())
 }

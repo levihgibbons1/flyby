@@ -34,7 +34,7 @@ struct RootView: View {
                 .tag(AppTab.record)
 
             NavigationStack {
-                FlightsView()
+                FlightsView(onLogFlight: { isLogFlightPresented = true })
             }
             .tabItem { tabLabel(.flights) }
             .tag(AppTab.flights)
@@ -94,4 +94,6 @@ struct RootView: View {
 
 #Preview {
     RootView()
+        .environment(FlightStore())
+        .environment(ProfileStore())
 }
