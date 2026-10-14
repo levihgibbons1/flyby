@@ -1,8 +1,8 @@
-# Flyby Design System: "Skyglass" (v0.3.1, provisional)
+# Flyby Design System: "Skyglass" (v0.3.2, provisional)
 
 > Local draft, Oct 13, 2026. **Replaces v0.1 "Contrail"** (dark), per founder feedback. Scope is provisional. All data in the mockups is **sample data**.
 > Visual reference: `proposal.html` (open in a browser) and `png/`. Research notes: `specs/research.md`.
-> **v0.3.1** closes the v0.3 QA follow-ups N1–N6 and the PM scope trims. **v0.3** addressed QA review `qa/design-review-sprint1.md` (F1–F15). **Deployment target: iOS 17.0.** New specs: `specs/platform-fallbacks.md`, `specs/accessibility.md`, `specs/states.md`.
+> **v0.3.2** adopts PR #14's tab implementation (`.tabItem` on every OS, Record intercepted in the selection-binding setter; `review-pr13-14.md` L1). **v0.3.1** closes the v0.3 QA follow-ups N1–N6 and the PM scope trims. **v0.3** addressed QA review `qa/design-review-sprint1.md` (F1–F15). **Deployment target: iOS 17.0.** New specs: `specs/platform-fallbacks.md`, `specs/accessibility.md`, `specs/states.md`.
 
 ## 1. Direction
 | | **A · Skyglass** (recommended) | B · Contrail (v0.1, retired) |
@@ -13,7 +13,7 @@
 What carries over from v0.1: optional altitude-tinted routes (Flight Detail toggle), rounded tabular numerals, SF Mono codes, the privacy model, the not-for-navigation stance.
 
 ## 2. Liquid Glass usage (from Apple's guidance)
-> **Platform rule (F1):** everything in this section is iOS 26 (and `Tab(...)` / the zoom transition are iOS 18). Feature views call only the DesignSystem wrappers `flybyGlass()`, `flybyGlassButton()`, `FlybyGlassGroup`, `flybyTabBarMinimizeOnScroll()` and `flybyZoomSource/Destination`. They gate with `#available` and fall back to `.thickMaterial` + `mapScrim` on maps or `.regularMaterial` elsewhere (never ultraThin/thin under text), `.bordered/.borderedProminent`, the classic `.tabItem` TabView and a standard push on iOS 17. See `specs/platform-fallbacks.md`.
+> **Platform rule (F1):** everything in this section is iOS 26 (and the zoom transition is iOS 18). The TabView uses the classic `.tabItem` on every OS, with no version split (v0.3.2, `specs/navigation.md`). Feature views call only the DesignSystem wrappers `flybyGlass()`, `flybyGlassButton()`, `FlybyGlassGroup`, `flybyTabBarMinimizeOnScroll()` and `flybyZoomSource/Destination`. They gate with `#available` and fall back to `.thickMaterial` + `mapScrim` on maps or `.regularMaterial` elsewhere (never ultraThin/thin under text), `.bordered/.borderedProminent`, and a standard push on iOS 17. See `specs/platform-fallbacks.md`.
 
 - Glass is a **functional layer for navigation and controls** that floats above content. Content itself (flight cards, lists, forms) stays on solid `surface`.
 - Use system components so glass is real: `TabView` (floating glass tab bar, `.tabBarMinimizeBehavior(.onScrollDown)`), toolbars, sheets, `.buttonStyle(.glass)` and `.glassProminent`. **No custom backgrounds on bars.**
