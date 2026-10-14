@@ -18,9 +18,10 @@ struct LogFlightSheet: View {
                 }
 
                 Section {
-                    Label("Flyby is a journal · Not for navigation", systemImage: "info.circle")
+                    Label("Personal journal · Not for navigation", systemImage: "info.circle")
                         .font(.footnote)
                         .foregroundStyle(Color.label2)
+                        .accessibilityIdentifier("log.disclaimer")
                 }
             }
             .navigationTitle("Log a Flight")

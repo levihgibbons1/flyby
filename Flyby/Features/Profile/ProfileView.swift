@@ -35,8 +35,8 @@ struct ProfileView: View {
             }
 
             Section {
-                Label("Flyby is a flight journal. Not for navigation.", systemImage: "info.circle")
-                    .accessibilityIdentifier("profile.disclaimer")
+                Label("Personal journal · Not for navigation", systemImage: "info.circle")
+                    .accessibilityIdentifier("about.disclaimer")
             } header: {
                 SectionHeaderText("About")
             }

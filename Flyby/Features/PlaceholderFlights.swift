@@ -56,6 +56,8 @@ struct PlaceholderFlightRow: View {
                 .foregroundStyle(Color.label2)
         }
         .frame(minHeight: 44)
+        // Otherwise the divider starts under the "Private" label's text.
+        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
         .accessibilityElement(children: .combine)
     }
 }
