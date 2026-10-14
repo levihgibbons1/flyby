@@ -33,8 +33,6 @@
 		F1A000000000000000000013 /* Exceptions for "Flyby" folder in "Flyby" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				DesignSystem/.gitkeep,
-				Features/.gitkeep,
 				MockData/.gitkeep,
 				Models/.gitkeep,
 			);
