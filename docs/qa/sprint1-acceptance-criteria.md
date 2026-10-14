@@ -87,7 +87,7 @@ Sprint 1 rules: **mock data only** (no Supabase or networking), PRs only, no dep
 - [ ] **Default visibility is Private:** the `Flight` model and Log form both default to `.private` (unit + UI test)
 - [ ] **Hide or trim the home airport and track ends where feasible:** mock home airport in Profile, and a global "Hide home airport" setting that defaults to **On** (sharing it is opt-in). Recaps hide a matching endpoint and trim about 1 nm or N points from the track ends. Very short tracks fall back to hiding the endpoints. Covered by `TrackPrivacyTests`.
 - [ ] **No keys or secrets in the repo:** `.gitignore` covers `.env*`, `*.p8`, `*.p12`, `*.xcconfig.local`, and `xcuserdata/`. Secret scan is clean.
-- [ ] **Not-for-navigation disclaimer** in Flight Detail, Recap preview, and Profile → About, as real text that VoiceOver reads
+- [ ] **Not-for-navigation disclaimer** in Flight Detail, Recap preview, the log sheet, and Profile → About, as real text that VoiceOver reads. Copy: 'Personal journal · Not for navigation'. Accessibility ids: `about.disclaimer`, `log.disclaimer`, and `detail.disclaimer`/`recap.disclaimer` per the design spec. The global Hide home airport toggle has id `settings.hideHome` and defaults to On.
 - [ ] No permissions besides Photos add-only (on Save). No analytics or tracking SDKs.
 
 ---
