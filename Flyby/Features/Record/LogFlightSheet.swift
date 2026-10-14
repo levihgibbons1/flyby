@@ -15,8 +15,12 @@ struct LogFlightSheet: View {
 
                 Section {
                     Label("Private by default. Only you can see a new flight.", systemImage: "lock.fill")
-                } footer: {
-                    Text("Flyby is a journal · Not for navigation")
+                }
+
+                Section {
+                    Label("Flyby is a journal · Not for navigation", systemImage: "info.circle")
+                        .font(.footnote)
+                        .foregroundStyle(Color.label2)
                 }
             }
             .navigationTitle("Log a Flight")

@@ -16,19 +16,23 @@ struct ProfileView: View {
                             .font(.headline)
                         Text("Totals, aircraft and achievements will appear here.")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.label2)
                     }
                 }
                 .accessibilityElement(children: .combine)
             }
 
-            Section("Privacy") {
+            Section {
                 Label("New flights are Private by default", systemImage: "lock.fill")
+            } header: {
+                SectionHeaderText("Privacy")
             }
 
-            Section("About") {
+            Section {
                 Label("Flyby is a flight journal. Not for navigation.", systemImage: "info.circle")
                     .accessibilityIdentifier("profile.disclaimer")
+            } header: {
+                SectionHeaderText("About")
             }
         }
         .navigationTitle("Profile")

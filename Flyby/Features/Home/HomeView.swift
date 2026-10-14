@@ -14,27 +14,33 @@ struct HomeView: View {
                         .font(.headline)
                     Text("Your year in flight will appear here: hours, flights, airports and distance.")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.label2)
                     Label("Only you", systemImage: "lock.fill")
                         .font(.caption.weight(.medium))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.label2)
                 }
                 .padding(.vertical, 4)
                 .accessibilityElement(children: .combine)
             }
 
-            Section("Recent flights") {
+            Section {
                 ForEach(PlaceholderFlights.recent) { flight in
                     PlaceholderFlightRow(flight: flight)
                 }
                 Button("All flights", action: onShowAllFlights)
                     .frame(minHeight: 44)
                     .accessibilityIdentifier("home.allFlights")
+            } header: {
+                SectionHeaderText("Recent flights")
             }
 
             Section {
                 Button(action: onLogFlight) {
-                    Label("Log a Flight", systemImage: "plus")
+                    Text("Log a Flight")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.vertical, 4)
                         .frame(maxWidth: .infinity, minHeight: 44)
                 }
                 .flybyGlassProminentButtonStyle()

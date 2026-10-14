@@ -32,19 +32,28 @@ enum PlaceholderFlights {
 struct PlaceholderFlightRow: View {
     let flight: PlaceholderFlight
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
-        HStack {
+        // At accessibility text sizes, stack the visibility pill under the
+        // route instead of squeezing it into a narrow trailing column.
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+            : AnyLayout(HStackLayout())
+        layout {
             VStack(alignment: .leading, spacing: 2) {
                 Text(flight.routeTitle)
                     .font(.body.monospaced().weight(.semibold))
                 Text("\(flight.date) · \(flight.aircraft)")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.label2)
             }
-            Spacer()
+            if !dynamicTypeSize.isAccessibilitySize {
+                Spacer()
+            }
             Label("Private", systemImage: "lock.fill")
                 .font(.caption.weight(.medium))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.label2)
         }
         .frame(minHeight: 44)
         .accessibilityElement(children: .combine)

@@ -5,13 +5,15 @@ import SwiftUI
 struct FlightsView: View {
     var body: some View {
         List {
-            Section("October 2026") {
+            Section {
                 ForEach(PlaceholderFlights.recent) { flight in
                     NavigationLink(value: flight) {
                         PlaceholderFlightRow(flight: flight)
                     }
                     .accessibilityIdentifier("flights.row.\(flight.id)")
                 }
+            } header: {
+                SectionHeaderText("October 2026")
             }
         }
         .navigationTitle("Flights")
@@ -31,7 +33,7 @@ private struct PlaceholderFlightDetail: View {
             }
             Section {
                 Text("The full Flight Detail map and stats arrive in #5.")
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.label2)
             }
         }
         .navigationTitle(flight.routeTitle)
