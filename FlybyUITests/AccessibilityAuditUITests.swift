@@ -25,21 +25,41 @@ final class AccessibilityAuditUITests: XCTestCase {
             app.launchArguments += ["-UIPreferredContentSizeCategoryName", textSize]
         }
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5))
+        app.requireTabBar()
     }
 
-    /// Runs the audit and logs the element behind each issue, so failures are actionable.
+    /// Audits one screen. Real issues are returned (not thrown) so a run reports
+    /// every screen, and the element text is in the XCTest failure line CI keeps.
+    /// One retry covers the iOS 26 simulator timeout (XCTest code -56, "Audit
+    /// failed to complete in time") which can happen before any issue is produced.
     @MainActor
-    private func audit() throws {
+    private func audit(screen: String) throws -> [String] {
         let tabBarFrame = app.tabBars.firstMatch.frame
         let types = XCUIAccessibilityAuditType.all.subtracting(.dynamicType)
-        try app.performAccessibilityAudit(for: types) { issue in
-            let element = issue.element.map { "'\($0.label)' [\($0.identifier)] \($0.frame)" } ?? "(no element)"
-            let ignored = Self.isKnownFalsePositive(issue)
-                || Self.isContrastBehindTabBar(issue, tabBarFrame: tabBarFrame)
-            print("ACCESSIBILITY AUDIT\(ignored ? " (known false positive, ignored)" : ""): \(issue.compactDescription): \(element)")
-            return ignored
+        var lastError: Error?
+        for attempt in 1...2 {
+            do {
+                var found: [String] = []
+                try app.performAccessibilityAudit(for: types) { issue in
+                    let element = issue.element.map { "'\($0.label)' [\($0.identifier)]" } ?? "(no element)"
+                    let ignored = Self.isKnownFalsePositive(issue)
+                        || Self.isContrastBehindTabBar(issue, tabBarFrame: tabBarFrame)
+                    let description = "\(issue.compactDescription): \(element)"
+                    print("ACCESSIBILITY AUDIT\(ignored ? " (known false positive, ignored)" : ""): \(screen): \(description)")
+                    if !ignored {
+                        found.append("\(screen): \(description)")
+                    }
+                    return true
+                }
+                return found
+            } catch {
+                lastError = error
+                let timedOut = String(describing: error).contains("complete in time")
+                if timedOut && attempt == 1 { continue }
+                throw error
+            }
         }
+        throw lastError ?? CocoaError(.coderInvalidValue)
     }
 
     /// Content scrolls underneath the translucent tab bar (by design), so contrast
@@ -74,16 +94,20 @@ final class AccessibilityAuditUITests: XCTestCase {
 
     @MainActor
     private func auditAllScreens() throws {
+        var failures: [String] = []
         for id in ["tab.home", "tab.explore", "tab.flights", "tab.profile"] {
             app.tabBars.buttons[id].tap()
-            try audit()
+            failures += try audit(screen: id)
         }
         app.buttons["profile.settings"].tap()
         XCTAssertTrue(app.switches["settings.hideHome"].waitForExistence(timeout: 3))
-        try audit()
+        failures += try audit(screen: "settings")
         app.tabBars.buttons["tab.record"].tap()
         XCTAssertTrue(app.navigationBars["Log a Flight"].waitForExistence(timeout: 3))
-        try audit()
+        failures += try audit(screen: "log")
+        if !failures.isEmpty {
+            XCTFail(failures.joined(separator: " || "))
+        }
     }
 
     @MainActor

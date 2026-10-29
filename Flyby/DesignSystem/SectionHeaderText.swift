@@ -16,6 +16,10 @@ struct SectionHeaderText: View {
             .font(.subheadline.weight(.semibold))
             .textCase(nil)
             .foregroundStyle(Color.label2)
+            // Grow onto another line instead of clipping inside the iOS 17
+            // section-header slot (SE at AX3).
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityAddTraits(.isHeader)
             // Lets the accessibility audit recognize section headers (see AccessibilityAuditUITests).
             .accessibilityIdentifier("header.\(title)")

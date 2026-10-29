@@ -5,32 +5,39 @@ import SwiftUI
 struct FlightRow: View {
     let flight: Flight
 
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     var body: some View {
-        // At accessibility sizes, stack the visibility under the route instead
-        // of squeezing it into a narrow trailing column.
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
-            : AnyLayout(HStackLayout())
-        layout {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(flight.routeTitle)
-                    .font(.body.monospaced().weight(.semibold))
-                Text(detailLine)
-                    .font(.subheadline)
-                    .foregroundStyle(Color.label2)
-            }
-            if !dynamicTypeSize.isAccessibilitySize {
+        // Side by side when it fits; stacked when the date line would truncate
+        // (iPhone SE, and every phone at accessibility sizes).
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .center, spacing: 8) {
+                textColumn
                 Spacer(minLength: 8)
+                VisibilityLabel(visibility: flight.visibility)
             }
-            VisibilityLabel(visibility: flight.visibility)
+            .fixedSize(horizontal: true, vertical: false)
+
+            VStack(alignment: .leading, spacing: 4) {
+                textColumn
+                VisibilityLabel(visibility: flight.visibility)
+            }
         }
         .frame(minHeight: 44)
         // Otherwise the divider starts under the visibility label's text.
         .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(flight.accessibilitySummary)
+    }
+
+    private var textColumn: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(flight.routeTitle)
+                .font(.body.monospaced().weight(.semibold))
+                .fixedSize(horizontal: false, vertical: true)
+            Text(detailLine)
+                .font(.subheadline)
+                .foregroundStyle(Color.label2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
     }
 
     private var detailLine: String {

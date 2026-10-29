@@ -14,15 +14,19 @@ struct ExploreView: View {
 
             Section {
                 ForEach(store.visitedAirports, id: \.airport) { entry in
-                    HStack(spacing: 12) {
+                    HStack(alignment: .firstTextBaseline, spacing: 12) {
                         Text(entry.airport.icao)
                             .font(.body.monospaced().weight(.semibold))
+                            .fixedSize()
                         Text(entry.airport.name)
                             .foregroundStyle(Color.label2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
                         Spacer(minLength: 8)
                         Text(entry.visits == 1 ? "1 visit" : "\(entry.visits) visits")
                             .font(.subheadline)
                             .foregroundStyle(Color.label2)
+                            .fixedSize()
                     }
                     .frame(minHeight: 44)
                     .accessibilityElement(children: .combine)

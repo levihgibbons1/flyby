@@ -17,7 +17,7 @@ final class ScreenshotCaptureUITests: XCTestCase {
 
         let app = XCUIApplication()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5))
+        app.requireTabBar()
 
         var accessibilityTree = ""
         func capture(_ name: String) throws {

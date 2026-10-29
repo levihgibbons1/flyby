@@ -33,18 +33,14 @@ struct HomeView: View {
         let totals = store.totals(year: year)
         return List {
             Section {
+                // In the section body, not the header. iOS 17 clips a header
+                // that is taller than one line ("2026 so far" plus "Only you"),
+                // which the accessibility audit reports as text clipped.
+                yearSummary(year)
                 FactRow("Hours", value: FlightFormat.hours(totals.flightTime))
                 FactRow("Flights", value: "\(totals.count)")
                 FactRow("Airports", value: "\(totals.airports)")
                 FactRow("Distance", value: "\(FlightFormat.distance(totals.distanceNM)) nm")
-            } header: {
-                HStack {
-                    SectionHeaderText("\(String(year)) so far")
-                    Spacer()
-                    Label("Only you", systemImage: "lock.fill")
-                        .font(.caption.weight(.medium))
-                        .foregroundStyle(Color.label2)
-                }
             }
 
             Section {
@@ -61,6 +57,39 @@ struct HomeView: View {
                 SectionHeaderText("Recent flights")
             }
         }
+    }
+
+    /// Year title with the "Only you" privacy pill. Stacks when the row is too
+    /// narrow (iPhone SE at AX3) instead of truncating either label.
+    private func yearSummary(_ year: Int) -> some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                yearTitle(year)
+                Spacer(minLength: 8)
+                onlyYou
+            }
+            .fixedSize(horizontal: true, vertical: false)
+
+            VStack(alignment: .leading, spacing: 4) {
+                yearTitle(year)
+                onlyYou
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func yearTitle(_ year: Int) -> some View {
+        Text("\(String(year)) so far")
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(Color.label2)
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    private var onlyYou: some View {
+        Label("Only you", systemImage: "lock.fill")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(Color.label2)
+            .fixedSize()
     }
 }
 

@@ -12,7 +12,7 @@ final class JournalUITests: XCTestCase {
     private func launch(_ arguments: [String] = []) {
         app.launchArguments = arguments
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5))
+        app.requireTabBar()
     }
 
     @MainActor

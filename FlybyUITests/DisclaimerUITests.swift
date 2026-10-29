@@ -10,7 +10,7 @@ final class DisclaimerUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5))
+        app.requireTabBar()
     }
 
     @MainActor

@@ -1,12 +1,11 @@
 import SwiftUI
 
-/// "Title ........ value" row. Stacks at accessibility sizes so long values
-/// keep the full width. The value uses `label2` (AA in both modes).
+/// "Title ........ value" row. Stacks when the pair doesn't fit on one line
+/// (narrow phones, and every phone at accessibility sizes). The value uses
+/// `label2` (AA in both modes).
 struct FactRow: View {
     let title: String
     let value: String
-
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     init(_ title: String, value: String) {
         self.title = title
@@ -14,17 +13,26 @@ struct FactRow: View {
     }
 
     var body: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 2))
-            : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
-        layout {
-            Text(title)
-            if !dynamicTypeSize.isAccessibilitySize {
+        // `fixedSize` makes the side-by-side row report its full width, so
+        // ViewThatFits stacks instead of letting the texts truncate. Truncation
+        // fails the accessibility audit's text-clipped check.
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline, spacing: 12) {
+                Text(title)
                 Spacer(minLength: 12)
+                Text(value)
+                    .foregroundStyle(Color.label2)
+                    .multilineTextAlignment(.trailing)
             }
-            Text(value)
-                .foregroundStyle(Color.label2)
-                .multilineTextAlignment(dynamicTypeSize.isAccessibilitySize ? .leading : .trailing)
+            .fixedSize(horizontal: true, vertical: false)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(value)
+                    .foregroundStyle(Color.label2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .frame(minHeight: 44)
         // One element: VoiceOver reads "Hours, 3.9".
