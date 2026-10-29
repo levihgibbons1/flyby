@@ -8,13 +8,7 @@ final class TabBarUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        let home = app.tabBars.buttons["tab.home"]
-        if !home.waitForExistence(timeout: 8) {
-            let summary = app.tabBars.buttons.allElementsBoundByIndex
-                .map { "\($0.label)#\($0.identifier)" }
-                .joined(separator: ", ")
-            XCTFail("Tab bar identifiers were not installed (\(summary))")
-        }
+        app.requireTabBar()
     }
 
     @MainActor
@@ -53,7 +47,7 @@ final class TabBarUITests: XCTestCase {
     @MainActor
     func testNavigationStateSurvivesTabSwitch() throws {
         app.tabBars.buttons["tab.flights"].tap()
-        app.buttons["flights.row.1"].tap()
+        app.buttons["flights.row.kpao-kmry-20261004"].tap()
         XCTAssertTrue(app.navigationBars["KPAO → KMRY"].waitForExistence(timeout: 3))
 
         app.tabBars.buttons["tab.home"].tap()

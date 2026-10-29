@@ -1,7 +1,7 @@
 import XCTest
 
-/// The "Not for navigation" disclaimer must appear on About (Profile) and the
-/// Log a Flight sheet (CLAUDE.md, Privacy).
+/// The "Not for navigation" disclaimer must appear in Profile → Settings → About
+/// and on the Log a Flight sheet (CLAUDE.md, Privacy).
 final class DisclaimerUITests: XCTestCase {
     private let disclaimer = "Personal journal · Not for navigation"
     private var app: XCUIApplication!
@@ -10,12 +10,13 @@ final class DisclaimerUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5))
+        app.requireTabBar()
     }
 
     @MainActor
     func testAboutShowsDisclaimer() throws {
         app.tabBars.buttons["tab.profile"].tap()
+        app.buttons["profile.settings"].tap()
         let element = app.staticTexts.matching(identifier: "about.disclaimer").firstMatch
         XCTAssertTrue(element.waitForExistence(timeout: 3))
         XCTAssertTrue(element.label.contains(disclaimer), element.label)
