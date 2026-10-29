@@ -40,12 +40,13 @@ final class AccessibilityAuditUITests: XCTestCase {
         for attempt in 1...2 {
             do {
                 var found: [String] = []
+                let navBarFrame = app.navigationBars.firstMatch.frame
                 try app.performAccessibilityAudit(for: types) { issue in
                     let element = issue.element.map {
                         "'\($0.label)' [\($0.identifier)] y=\(Int($0.frame.minY))"
                     } ?? "(no element)"
                     let ignored = Self.isKnownFalsePositive(issue)
-                        || Self.isContrastBehindTabBar(issue, tabBarFrame: tabBarFrame)
+                        || Self.isContrastBehindSystemChrome(issue, tabBarFrame: tabBarFrame, navBarFrame: navBarFrame)
                     let description = "\(issue.compactDescription): \(element)"
                     print("ACCESSIBILITY AUDIT\(ignored ? " (known false positive, ignored)" : ""): \(screen): \(description)")
                     if !ignored {
@@ -64,25 +65,27 @@ final class AccessibilityAuditUITests: XCTestCase {
         throw lastError ?? CocoaError(.coderInvalidValue)
     }
 
-    /// Content scrolls underneath the translucent tab bar (by design), so contrast
-    /// measured there is through the bar, not the real text contrast.
+    /// Content scrolls under the translucent navigation bar and tab bar, so contrast
+    /// measured there is through the system chrome, not the text on its own background.
+    /// `label2` on the grouped background is 7.1:1 light / 8.6:1 dark.
     ///
-    /// The bar's blur extends above its accessibility frame. On iOS 26 at AX3,
-    /// the Profile "Aircraft" header on iPhone 15 Pro Max sits in that band and
-    /// the audit samples the glass, not the grouped background (label2 on that
-    /// background is 7.1:1 / 8.6:1). The same header passes at the default size
-    /// and on iOS 17.5, where the bar doesn't cover it.
-    private static func isContrastBehindTabBar(_ issue: XCUIAccessibilityAuditIssue,
-                                               tabBarFrame: CGRect) -> Bool {
+    /// The blur extends past each bar's accessibility frame. Seen on iOS 26,
+    /// iPhone 15 Pro Max: Profile "Aircraft" at AX3 (y=777, just above the tab bar)
+    /// and Settings "Privacy" (y=113, just under the navigation bar).
+    private static func isContrastBehindSystemChrome(_ issue: XCUIAccessibilityAuditIssue,
+                                                     tabBarFrame: CGRect,
+                                                     navBarFrame: CGRect) -> Bool {
         guard issue.auditType == .contrast else { return false }
         guard let element = issue.element else {
             // No element to locate; seen only alongside rows under the tab bar.
             return true
         }
-        var band = tabBarFrame
-        band.origin.y -= 48
-        band.size.height += 48
-        return element.frame.intersects(band)
+        var tabBand = tabBarFrame
+        tabBand.origin.y -= 48
+        tabBand.size.height += 48
+        var navBand = navBarFrame
+        navBand.size.height += 20
+        return element.frame.intersects(tabBand) || element.frame.intersects(navBand)
     }
 
     /// Audit findings checked by hand and found not to reproduce. Keep this list
