@@ -80,7 +80,17 @@ struct TabBarAccessibilityIdentifiers: UIViewControllerRepresentable {
             let byTitle = Dictionary(uniqueKeysWithValues: zip(titles, identifiers))
             // The floating glass bar sits slightly outside `tabBar.bounds`.
             let barFrame = tabBar.convert(tabBar.bounds, to: root).insetBy(dx: -32, dy: -80)
-            stamp(root, tabBar: tabBar, root: root, barFrame: barFrame, byTitle: byTitle)
+            stamp(tabBar, tabBar: tabBar, root: root, barFrame: barFrame, byTitle: byTitle)
+            // iOS 26 sometimes hosts the glass buttons beside the tab bar, in a
+            // short container. Don't walk the screen: a full-height sibling is content.
+            if let container = tabBar.superview {
+                for sibling in container.subviews where sibling !== tabBar {
+                    let frame = sibling.convert(sibling.bounds, to: root)
+                    if frame.intersects(barFrame) && frame.height < 160 {
+                        stamp(sibling, tabBar: tabBar, root: root, barFrame: barFrame, byTitle: byTitle)
+                    }
+                }
+            }
         }
 
         /// Sets the id on the tab button itself. iOS 26's glass button is not
@@ -92,9 +102,11 @@ struct TabBarAccessibilityIdentifiers: UIViewControllerRepresentable {
                let identifier = byTitle[title],
                view.accessibilityIdentifier != identifier {
                 let frame = view.convert(view.bounds, to: root)
-                let inBar = view.isDescendant(of: tabBar)
-                let overlapsBar = frame.width > 1 && frame.height > 1 && frame.intersects(barFrame)
-                if inBar || overlapsBar {
+                // Tab buttons are small. Skip full-screen containers whose
+                // accessibility label happens to be the selected tab's title.
+                let buttonSized = frame.width > 24 && frame.width < 200
+                    && frame.height > 16 && frame.height < 96
+                if buttonSized && (view.isDescendant(of: tabBar) || frame.intersects(barFrame)) {
                     view.accessibilityIdentifier = identifier
                 }
             }
