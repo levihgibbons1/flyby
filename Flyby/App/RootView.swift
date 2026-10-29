@@ -47,9 +47,12 @@ struct RootView: View {
         }
         .flybyTabBarMinimizeOnScroll()
         .background {
-            TabBarAccessibilityIdentifiers(identifiers: AppTab.allCases.map(\.accessibilityID))
-                .frame(width: 0, height: 0)
-                .accessibilityHidden(true)
+            TabBarAccessibilityIdentifiers(
+                titles: AppTab.allCases.map(\.title),
+                identifiers: AppTab.allCases.map(\.accessibilityID)
+            )
+            .frame(width: 0, height: 0)
+            .accessibilityHidden(true)
         }
         .sheet(isPresented: $isLogFlightPresented) {
             LogFlightSheet()
@@ -79,6 +82,9 @@ struct RootView: View {
                 Image(systemName: tab.systemImage)
             }
         }
+        // Applied when the tab button is built. iOS 17 still needs
+        // TabBarAccessibilityIdentifiers; the iOS 26 glass bar reads this one.
+        .accessibilityIdentifier(tab.accessibilityID)
     }
 
     /// Record is the only tinted tab item (Flyby Blue). Tab bar items ignore
