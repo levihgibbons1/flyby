@@ -1,0 +1,73 @@
+# Sprint 1 CI (issue #9): static checks, then build and test on iPhone SE and
+# iPhone 15 Pro Max simulators on iOS 17.5 and iOS 26. No signing, no deploys.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # gitleaks scans the full history
+      - name: Install gitleaks
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+      - name: Secrets, network, location, disclaimer, gated APIs, .gitignore
+        run: scripts/ci-checks.sh
+
+  test:
+    name: Test · ${{ matrix.device }} · iOS ${{ matrix.os }}
+    runs-on: macos-26
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        device: ["iPhone SE (3rd generation)", "iPhone 15 Pro Max"]
+        os: ["17.5", "26"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select the newest Xcode 26+
+        run: |
+          xcode=$(ls -d /Applications/Xcode_2[6-9]*.app | sort -V | tail -1)
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+      - name: Create simulator
+        id: sim
+        run: echo "udid=$(scripts/ci-simulator.sh '${{ matrix.device }}' '${{ matrix.os }}')" >> "$GITHUB_OUTPUT"
+      - name: Build and test
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Flyby.xcodeproj -scheme Flyby \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -parallel-testing-enabled NO \
+            -resultBundlePath "Flyby-${{ matrix.os }}.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee xcodebuild.log | grep -E "^(Test Case|Test case|\*\*|.*error:|.*warning:|ACCESSIBILITY AUDIT)" || true
+          grep -q "\*\* TEST SUCCEEDED \*\*" xcodebuild.log
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcresult-${{ matrix.os }}-${{ strategy.job-index }}
+          path: |
+            *.xcresult
+            xcodebuild.log
+          retention-days: 14

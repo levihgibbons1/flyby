@@ -60,6 +60,10 @@ final class AccessibilityAuditUITests: XCTestCase {
             // nil element: system chrome (the tab bar uses the Large Content Viewer
             // instead of scaling). The sheet row wraps fully at AX5.
             return label == nil || label == "Flyby never records your live position."
+        case .elementDetection:
+            // nil element: seen only on a fresh iPhone 15 Pro Max iOS 26.2 simulator,
+            // with no element to attribute it to (system chrome).
+            return label == nil
         default:
             return false
         }

@@ -26,6 +26,17 @@ xcodebuild -project Flyby.xcodeproj -scheme Flyby \
 ```
 QA's smallest test device is iPhone SE (3rd generation). If your Xcode has no SE simulator, create one in Xcode → Window → Devices and Simulators, or use the iPhone 16e.
 
+Always add `OS=` to simulator destinations (e.g. `name=iPhone SE (3rd generation),OS=17.5`): installing a runtime auto-creates devices with the same names. On iOS 17 add `-parallel-testing-enabled NO`, which avoids "Failed to clone device" errors.
+
+**iOS 17.5 simulator:** Xcode 26+ can't download it. Install it with [`xcodes`](https://github.com/XcodesOrg/xcodes) (free): `brew install xcodesorg/made/xcodes && xcodes runtimes download "iOS 17.5"`, then `xcrun simctl runtime add ~/Downloads/<runtime>.dmg`.
+
+## CI
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `main`:
+- **Static checks** (`scripts/ci-checks.sh`, also runnable locally): gitleaks secret scan, no network or Supabase code, no location APIs, the "Not for navigation" disclaimer is present, iOS 18/26-only APIs only inside `DesignSystem/`, no force-unwrapped `.first!`/`.last!`, `.gitignore` covers secrets, and the deployment target stays iOS 17.0.
+- **Build and test** on iPhone SE (3rd generation) and iPhone 15 Pro Max, on iOS 17.5 and the newest iOS 26.x (`scripts/ci-simulator.sh` creates the simulators). Each run uploads its `.xcresult` and log as an artifact.
+
+No signing, no secrets and no deploys. The repo is public, so GitHub-hosted runners are free.
+
 ## Project structure
 ```
 Flyby/
