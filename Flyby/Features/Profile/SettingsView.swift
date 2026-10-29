@@ -23,8 +23,14 @@ struct SettingsView: View {
             } header: {
                 SectionHeaderText("Privacy")
             } footer: {
+                // iOS 17 sizes this footer a line short, so the audit reports the
+                // last line as text clipped. fixedSize lets it take its full height.
                 Text("When on, shares show \(profile.homeAirport.region) instead of your home airport and trim the track near it. You can change this for a single share.")
+                    .font(.footnote)
                     .foregroundStyle(Color.label2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 8)
             }
 
             Section {
