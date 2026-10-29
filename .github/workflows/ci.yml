@@ -60,7 +60,7 @@ jobs:
             -parallel-testing-enabled NO \
             -resultBundlePath "Flyby-${{ matrix.os }}.xcresult" \
             CODE_SIGNING_ALLOWED=NO \
-            | tee xcodebuild.log | grep -E "^(Test Case|Test case|\*\*|.*error:|.*warning:)" || true
+            | tee xcodebuild.log | grep -E "^(Test Case|Test case|\*\*|.*error:|.*warning:|ACCESSIBILITY AUDIT)" || true
           grep -q "\*\* TEST SUCCEEDED \*\*" xcodebuild.log
       - name: Upload results
         if: always()

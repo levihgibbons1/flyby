@@ -8,8 +8,13 @@ final class TabBarUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["tab.home"].waitForExistence(timeout: 5),
-                      "Tab bar identifiers were not installed")
+        let home = app.tabBars.buttons["tab.home"]
+        if !home.waitForExistence(timeout: 8) {
+            let summary = app.tabBars.buttons.allElementsBoundByIndex
+                .map { "\($0.label)#\($0.identifier)" }
+                .joined(separator: ", ")
+            XCTFail("Tab bar identifiers were not installed (\(summary))")
+        }
     }
 
     @MainActor
