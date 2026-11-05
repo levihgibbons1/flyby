@@ -17,61 +17,83 @@ final class FlightDetailUITests: XCTestCase {
         app.buttons["home.row.kpao-kmry-20261004"].tap()
         XCTAssertTrue(app.navigationBars["KPAO → KMRY"].waitForExistence(timeout: 5))
 
-        let disclaimer = app.descendants(matching: .any)["detail.disclaimer"]
+        let disclaimer = labeled("detail.disclaimer", containing: "Personal journal · Not for navigation")
         XCTAssertTrue(disclaimer.waitForExistence(timeout: 5))
-        XCTAssertTrue(disclaimer.label.contains("Personal journal · Not for navigation"), disclaimer.label)
 
-        let map = app.descendants(matching: .any)["detail.map"]
+        let map = labeled("detail.map", containing: "Palo Alto to Monterey Regional")
         XCTAssertTrue(map.waitForExistence(timeout: 5))
-        XCTAssertTrue(map.label.contains("Palo Alto to Monterey Regional"), map.label)
         XCTAssertTrue(map.label.contains("nautical miles"), map.label)
 
-        let visibility = app.descendants(matching: .any)["detail.visibility"]
+        let visibility = labeled("detail.visibility", containing: "Private")
         XCTAssertTrue(visibility.waitForExistence(timeout: 3))
-        XCTAssertTrue(visibility.label.contains("Private"), visibility.label)
 
-        let duration = app.descendants(matching: .any)["detail.stat.duration"]
+        let duration = app.descendants(matching: .any).matching(identifier: "detail.stat.duration").firstMatch
         reveal(duration)
         XCTAssertTrue(duration.waitForExistence(timeout: 3))
-        XCTAssertTrue(app.descendants(matching: .any)["detail.stat.distance"].exists)
-        XCTAssertTrue(app.descendants(matching: .any)["detail.stat.maxAlt"].exists)
-        let aircraft = app.descendants(matching: .any)["detail.stat.aircraft"]
-        XCTAssertTrue(aircraft.exists)
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "detail.stat.distance").firstMatch.exists)
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "detail.stat.maxAlt").firstMatch.exists)
+        let aircraft = app.descendants(matching: .any).matching(identifier: "detail.stat.aircraft").firstMatch
+        XCTAssertTrue(aircraft.waitForExistence(timeout: 3))
         let aircraftValue = aircraft.value as? String ?? ""
         XCTAssertTrue(aircraft.label.contains("Cessna 172S") || aircraftValue.contains("Cessna 172S"),
                       "\(aircraft.label) \(aircraftValue)")
 
-        let tail = app.descendants(matching: .any)["detail.tail"]
-        XCTAssertTrue(tail.label.contains("N739PA") || (tail.value as? String)?.contains("N739PA") == true,
-                      tail.label)
+        let tail = app.descendants(matching: .any).matching(identifier: "detail.tail").firstMatch
+        XCTAssertTrue(tail.waitForExistence(timeout: 3))
+        let tailValue = tail.value as? String ?? ""
+        XCTAssertTrue(tail.label.contains("N739PA") || tailValue.contains("N739PA"), "\(tail.label) \(tailValue)")
 
-        XCTAssertFalse(app.descendants(matching: .any)["detail.approximate"].exists)
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "detail.approximate").firstMatch.exists)
         XCTAssertFalse(app.alerts.firstMatch.waitForExistence(timeout: 1))
 
-        let notes = app.descendants(matching: .any)["detail.notes"]
+        let notes = labeled("detail.notes", containing: "Santa Cruz")
         reveal(notes)
         XCTAssertTrue(notes.waitForExistence(timeout: 3))
-        XCTAssertTrue(notes.label.contains("Santa Cruz"), notes.label)
 
-        let photo = app.descendants(matching: .any)["detail.photo.kpao-kmry-coast"]
+        let photo = labeled("detail.photo.kpao-kmry-coast", containing: "Photo 1 of 3")
         reveal(photo)
         XCTAssertTrue(photo.waitForExistence(timeout: 3))
-        XCTAssertTrue(photo.label.contains("Photo 1 of 3"), photo.label)
+    }
+
+    /// One match whose label or value contains `snippet`, so a duplicate icon
+    /// (the disclaimer image is also `detail.disclaimer`) does not fail the query.
+    private func labeled(_ identifier: String, containing snippet: String) -> XCUIElement {
+        let predicate = NSPredicate(format: "identifier == %@ AND (label CONTAINS %@ OR value CONTAINS %@)",
+                                    identifier, snippet, snippet)
+        return app.descendants(matching: .any).matching(predicate).firstMatch
+    }
+
+    /// iOS 26 does not build off-screen list rows until the list moves.
+    private func scrollUntilExists(_ element: XCUIElement) -> Bool {
+        if element.waitForExistence(timeout: 1) { return true }
+        for _ in 0..<5 {
+            app.swipeUp()
+            if element.exists { return true }
+        }
+        return false
     }
 
     @MainActor
     func testHomeRowShowsApproximateRoute() throws {
-        app.buttons["home.row.khaf-ksql-20260907"].tap()
+        // iOS 26's list only exposes the first Home row until the list scrolls.
+        let home = app.buttons["home.row.khaf-ksql-20260907"]
+        if !scrollUntilExists(home) {
+            app.tabBars.buttons["tab.flights"].tap()
+            let row = app.buttons["flights.row.khaf-ksql-20260907"]
+            XCTAssertTrue(scrollUntilExists(row), "Approximate flight was not in Home or Flights")
+            row.tap()
+        } else {
+            home.tap()
+        }
         XCTAssertTrue(app.navigationBars["KHAF → KSQL"].waitForExistence(timeout: 5))
 
-        let approximate = app.descendants(matching: .any)["detail.approximate"]
+        let approximate = app.descendants(matching: .any).matching(identifier: "detail.approximate").firstMatch
         XCTAssertTrue(approximate.waitForExistence(timeout: 5))
         XCTAssertEqual(approximate.label, "Approximate route")
 
-        let map = app.descendants(matching: .any)["detail.map"]
+        let map = labeled("detail.map", containing: "Approximate route, not the flown track")
         XCTAssertTrue(map.waitForExistence(timeout: 5))
-        XCTAssertTrue(map.label.contains("Approximate route, not the flown track"), map.label)
-        XCTAssertTrue(app.descendants(matching: .any)["detail.disclaimer"].exists)
+        XCTAssertTrue(labeled("detail.disclaimer", containing: "Not for navigation").waitForExistence(timeout: 3))
         XCTAssertFalse(app.alerts.firstMatch.exists)
     }
 
@@ -84,11 +106,10 @@ final class FlightDetailUITests: XCTestCase {
         row.tap()
 
         XCTAssertTrue(app.navigationBars["KSQL → KTVL"].waitForExistence(timeout: 5))
-        let map = app.descendants(matching: .any)["detail.map"]
+        let map = labeled("detail.map", containing: "San Carlos to Lake Tahoe")
         XCTAssertTrue(map.waitForExistence(timeout: 5))
-        XCTAssertTrue(map.label.contains("San Carlos to Lake Tahoe"), map.label)
-        let visibility = app.descendants(matching: .any)["detail.visibility"]
-        XCTAssertTrue(visibility.label.contains("Followers"), visibility.label)
+        let visibility = labeled("detail.visibility", containing: "Followers")
+        XCTAssertTrue(visibility.waitForExistence(timeout: 3))
         XCTAssertFalse(app.alerts.firstMatch.exists)
     }
 

@@ -34,9 +34,10 @@ final class DisclaimerUITests: XCTestCase {
     @MainActor
     func testFlightDetailShowsDisclaimer() throws {
         app.buttons["home.row.kpao-kmry-20261004"].tap()
-        let element = app.staticTexts.matching(identifier: "detail.disclaimer").firstMatch
+        let element = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier == 'detail.disclaimer' AND label CONTAINS %@", disclaimer))
+            .firstMatch
         XCTAssertTrue(element.waitForExistence(timeout: 5))
-        XCTAssertTrue(element.label.contains(disclaimer), element.label)
         XCTAssertTrue(element.label.contains("Not for navigation"), element.label)
     }
 }

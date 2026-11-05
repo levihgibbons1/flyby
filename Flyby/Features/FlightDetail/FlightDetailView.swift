@@ -70,6 +70,8 @@ struct FlightDetailView: View {
                     .accessibilityIdentifier("detail.approximate")
             }
 
+            // One element. A Label otherwise exposes the icon ("Info") and the
+            // sentence as two views with the same identifier.
             Label("Personal journal · Not for navigation", systemImage: "info.circle")
                 .font(.caption)
                 .foregroundStyle(Color.label2)
@@ -78,6 +80,8 @@ struct FlightDetailView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Personal journal · Not for navigation")
                 .accessibilityIdentifier("detail.disclaimer")
         }
     }
