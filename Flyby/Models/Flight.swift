@@ -34,6 +34,8 @@ struct Flight: Identifiable, Hashable, Sendable {
     var visibility: FlightVisibility
     /// Raw track points; may be empty (the map then shows an approximate route).
     var track: [TrackPoint]
+    /// Mock trip photos for the detail carousel. Empty until a flight has any.
+    var photos: [FlightPhoto]
     var source: Source
 
     init(id: String = UUID().uuidString,
@@ -51,6 +53,7 @@ struct Flight: Identifiable, Hashable, Sendable {
          notes: String = "",
          visibility: FlightVisibility = .default,
          track: [TrackPoint] = [],
+         photos: [FlightPhoto] = [],
          source: Source = .entered) {
         self.id = id
         self.date = date
@@ -67,6 +70,7 @@ struct Flight: Identifiable, Hashable, Sendable {
         self.notes = notes
         self.visibility = visibility
         self.track = track
+        self.photos = photos
         self.source = source
     }
 
