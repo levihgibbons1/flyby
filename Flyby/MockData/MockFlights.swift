@@ -16,6 +16,7 @@ enum MockFlights {
                       notes: "Coastal haze burned off over Santa Cruz. Smooth air the whole way.",
                       track: MockTrack.generate(from: MockAirports.kpao, to: MockAirports.kmry, points: 180,
                                                 cruiseFeet: 5_500, takeoff: takeoff, duration: duration),
+                      photos: MockPhotos.kpaoKmry,
                       source: .recorded)
     }()
 
@@ -30,6 +31,7 @@ enum MockFlights {
                       visibility: .followers,
                       track: MockTrack.generate(from: MockAirports.ksql, to: MockAirports.ktvl, points: 512,
                                                 cruiseFeet: 11_500, takeoff: takeoff, duration: duration, bow: 0.04),
+                      photos: MockPhotos.ksqlKtvl,
                       source: .recorded)
     }()
 
@@ -39,7 +41,8 @@ enum MockFlights {
         return Flight(id: "khaf-ksql-20260907", date: takeoff, aircraftType: "Cessna 172S", tailNumber: "N739PA",
                       departure: MockAirports.khaf, arrival: MockAirports.ksql, route: "Over the hills",
                       flightDuration: 22 * 60, maxAltitudeFeet: 2_500,
-                      notes: "Sunset hop home over Crystal Springs.")
+                      notes: "Sunset hop home over Crystal Springs.",
+                      photos: MockPhotos.khafKsql)
     }()
 
     static let ksqlKsba: Flight = {
@@ -52,6 +55,7 @@ enum MockFlights {
                       notes: "Down the coast past Big Sur.",
                       track: MockTrack.generate(from: MockAirports.ksql, to: MockAirports.ksba, points: 300,
                                                 cruiseFeet: 9_500, takeoff: takeoff, duration: duration, bow: 0.12),
+                      photos: MockPhotos.ksqlKsba,
                       source: .recorded)
     }()
 
