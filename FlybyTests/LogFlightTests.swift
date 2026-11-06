@@ -90,8 +90,8 @@ struct LogFlightTests {
         draft.durationHoursText = "1"
         draft.durationMinutesText = "12"
         #expect(draft.problems().duration == nil)
-        #expect(draft.resolvedDuration() == 72 * 60)
-        #expect(draft.makeFlight(now: now, calendar: calendar)?.flightDuration == 72 * 60)
+        #expect(draft.resolvedDuration() == TimeInterval(72 * 60))
+        #expect(draft.makeFlight(now: now, calendar: calendar)?.flightDuration == TimeInterval(72 * 60))
 
         draft.durationHoursText = "48"
         draft.durationMinutesText = "1"
@@ -107,8 +107,8 @@ struct LogFlightTests {
         #expect(problems.duration == nil)
         #expect(problems.times == nil)
         let flight = draft.makeFlight(now: now, calendar: calendar)
-        #expect(flight?.flightDuration == 60 * 60)
-        #expect(flight?.blockDuration == 60 * 60)
+        #expect(flight?.flightDuration == TimeInterval(60 * 60))
+        #expect(flight?.blockDuration == TimeInterval(60 * 60))
         #expect(flight?.takeoff != nil)
         #expect(flight?.landing != nil)
 

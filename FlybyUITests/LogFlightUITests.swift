@@ -15,18 +15,15 @@ final class LogFlightUITests: XCTestCase {
     @MainActor
     func testLogFormDefaultsToPrivateAndResets() throws {
         openLog()
-        let privateOption = app.buttons["log.visibility.private"]
-        reveal(privateOption)
-        XCTAssertTrue(privateOption.waitForExistence(timeout: 3))
+        let privateOption = requireButton("log.visibility.private")
         XCTAssertTrue(privateOption.isSelected, privateOption.label)
         XCTAssertTrue(privateOption.label.contains("Private"), privateOption.label)
-        XCTAssertFalse(app.buttons["log.visibility.followers"].isSelected)
-        XCTAssertFalse(app.buttons["log.visibility.public"].isSelected)
+        XCTAssertFalse(requireButton("log.visibility.followers").isSelected)
+        let publicOption = requireButton("log.visibility.public")
+        XCTAssertFalse(publicOption.isSelected)
 
-        reveal(app.buttons["log.visibility.public"])
-        app.buttons["log.visibility.public"].tap()
-        XCTAssertTrue(app.buttons["log.visibility.public"].isSelected)
-        XCTAssertFalse(app.buttons["log.visibility.private"].isSelected)
+        publicOption.tap()
+        XCTAssertTrue(publicOption.isSelected)
 
         app.buttons["log.cancel"].tap()
         let alert = app.alerts["Discard this flight?"]
@@ -35,9 +32,9 @@ final class LogFlightUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 5))
 
         openLog()
-        reveal(privateOption)
-        XCTAssertTrue(privateOption.isSelected, "Opening the form again should select Private")
-        XCTAssertFalse(app.buttons["log.visibility.public"].isSelected)
+        let reopened = requireButton("log.visibility.private")
+        XCTAssertTrue(reopened.isSelected, "Opening the form again should select Private")
+        XCTAssertFalse(requireButton("log.visibility.public").isSelected)
     }
 
     @MainActor
@@ -145,6 +142,16 @@ final class LogFlightUITests: XCTestCase {
         if let count = digits.compactMap({ Int($0) }).last { return count }
         XCTFail("Profile flight count was \(stat.label) / \(String(describing: stat.value))")
         return -1
+    }
+
+    /// iOS 26 only builds a list row once it is on screen, and reading
+    /// `isSelected` on a missing button fails the test outright.
+    @MainActor
+    private func requireButton(_ identifier: String) -> XCUIElement {
+        let button = app.buttons[identifier]
+        reveal(button)
+        XCTAssertTrue(button.waitForExistence(timeout: 3), identifier)
+        return button
     }
 
     @MainActor
