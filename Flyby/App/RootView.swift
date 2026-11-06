@@ -10,12 +10,15 @@ import UIKit
 struct RootView: View {
     @State private var selection: AppTab = .home
     @State private var isLogFlightPresented = false
+    /// Bumps every time the sheet opens, so the form (and its Private default)
+    /// is built fresh instead of keeping the last visibility choice.
+    @State private var logSheetID = 0
 
     var body: some View {
         TabView(selection: tabSelection) {
             NavigationStack {
                 HomeView(
-                    onLogFlight: { isLogFlightPresented = true },
+                    onLogFlight: presentLog,
                     onShowAllFlights: { selection = .flights }
                 )
             }
@@ -34,7 +37,7 @@ struct RootView: View {
                 .tag(AppTab.record)
 
             NavigationStack {
-                FlightsView(onLogFlight: { isLogFlightPresented = true })
+                FlightsView(onLogFlight: presentLog)
             }
             .tabItem { tabLabel(.flights) }
             .tag(AppTab.flights)
@@ -56,7 +59,14 @@ struct RootView: View {
         }
         .sheet(isPresented: $isLogFlightPresented) {
             LogFlightSheet()
+                .id(logSheetID)
         }
+    }
+
+    /// Opens a new Log a Flight sheet. Record is an action, not a destination.
+    private func presentLog() {
+        logSheetID += 1
+        isLogFlightPresented = true
     }
 
     private var tabSelection: Binding<AppTab> {
@@ -64,7 +74,7 @@ struct RootView: View {
             get: { selection },
             set: { newValue in
                 if newValue.isAction {
-                    isLogFlightPresented = true
+                    presentLog()
                 } else {
                     selection = newValue
                 }
