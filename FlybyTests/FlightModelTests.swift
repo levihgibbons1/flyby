@@ -114,4 +114,22 @@ struct PrivacySettingsTests {
         #expect(profile.defaultTrimNM == 1.0)
         #expect(profile.homeAirport == MockAirports.ksql)
     }
+
+    @Test func shareOverrideDoesNotPersist() {
+        let profile = ProfileStore()
+        var selection = RecapPrivacySelection(profile: profile)
+        #expect(selection.hideHomeAirport)
+        #expect(selection.trimEnds)
+        #expect(selection.savedHideHomeDefault)
+        #expect(selection.home == MockAirports.ksql)
+        selection.hideHomeAirport = false
+        selection.trimEnds = false
+        selection.trimDistanceNM = 3
+        #expect(profile.hideHomeAirport)
+        #expect(profile.defaultTrimNM == 1)
+        let nextShare = RecapPrivacySelection(profile: profile)
+        #expect(nextShare.hideHomeAirport)
+        #expect(nextShare.trimEnds)
+        #expect(nextShare.trimDistanceNM == 1)
+    }
 }
