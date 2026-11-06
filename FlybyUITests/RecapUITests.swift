@@ -48,10 +48,12 @@ final class RecapUITests: XCTestCase {
         XCTAssertFalse(hidden.localizedCaseInsensitiveContains("ksql"), hidden)
         XCTAssertFalse(hidden.localizedCaseInsensitiveContains("san carlos"), hidden)
 
-        hide.tap()
+        flip(hide)
+        XCTAssertEqual(hide.value as? String, "0", "Hide home airport stayed on. route=\(copy(of: "recap.route"))")
         XCTAssertTrue(waitUntilRouteShowsField(), copy(of: "recap.route"))
 
-        hide.tap()
+        flip(hide)
+        XCTAssertEqual(hide.value as? String, "1", "Hide home airport stayed off")
         XCTAssertTrue(waitUntilRouteHidesHome())
         let hiddenAgain = copy(of: "recap.route")
         XCTAssertFalse(hiddenAgain.localizedCaseInsensitiveContains("ksql"), hiddenAgain)
@@ -65,6 +67,21 @@ final class RecapUITests: XCTestCase {
         let element = app.descendants(matching: .any)[identifier]
         let value = element.value as? String ?? ""
         return "\(element.label) \(value)"
+    }
+
+    /// The row's center is the title. The control that actually flips is the switch at the trailing edge.
+    private func flip(_ toggle: XCUIElement) {
+        let before = toggle.value as? String
+        let knob = toggle.switches.firstMatch
+        if knob.exists, knob.isHittable {
+            knob.tap()
+        } else {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+        }
+        let deadline = Date().addingTimeInterval(2)
+        while Date() < deadline, (toggle.value as? String) == before {
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
     }
 
     /// The field is showing when either its name or its ICAO is back on the route.

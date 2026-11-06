@@ -16,7 +16,6 @@ struct RecapShareView: View {
     @State private var photoDenied = false
     @State private var savedMessage: String?
     @State private var isSaving = false
-    @State private var shareImage: RecapShareImage?
 
     private var model: RecapCardModel {
         RecapCardModel.make(flight: flight, selection: selection)
@@ -35,21 +34,7 @@ struct RecapShareView: View {
             .navigationTitle("Share Recap")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: loadPrivacy)
-            .background {
-                RecapActivityPresenter(image: shareImageBinding)
-            }
         }
-    }
-
-    /// The rendered image, presented by the host already on screen.
-    /// A second sheet never gets a chance to cover the share controller.
-    private var shareImageBinding: Binding<UIImage?> {
-        Binding(
-            get: { shareImage?.image },
-            set: { newValue in
-                if newValue == nil { shareImage = nil }
-            }
-        )
     }
 
     /// Full card, in the fixed export style. The scroll view fits it on a small phone.
@@ -171,7 +156,7 @@ struct RecapShareView: View {
             return
         }
         errorMessage = nil
-        shareImage = RecapShareImage(image: image)
+        RecapSharePresenter.present(image)
     }
 
     private func saveToPhotos() async {

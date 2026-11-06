@@ -49,70 +49,38 @@ struct ImageRecapRenderer: RecapImageRendering {
     }
 }
 
-/// The rendered card, held only while the system share sheet is on screen.
-struct RecapShareImage: Identifiable {
-    let id = UUID()
-    let image: UIImage
-}
-
-/// Presents the system share sheet from a host that is already on screen.
-/// The sheet appears only after Share hands over an image.
-struct RecapActivityPresenter: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
-
-    func makeUIViewController(context: Context) -> RecapShareHost {
-        let host = RecapShareHost()
-        host.onDismiss = { image = nil }
-        return host
-    }
-
-    func updateUIViewController(_ controller: RecapShareHost, context: Context) {
-        controller.onDismiss = { image = nil }
-        controller.image = image
-        // Presenting during a SwiftUI update is dropped. The next turn is on screen.
-        DispatchQueue.main.async {
-            controller.presentShareIfNeeded()
+/// Presents the system share sheet from the view controller already on screen.
+/// Share is the only caller. Nothing is uploaded.
+enum RecapSharePresenter {
+    static func present(_ image: UIImage) {
+        guard let presenter = topViewController() else { return }
+        guard !(presenter.presentedViewController is UIActivityViewController) else { return }
+        let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        controller.view.accessibilityIdentifier = "recap.shareSheet"
+        if let popover = controller.popoverPresentationController {
+            popover.sourceView = presenter.view
+            popover.sourceRect = CGRect(x: presenter.view.bounds.midX, y: presenter.view.bounds.midY, width: 1, height: 1)
+            popover.permittedArrowDirections = []
         }
-    }
-
-    final class RecapShareHost: UIViewController {
-        var image: UIImage?
-        var onDismiss: (() -> Void)?
-        private var presentedToken: ObjectIdentifier?
-
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            view.backgroundColor = .clear
-            view.isUserInteractionEnabled = false
-        }
-
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-            presentShareIfNeeded()
-        }
-
-        func presentShareIfNeeded() {
-            guard view.window != nil, presentedViewController == nil, let image else { return }
-            let token = ObjectIdentifier(image)
-            guard presentedToken != token else { return }
-            presentedToken = token
-            let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        presenter.present(controller, animated: true) {
             controller.view.accessibilityIdentifier = "recap.shareSheet"
-            if let popover = controller.popoverPresentationController {
-                popover.sourceView = view
-                popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 1, height: 1)
-                popover.permittedArrowDirections = []
-            }
-            controller.completionWithItemsHandler = { [weak self] _, _, _, _ in
-                DispatchQueue.main.async {
-                    self?.presentedToken = nil
-                    self?.image = nil
-                    self?.onDismiss?()
-                }
-            }
-            present(controller, animated: true) {
-                controller.view.accessibilityIdentifier = "recap.shareSheet"
-            }
         }
+    }
+
+    private static func topViewController() -> UIViewController? {
+        let scene = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }
+            ?? UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+        let root = scene?.windows.first { $0.isKeyWindow }?.rootViewController
+            ?? scene?.windows.first?.rootViewController
+        return root.map(topmost)
+    }
+
+    private static func topmost(_ controller: UIViewController) -> UIViewController {
+        if let presented = controller.presentedViewController, !presented.isBeingDismissed {
+            return topmost(presented)
+        }
+        return controller
     }
 }
