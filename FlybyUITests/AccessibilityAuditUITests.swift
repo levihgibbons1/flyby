@@ -30,14 +30,14 @@ final class AccessibilityAuditUITests: XCTestCase {
 
     /// Audits one screen. Real issues are returned (not thrown) so a run reports
     /// every screen, and the element text is in the XCTest failure line CI keeps.
-    /// One retry covers the iOS 26 simulator timeout (XCTest code -56, "Audit
-    /// failed to complete in time") which can happen before any issue is produced.
+    /// Two retries cover the iOS 26 simulator timeout, reported as "Audit failed
+    /// to complete in time" or "Timed out while running accessibility audit".
     @MainActor
     private func audit(screen: String) throws -> [String] {
         let tabBarFrame = app.tabBars.firstMatch.frame
         let types = XCUIAccessibilityAuditType.all.subtracting(.dynamicType)
         var lastError: Error?
-        for attempt in 1...2 {
+        for attempt in 1...3 {
             do {
                 var found: [String] = []
                 let navBarFrame = app.navigationBars.firstMatch.frame
@@ -57,8 +57,12 @@ final class AccessibilityAuditUITests: XCTestCase {
                 return found
             } catch {
                 lastError = error
-                let timedOut = String(describing: error).contains("complete in time")
-                if timedOut && attempt == 1 { continue }
+                // iOS 26 reports this two ways: "Audit failed to complete in time"
+                // and "Timed out while running accessibility audit".
+                let description = String(describing: error)
+                let timedOut = description.contains("complete in time")
+                    || description.contains("Timed out while running accessibility audit")
+                if timedOut && attempt < 3 { continue }
                 throw error
             }
         }

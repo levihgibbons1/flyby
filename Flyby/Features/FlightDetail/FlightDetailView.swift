@@ -7,6 +7,7 @@ struct FlightDetailView: View {
     /// Computed when the screen opens. Later `body` calls reuse this value,
     /// so the polyline is not rebuilt on every frame of a scroll.
     @State private var route: RouteDisplay
+    @State private var showingRecap = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     init(flight: Flight) {
@@ -44,6 +45,19 @@ struct FlightDetailView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(flight.routeTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    showingRecap = true
+                } label: {
+                    Label("Share Recap", systemImage: "square.and.arrow.up")
+                }
+                .accessibilityIdentifier("detail.share")
+            }
+        }
+        .sheet(isPresented: $showingRecap) {
+            RecapShareView(flight: flight)
+        }
     }
 
     private func routeSection(mapHeight: CGFloat) -> some View {
@@ -195,17 +209,20 @@ struct FlightDetailView: View {
     NavigationStack {
         FlightDetailView(flight: MockFlights.kpaoKmry)
     }
+    .environment(ProfileStore())
 }
 
 #Preview("Approximate") {
     NavigationStack {
         FlightDetailView(flight: MockFlights.khafKsql)
     }
+    .environment(ProfileStore())
 }
 
 #Preview("Dark") {
     NavigationStack {
         FlightDetailView(flight: MockFlights.ksqlKtvl)
     }
+    .environment(ProfileStore())
     .preferredColorScheme(.dark)
 }
