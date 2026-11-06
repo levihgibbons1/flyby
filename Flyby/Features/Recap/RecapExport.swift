@@ -55,38 +55,47 @@ struct RecapShareImage: Identifiable {
     let image: UIImage
 }
 
-/// Shows the system share sheet. SwiftUI can't present `UIActivityViewController`
-/// as the sheet itself, so this host presents it once it is on screen.
-struct RecapActivityView: UIViewControllerRepresentable {
-    let image: UIImage
+/// Presents the system share sheet from a host that is already on screen.
+/// The sheet appears only after Share hands over an image.
+struct RecapActivityPresenter: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
 
     func makeUIViewController(context: Context) -> RecapShareHost {
-        RecapShareHost(image: image)
+        let host = RecapShareHost()
+        host.onDismiss = { image = nil }
+        return host
     }
 
-    func updateUIViewController(_ controller: RecapShareHost, context: Context) {}
+    func updateUIViewController(_ controller: RecapShareHost, context: Context) {
+        controller.onDismiss = { image = nil }
+        controller.image = image
+        // Presenting during a SwiftUI update is dropped. The next turn is on screen.
+        DispatchQueue.main.async {
+            controller.presentShareIfNeeded()
+        }
+    }
 
     final class RecapShareHost: UIViewController {
-        private let image: UIImage
-        private var didPresent = false
-
-        init(image: UIImage) {
-            self.image = image
-            super.init(nibName: nil, bundle: nil)
-        }
-
-        @available(*, unavailable)
-        required init?(coder: NSCoder) { nil }
+        var image: UIImage?
+        var onDismiss: (() -> Void)?
+        private var presentedToken: ObjectIdentifier?
 
         override func viewDidLoad() {
             super.viewDidLoad()
             view.backgroundColor = .clear
+            view.isUserInteractionEnabled = false
         }
 
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
-            guard !didPresent, presentedViewController == nil else { return }
-            didPresent = true
+            presentShareIfNeeded()
+        }
+
+        func presentShareIfNeeded() {
+            guard view.window != nil, presentedViewController == nil, let image else { return }
+            let token = ObjectIdentifier(image)
+            guard presentedToken != token else { return }
+            presentedToken = token
             let controller = UIActivityViewController(activityItems: [image], applicationActivities: nil)
             controller.view.accessibilityIdentifier = "recap.shareSheet"
             if let popover = controller.popoverPresentationController {
@@ -96,10 +105,14 @@ struct RecapActivityView: UIViewControllerRepresentable {
             }
             controller.completionWithItemsHandler = { [weak self] _, _, _, _ in
                 DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
+                    self?.presentedToken = nil
+                    self?.image = nil
+                    self?.onDismiss?()
                 }
             }
-            present(controller, animated: true)
+            present(controller, animated: true) {
+                controller.view.accessibilityIdentifier = "recap.shareSheet"
+            }
         }
     }
 }

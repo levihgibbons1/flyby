@@ -24,8 +24,9 @@ final class RecapUITests: XCTestCase {
         XCTAssertTrue(share.waitForExistence(timeout: 3))
         share.tap()
 
+        XCTAssertTrue(app.navigationBars["Share Recap"].waitForExistence(timeout: 5))
         let route = app.descendants(matching: .any)["recap.route"]
-        XCTAssertTrue(route.waitForExistence(timeout: 5))
+        XCTAssertTrue(route.waitForExistence(timeout: 5), "Route was not in the recap")
         XCTAssertTrue(app.descendants(matching: .any)["recap.preview"].waitForExistence(timeout: 3))
 
         let hide = app.switches["recap.toggle.hideHome"]

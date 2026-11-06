@@ -25,23 +25,31 @@ struct RecapShareView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    preview
-                    controls
-                }
-                .padding(.vertical, 16)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                preview
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
             }
-            .safeAreaInset(edge: .bottom, spacing: 0) { actions }
+            // Toggles stay in the bottom bar. Under the full-size card they sit
+            // behind Share and Save, so a tap never reaches them.
+            .safeAreaInset(edge: .bottom, spacing: 0) { bottomBar }
             .navigationTitle("Share Recap")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: loadPrivacy)
-            .sheet(item: $shareImage) { item in
-                RecapActivityView(image: item.image)
-                    .presentationBackground(.clear)
-                    .presentationDragIndicator(.hidden)
+            .background {
+                RecapActivityPresenter(image: shareImageBinding)
             }
         }
+    }
+
+    /// The rendered image, presented by the host already on screen.
+    /// A second sheet never gets a chance to cover the share controller.
+    private var shareImageBinding: Binding<UIImage?> {
+        Binding(
+            get: { shareImage?.image },
+            set: { newValue in
+                if newValue == nil { shareImage = nil }
+            }
+        )
     }
 
     /// Full card, in the fixed export style. The scroll view fits it on a small phone.
@@ -114,6 +122,15 @@ struct RecapShareView: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(text)
             .accessibilityIdentifier(identifier)
+    }
+
+    private var bottomBar: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            controls
+            actions
+        }
+        .padding(.top, 8)
+        .background(.bar)
     }
 
     private var actions: some View {

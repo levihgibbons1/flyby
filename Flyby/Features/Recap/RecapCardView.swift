@@ -2,8 +2,8 @@ import SwiftUI
 
 /// The share card: route line, stats, aircraft, date, Flyby, and the disclaimer.
 ///
-/// Laid out at a fixed size and fixed text size. The share screen scales this
-/// view down to fit the phone; the exported image is this same view at 3×.
+/// Laid out at a fixed size and fixed text size. The share screen scrolls this
+/// view; the exported image is this same view at 3×.
 struct RecapCardView: View {
     let model: RecapCardModel
 
@@ -11,6 +11,13 @@ struct RecapCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: square ? 6 : 12) {
+            // Its own element. An identifier on the card itself replaces the
+            // route, stats, and disclaimer identifiers in the accessibility tree.
+            Color.clear
+                .frame(width: 1, height: 1)
+                .accessibilityElement()
+                .accessibilityLabel("Recap preview")
+                .accessibilityIdentifier("recap.preview")
             brand
             route
             if let homeNote = model.homeNote {
@@ -46,7 +53,6 @@ struct RecapCardView: View {
             LinearGradient(colors: [RecapPalette.skyTop, RecapPalette.skyBottom],
                            startPoint: .top, endPoint: .bottom)
         }
-        .accessibilityIdentifier("recap.preview")
     }
 
     private var brand: some View {
